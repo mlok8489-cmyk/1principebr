@@ -14,21 +14,23 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* ================================
+
+    /* =========================================
        TELA DE ENTRADA
-    ================================= */
+    ========================================= */
 
     #intro-screen {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      z-index: 99999;
       background: #050507;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      overflow: hidden;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      overflow-y: auto;
+      padding: 30px 15px;
+      transition: opacity .8s ease, visibility .8s ease;
     }
 
     #intro-screen.hidden {
@@ -38,7 +40,7 @@
     }
 
     .intro-content {
-      width: min(90%, 600px);
+      width: min(94%, 850px);
       position: relative;
       z-index: 2;
     }
@@ -48,7 +50,7 @@
       font-size: clamp(25px, 5vw, 48px);
       font-weight: 900;
       letter-spacing: 4px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .intro-brand span {
@@ -56,15 +58,15 @@
     }
 
     .intro-crown {
-      font-size: clamp(65px, 12vw, 110px);
       color: #b86cff;
-      margin-bottom: 25px;
-      filter: drop-shadow(0 0 18px rgba(138, 43, 226, 0.45));
+      font-size: clamp(65px, 12vw, 105px);
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 18px rgba(138,43,226,.45));
       animation: crownFloat 3s ease-in-out infinite;
     }
 
     @keyframes crownFloat {
-      0%, 100% {
+      0%,100% {
         transform: translateY(0);
       }
 
@@ -77,150 +79,241 @@
       color: #f7f4ff;
       font-size: clamp(18px, 3vw, 28px);
       font-weight: 800;
-      letter-spacing: 1px;
-      line-height: 1.4;
-      margin-bottom: 30px;
+      line-height: 1.5;
+      margin-bottom: 28px;
     }
 
-    .intro-title span {
+    .intro-title span,
+    .step-title span,
+    .activation-title span {
       color: #b86cff;
     }
 
     .intro-button,
+    .continue-button,
     .nickname-button {
-      border: 1px solid rgba(184, 108, 255, 0.5);
-      background: linear-gradient(135deg, #8a2be2, #5f18a8);
+      border: 1px solid rgba(184,108,255,.5);
+      background: linear-gradient(135deg,#8a2be2,#5f18a8);
       color: white;
       padding: 15px 28px;
       border-radius: 7px;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Orbitron',sans-serif;
       font-size: 11px;
       font-weight: 900;
       letter-spacing: 1px;
       cursor: pointer;
-      transition: 0.25s;
-      box-shadow: 0 0 25px rgba(138, 43, 226, 0.18);
+      transition: .25s;
+      box-shadow: 0 0 25px rgba(138,43,226,.18);
     }
 
     .intro-button:hover,
+    .continue-button:hover,
     .nickname-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(138, 43, 226, 0.28);
+      box-shadow: 0 10px 30px rgba(138,43,226,.28);
     }
 
-    /* ================================
-       TELA DO NICKNAME
-    ================================= */
+    /* =========================================
+       TELAS INTERNAS
+    ========================================= */
 
-    #nickname-screen {
+    .wizard-screen {
       display: none;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity .5s ease;
     }
 
-    #nickname-screen.active {
+    .wizard-screen.active {
       display: block;
       opacity: 1;
     }
 
-    .nickname-title {
+    .step-title {
       color: #f7f4ff;
-      font-size: clamp(22px, 5vw, 36px);
+      font-size: clamp(22px,5vw,38px);
       font-weight: 900;
       margin-bottom: 10px;
     }
 
-    .nickname-subtitle {
+    .step-description {
       color: #aaa3b8;
-      font-family: Arial, sans-serif;
+      font-family: Arial,sans-serif;
       font-size: 14px;
+      line-height: 1.6;
       margin-bottom: 25px;
     }
 
+    .step-counter {
+      color: #b86cff;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    /* =========================================
+       NICKNAME
+    ========================================= */
+
     .nickname-input {
-      width: min(100%, 380px);
+      width: min(100%,380px);
       padding: 16px 18px;
       background: #0b0a10;
-      border: 1px solid rgba(184, 108, 255, 0.3);
+      border: 1px solid rgba(184,108,255,.3);
       border-radius: 7px;
       outline: none;
       color: white;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Orbitron',sans-serif;
       font-size: 12px;
       text-align: center;
       margin-bottom: 15px;
-      transition: 0.25s;
+      transition: .25s;
     }
 
     .nickname-input:focus {
       border-color: #b86cff;
-      box-shadow: 0 0 20px rgba(138, 43, 226, 0.15);
+      box-shadow: 0 0 20px rgba(138,43,226,.15);
     }
 
     .nickname-input::placeholder {
       color: #6f6879;
     }
 
-    /* ================================
-       TELA DE ATIVAÇÃO
-    ================================= */
+    /* =========================================
+       CARDS DE ESCOLHA
+    ========================================= */
 
-    #activation-screen {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.6s ease;
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 12px;
+      margin: 25px auto;
+      max-width: 800px;
     }
 
-    #activation-screen.active {
-      display: block;
+    .choice-card {
+      min-height: 115px;
+      padding: 18px 10px;
+      background: #0b090d;
+      border: 1px solid rgba(184,108,255,.2);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: .25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(184,108,255,.55);
+      background: #100b15;
+    }
+
+    .choice-card.selected {
+      border-color: #b86cff;
+      background: linear-gradient(
+        145deg,
+        rgba(138,43,226,.22),
+        rgba(11,9,13,.95)
+      );
+      box-shadow: 0 0 22px rgba(138,43,226,.18);
+    }
+
+    .choice-icon {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .choice-name {
+      color: #f7f4ff;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .choice-check {
+      color: #b86cff;
+      font-size: 9px;
+      font-weight: 900;
+      margin-top: 6px;
+      opacity: 0;
+    }
+
+    .choice-card.selected .choice-check {
       opacity: 1;
     }
 
-    .activation-crown {
-      font-size: clamp(75px, 14vw, 125px);
+    /* =========================================
+       CONTADOR DOS GÊNEROS
+    ========================================= */
+
+    .genre-counter {
+      color: #aaa3b8;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .genre-counter strong {
       color: #b86cff;
-      filter: drop-shadow(0 0 22px rgba(138, 43, 226, 0.55));
+    }
+
+    .continue-button.disabled {
+      opacity: .35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* =========================================
+       ATIVAÇÃO FINAL
+    ========================================= */
+
+    .activation-crown {
+      color: #b86cff;
+      font-size: clamp(80px,15vw,130px);
+      filter: drop-shadow(0 0 22px rgba(138,43,226,.55));
       animation: activationCrown 1.8s ease-in-out infinite;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     @keyframes activationCrown {
-      0%, 100% {
+
+      0%,100% {
         transform: scale(1);
-        filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.4));
+        filter: drop-shadow(0 0 15px rgba(138,43,226,.4));
       }
 
       50% {
         transform: scale(1.06);
-        filter: drop-shadow(0 0 30px rgba(138, 43, 226, 0.7));
+        filter: drop-shadow(0 0 30px rgba(138,43,226,.7));
       }
+
     }
 
     .activation-title {
       color: #f7f4ff;
-      font-size: clamp(22px, 5vw, 38px);
+      font-size: clamp(22px,5vw,38px);
       font-weight: 900;
       margin-bottom: 10px;
     }
 
-    .activation-title span {
-      color: #b86cff;
-    }
-
     .activation-user {
       color: #aaa3b8;
-      font-family: Arial, sans-serif;
+      font-family: Arial,sans-serif;
       font-size: 14px;
     }
 
-    /* ================================
+    /* =========================================
        SITE PRINCIPAL
-    ================================= */
+    ========================================= */
 
     #main-site {
       display: none;
       opacity: 0;
-      transition: opacity 0.9s ease;
+      transition: opacity .9s ease;
     }
 
     #main-site.visible {
@@ -228,13 +321,32 @@
       opacity: 1;
     }
 
-    /* ================================
+    /* =========================================
+       BARRA DO USUÁRIO
+    ========================================= */
+
+    .user-badge {
+      margin-top: 15px;
+      display: inline-block;
+      padding: 9px 13px;
+      border: 1px solid rgba(184,108,255,.25);
+      background: rgba(11,9,13,.7);
+      color: #aaa3b8;
+      font-size: 9px;
+      border-radius: 5px;
+    }
+
+    .user-badge strong {
+      color: #b86cff;
+    }
+
+    /* =========================================
        JOGOS
-    ================================= */
+    ========================================= */
 
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4,1fr);
       gap: 18px;
       margin-top: 35px;
     }
@@ -270,9 +382,9 @@
     }
 
     .game-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content:"";
+      position:absolute;
+      inset:0;
       background:
         linear-gradient(
           to top,
@@ -280,91 +392,108 @@
           rgba(0,0,0,.55) 42%,
           rgba(0,0,0,.05) 80%
         );
-      pointer-events: none;
+      pointer-events:none;
     }
 
     .game-info {
-      position: absolute;
-      z-index: 2;
-      left: 18px;
-      right: 18px;
-      bottom: 17px;
+      position:absolute;
+      z-index:2;
+      left:18px;
+      right:18px;
+      bottom:17px;
     }
 
     .game-info b {
-      display: block;
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: .5px;
+      display:block;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.5px;
     }
 
     .game-info small {
-      display: block;
-      color: #d0c8da;
-      margin-top: 7px;
-      font-size: 8px;
-      line-height: 1.4;
+      display:block;
+      color:#d0c8da;
+      margin-top:7px;
+      font-size:8px;
+      line-height:1.4;
     }
 
     .other-games {
-      grid-column: span 2;
+      grid-column:span 2;
     }
 
-    .other-games img {
-      object-position: center;
-    }
-
-    /* ================================
-       NICKNAME NO SITE
-    ================================= */
-
-    .welcome-user {
-      color: #b86cff;
-      font-weight: 900;
-    }
-
-    /* ================================
+    /* =========================================
        RESPONSIVO
-    ================================= */
+    ========================================= */
 
-    @media (max-width: 900px) {
+    @media(max-width:900px) {
+
+      .choice-grid {
+        grid-template-columns:repeat(3,1fr);
+      }
+
       .games-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:repeat(2,1fr);
       }
 
       .other-games {
-        grid-column: span 2;
+        grid-column:span 2;
       }
+
     }
 
-    @media (max-width: 480px) {
+    @media(max-width:600px) {
+
+      .choice-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:480px) {
+
+      .choice-grid {
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+      }
+
+      .choice-card {
+        min-height:105px;
+      }
+
       .games-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
       }
 
       .other-games {
-        grid-column: span 1;
+        grid-column:span 1;
       }
 
       .intro-brand {
-        letter-spacing: 2px;
+        letter-spacing:2px;
       }
+
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- =================================
-       TELA INICIAL
-  ================================== -->
+  <!-- =========================================
+       EXPERIÊNCIA DE ENTRADA
+  ========================================== -->
 
   <div id="intro-screen">
 
     <div class="intro-content">
 
-      <!-- PRIMEIRA TELA -->
-      <div id="welcome-screen">
+
+      <!-- =====================================
+           TELA 1
+      ====================================== -->
+
+      <div id="welcome-screen" class="wizard-screen active">
 
         <div class="intro-crown">♛</div>
 
@@ -377,24 +506,35 @@
           SEU <span>MODO PRÍNCIPE</span>
         </div>
 
-        <button class="intro-button" onclick="showNickname()">
+        <button
+          class="intro-button"
+          onclick="showNickname()"
+        >
           ATIVAR MODO PRÍNCIPE
         </button>
 
       </div>
 
 
-      <!-- TELA DO NICKNAME -->
-      <div id="nickname-screen">
+      <!-- =====================================
+           TELA 2: NICKNAME
+      ====================================== -->
+
+      <div id="nickname-screen" class="wizard-screen">
+
+        <div class="step-counter">
+          ETAPA 1 DE 4
+        </div>
 
         <div class="intro-crown">♛</div>
 
-        <div class="nickname-title">
+        <div class="step-title">
           IDENTIFIQUE-SE, <span>PRÍNCIPE</span>
         </div>
 
-        <div class="nickname-subtitle">
-          Digite seu nickname para entrar no Modo Príncipe.
+        <div class="step-description">
+          Primeiro, escolha o nickname que será usado
+          durante sua experiência no Modo Príncipe.
         </div>
 
         <input
@@ -408,17 +548,286 @@
 
         <br>
 
-        <button class="nickname-button" onclick="activateMode()">
-          CONFIRMAR E ENTRAR
+        <button
+          class="nickname-button"
+          onclick="saveNicknameAndContinue()"
+        >
+          CONTINUAR
         </button>
 
       </div>
 
 
-      <!-- TELA DE ATIVAÇÃO -->
-      <div id="activation-screen">
+      <!-- =====================================
+           TELA 3: MASCOTE
+      ====================================== -->
 
-        <div class="activation-crown">♛</div>
+      <div id="mascot-screen" class="wizard-screen">
+
+        <div class="step-counter">
+          ETAPA 2 DE 4
+        </div>
+
+        <div class="step-title">
+          ESCOLHA SEU <span>MASCOTE</span>
+        </div>
+
+        <div class="step-description">
+          Todo Príncipe precisa de um companheiro.
+          Escolha o mascote que representa você.
+        </div>
+
+        <div class="choice-grid">
+
+          <div class="choice-card" data-mascot="Dragão" onclick="selectMascot(this)">
+            <div class="choice-icon">🐉</div>
+            <div class="choice-name">DRAGÃO</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Lobo" onclick="selectMascot(this)">
+            <div class="choice-icon">🐺</div>
+            <div class="choice-name">LOBO</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Raposa" onclick="selectMascot(this)">
+            <div class="choice-icon">🦊</div>
+            <div class="choice-name">RAPOSA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Tigre" onclick="selectMascot(this)">
+            <div class="choice-icon">🐯</div>
+            <div class="choice-name">TIGRE</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Águia" onclick="selectMascot(this)">
+            <div class="choice-icon">🦅</div>
+            <div class="choice-name">ÁGUIA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Panda" onclick="selectMascot(this)">
+            <div class="choice-icon">🐼</div>
+            <div class="choice-name">PANDA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Serpente" onclick="selectMascot(this)">
+            <div class="choice-icon">🐍</div>
+            <div class="choice-name">SERPENTE</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-mascot="Fênix" onclick="selectMascot(this)">
+            <div class="choice-icon">🔥</div>
+            <div class="choice-name">FÊNIX</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+        </div>
+
+        <button
+          id="mascot-continue"
+          class="continue-button disabled"
+          onclick="continueFromMascot()"
+        >
+          CONTINUAR
+        </button>
+
+      </div>
+
+
+      <!-- =====================================
+           TELA 4: PLATAFORMA
+      ====================================== -->
+
+      <div id="platform-screen" class="wizard-screen">
+
+        <div class="step-counter">
+          ETAPA 3 DE 4
+        </div>
+
+        <div class="step-title">
+          ESCOLHA SUA <span>PLATAFORMA</span>
+        </div>
+
+        <div class="step-description">
+          Onde você mais joga?
+        </div>
+
+        <div class="choice-grid">
+
+          <div class="choice-card" data-platform="PC" onclick="selectPlatform(this)">
+            <div class="choice-icon">🖥️</div>
+            <div class="choice-name">PC</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-platform="PlayStation 5" onclick="selectPlatform(this)">
+            <div class="choice-icon">🎮</div>
+            <div class="choice-name">PS5</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-platform="PlayStation 4" onclick="selectPlatform(this)">
+            <div class="choice-icon">🎮</div>
+            <div class="choice-name">PS4</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-platform="Xbox" onclick="selectPlatform(this)">
+            <div class="choice-icon">🟩</div>
+            <div class="choice-name">XBOX</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-platform="Nintendo" onclick="selectPlatform(this)">
+            <div class="choice-icon">🔴</div>
+            <div class="choice-name">NINTENDO</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card" data-platform="Mobile" onclick="selectPlatform(this)">
+            <div class="choice-icon">📱</div>
+            <div class="choice-name">MOBILE</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+        </div>
+
+        <button
+          id="platform-continue"
+          class="continue-button disabled"
+          onclick="continueFromPlatform()"
+        >
+          CONTINUAR
+        </button>
+
+      </div>
+
+
+      <!-- =====================================
+           TELA 5: GÊNEROS
+      ====================================== -->
+
+      <div id="genre-screen" class="wizard-screen">
+
+        <div class="step-counter">
+          ETAPA 4 DE 4
+        </div>
+
+        <div class="step-title">
+          ESCOLHA SEUS <span>GÊNEROS</span>
+        </div>
+
+        <div class="step-description">
+          Escolha exatamente 3 gêneros de jogos que você mais gosta.
+        </div>
+
+        <div class="genre-counter">
+          SELECIONADOS:
+          <strong id="genre-count">0 / 3</strong>
+        </div>
+
+        <div class="choice-grid">
+
+          <div class="choice-card genre-card" data-genre="FPS" onclick="selectGenre(this)">
+            <div class="choice-icon">🔫</div>
+            <div class="choice-name">FPS</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Battle Royale" onclick="selectGenre(this)">
+            <div class="choice-icon">🏗️</div>
+            <div class="choice-name">BATTLE ROYALE</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="RPG" onclick="selectGenre(this)">
+            <div class="choice-icon">⚔️</div>
+            <div class="choice-name">RPG</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Luta" onclick="selectGenre(this)">
+            <div class="choice-icon">🥊</div>
+            <div class="choice-name">LUTA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Corrida" onclick="selectGenre(this)">
+            <div class="choice-icon">🏎️</div>
+            <div class="choice-name">CORRIDA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Terror" onclick="selectGenre(this)">
+            <div class="choice-icon">👻</div>
+            <div class="choice-name">TERROR</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Mundo Aberto" onclick="selectGenre(this)">
+            <div class="choice-icon">🌍</div>
+            <div class="choice-name">MUNDO ABERTO</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Sandbox" onclick="selectGenre(this)">
+            <div class="choice-icon">🧱</div>
+            <div class="choice-name">SANDBOX</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Esportes" onclick="selectGenre(this)">
+            <div class="choice-icon">⚽</div>
+            <div class="choice-name">ESPORTES</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Aventura" onclick="selectGenre(this)">
+            <div class="choice-icon">🧙</div>
+            <div class="choice-name">AVENTURA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Simulação" onclick="selectGenre(this)">
+            <div class="choice-icon">🏭</div>
+            <div class="choice-name">SIMULAÇÃO</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+          <div class="choice-card genre-card" data-genre="Estratégia" onclick="selectGenre(this)">
+            <div class="choice-icon">♟️</div>
+            <div class="choice-name">ESTRATÉGIA</div>
+            <div class="choice-check">✓ ESCOLHIDO</div>
+          </div>
+
+        </div>
+
+        <button
+          id="genre-continue"
+          class="continue-button disabled"
+          onclick="finishChoices()"
+        >
+          ATIVAR MODO PRÍNCIPE
+        </button>
+
+      </div>
+
+
+      <!-- =====================================
+           TELA FINAL
+      ====================================== -->
+
+      <div id="activation-screen" class="wizard-screen">
+
+        <div class="activation-crown">
+          ♛
+        </div>
 
         <div class="activation-title">
           MODO <span>PRÍNCIPE</span>
@@ -429,7 +838,9 @@
         </div>
 
         <div class="activation-user">
-          BEM-VINDO, <span id="nickname-display"></span> 👑
+          BEM-VINDO,
+          <span id="nickname-display"></span>
+          👑
         </div>
 
       </div>
@@ -439,13 +850,11 @@
   </div>
 
 
-  <!-- =================================
+  <!-- =========================================
        SITE PRINCIPAL
-  ================================== -->
+  ========================================== -->
 
   <div id="main-site">
-
-    <!-- HEADER -->
 
     <header>
 
@@ -466,23 +875,23 @@
     </header>
 
 
-    <!-- EFEITOS DE FUNDO -->
-
     <div class="glow glow-one"></div>
     <div class="glow glow-two"></div>
 
 
-    <!-- =================================
-         HERO
-    ================================== -->
-
     <main id="inicio">
+
+      <!-- =====================================
+           HERO
+      ====================================== -->
 
       <section class="hero">
 
         <div class="hero-content">
 
-          <div class="crown">♛</div>
+          <div class="crown">
+            ♛
+          </div>
 
           <p class="eyebrow">
             MODO PRÍNCIPE ATIVADO
@@ -502,6 +911,8 @@
             cada live e cada momento. Prepare-se para jogos insanos,
             momentos inesperados e muita energia. 🎮🔥
           </p>
+
+          <div id="user-badge-container"></div>
 
           <div class="buttons">
 
@@ -527,8 +938,6 @@
         </div>
 
 
-        <!-- CARD -->
-
         <div class="hero-card">
 
           <div class="avatar-placeholder">
@@ -550,9 +959,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            SOBRE
-      ================================== -->
+      ====================================== -->
 
       <section id="sobre" class="section">
 
@@ -574,9 +983,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            JOGOS
-      ================================== -->
+      ====================================== -->
 
       <section id="jogos" class="section">
 
@@ -761,9 +1170,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            CLIPES
-      ================================== -->
+      ====================================== -->
 
       <section id="clipes" class="section">
 
@@ -799,9 +1208,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            REDES
-      ================================== -->
+      ====================================== -->
 
       <section id="redes" class="section">
 
@@ -817,20 +1226,17 @@
           Acompanhe o 1principebr também fora do site.
         </p>
 
-
         <div class="social-grid">
 
           <a
             href="https://www.twitch.tv/1principebr"
             target="_blank"
           >
-
             TWITCH
 
             <small>
               LIVES E GAMEPLAY
             </small>
-
           </a>
 
 
@@ -838,13 +1244,11 @@
             href="https://www.tiktok.com/@ikv_principe12"
             target="_blank"
           >
-
             TIKTOK
 
             <small>
               CLIPES E MOMENTOS
             </small>
-
           </a>
 
 
@@ -852,13 +1256,11 @@
             href="https://www.instagram.com/1principebr/"
             target="_blank"
           >
-
             INSTAGRAM
 
             <small>
               FOTOS E NOVIDADES
             </small>
-
           </a>
 
         </div>
@@ -866,9 +1268,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            LIVE
-      ================================== -->
+      ====================================== -->
 
       <section id="live" class="section">
 
@@ -901,9 +1303,9 @@
       </section>
 
 
-      <!-- =================================
+      <!-- =====================================
            COMUNIDADE
-      ================================== -->
+      ====================================== -->
 
       <section id="comunidade" class="section">
 
@@ -980,10 +1382,14 @@
         >
 
           <h2 style="margin-top:0;">
-            MODO PRÍNCIPE: <span>ATIVADO</span>
+            MODO PRÍNCIPE:
+            <span>ATIVADO</span>
           </h2>
 
-          <p class="section-text" style="margin-left:auto;margin-right:auto;">
+          <p
+            class="section-text"
+            style="margin-left:auto;margin-right:auto;"
+          >
             RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
           </p>
 
@@ -998,10 +1404,6 @@
 
     </main>
 
-
-    <!-- =================================
-         FOOTER
-    ================================== -->
 
     <footer>
 
@@ -1018,135 +1420,354 @@
   </div>
 
 
-  <!-- =================================
+  <!-- =========================================
        JAVASCRIPT
-  ================================== -->
+  ========================================== -->
 
   <script>
 
-    const introScreen = document.getElementById("intro-screen");
+    /* =========================================
+       VARIÁVEIS
+    ========================================= */
 
-    const welcomeScreen = document.getElementById("welcome-screen");
-
-    const nicknameScreen = document.getElementById("nickname-screen");
-
-    const activationScreen = document.getElementById("activation-screen");
-
-    const mainSite = document.getElementById("main-site");
-
-    const nicknameInput = document.getElementById("nickname");
-
-    const nicknameDisplay = document.getElementById("nickname-display");
+    let userData = {
+      nickname: "",
+      mascot: "",
+      platform: "",
+      genres: []
+    };
 
 
-    /* ================================
-       ABRIR TELA DE NICKNAME
-    ================================= */
+    /* =========================================
+       ELEMENTOS
+    ========================================= */
 
-    function showNickname() {
+    const introScreen =
+      document.getElementById("intro-screen");
 
-      welcomeScreen.style.display = "none";
+    const nicknameInput =
+      document.getElementById("nickname");
 
-      nicknameScreen.classList.add("active");
+    const nicknameDisplay =
+      document.getElementById("nickname-display");
 
-      setTimeout(() => {
-        nicknameInput.focus();
-      }, 300);
+
+    /* =========================================
+       TROCAR DE TELA
+    ========================================= */
+
+    function showScreen(screenId) {
+
+      const screens =
+        document.querySelectorAll(".wizard-screen");
+
+      screens.forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+      const target =
+        document.getElementById(screenId);
+
+      target.classList.add("active");
 
     }
 
 
-    /* ================================
-       ATIVAR MODO PRÍNCIPE
-    ================================= */
+    /* =========================================
+       ATIVAR MODO
+    ========================================= */
 
-    function activateMode() {
+    function showNickname() {
 
-      let nickname = nicknameInput.value.trim();
+      showScreen("nickname-screen");
+
+      setTimeout(() => {
+        nicknameInput.focus();
+      },300);
+
+    }
+
+
+    /* =========================================
+       NICKNAME
+    ========================================= */
+
+    function saveNicknameAndContinue() {
+
+      const nickname =
+        nicknameInput.value.trim();
 
       if (nickname === "") {
 
         nicknameInput.focus();
 
-        nicknameInput.style.borderColor = "#8a2be2";
+        nicknameInput.style.borderColor =
+          "#8a2be2";
 
         return;
 
       }
 
+      userData.nickname = nickname;
 
-      nicknameDisplay.textContent = nickname;
+      showScreen("mascot-screen");
+
+    }
 
 
-      nicknameScreen.classList.remove("active");
+    /* =========================================
+       MASCOTE
+    ========================================= */
+
+    function selectMascot(card) {
+
+      document
+        .querySelectorAll("[data-mascot]")
+        .forEach(item => {
+          item.classList.remove("selected");
+        });
+
+      card.classList.add("selected");
+
+      userData.mascot =
+        card.dataset.mascot;
+
+      document
+        .getElementById("mascot-continue")
+        .classList.remove("disabled");
+
+    }
 
 
-      setTimeout(() => {
+    function continueFromMascot() {
 
-        nicknameScreen.style.display = "none";
+      if (userData.mascot === "") {
+        return;
+      }
 
-        activationScreen.classList.add("active");
+      showScreen("platform-screen");
 
-      }, 400);
+    }
+
+
+    /* =========================================
+       PLATAFORMA
+    ========================================= */
+
+    function selectPlatform(card) {
+
+      document
+        .querySelectorAll("[data-platform]")
+        .forEach(item => {
+          item.classList.remove("selected");
+        });
+
+      card.classList.add("selected");
+
+      userData.platform =
+        card.dataset.platform;
+
+      document
+        .getElementById("platform-continue")
+        .classList.remove("disabled");
+
+    }
+
+
+    function continueFromPlatform() {
+
+      if (userData.platform === "") {
+        return;
+      }
+
+      showScreen("genre-screen");
+
+    }
+
+
+    /* =========================================
+       GÊNEROS
+    ========================================= */
+
+    function selectGenre(card) {
+
+      const isSelected =
+        card.classList.contains("selected");
+
+      if (isSelected) {
+
+        card.classList.remove("selected");
+
+        userData.genres =
+          userData.genres.filter(
+            genre =>
+              genre !== card.dataset.genre
+          );
+
+      } else {
+
+        if (userData.genres.length >= 3) {
+          return;
+        }
+
+        card.classList.add("selected");
+
+        userData.genres.push(
+          card.dataset.genre
+        );
+
+      }
+
+
+      updateGenreCounter();
+
+    }
+
+
+    function updateGenreCounter() {
+
+      const counter =
+        document.getElementById("genre-count");
+
+      counter.textContent =
+        userData.genres.length + " / 3";
+
+
+      const button =
+        document.getElementById("genre-continue");
+
+
+      if (userData.genres.length === 3) {
+
+        button.classList.remove("disabled");
+
+      } else {
+
+        button.classList.add("disabled");
+
+      }
+
+    }
+
+
+    /* =========================================
+       FINALIZAR ESCOLHAS
+    ========================================= */
+
+    function finishChoices() {
+
+      if (userData.genres.length !== 3) {
+        return;
+      }
 
 
       /*
-        Pequena pausa para a animação
-        da coroa antes de abrir o site.
+        Guarda tudo localmente apenas para teste.
+        Futuramente isso será substituído
+        pelo banco de dados do Príncipe.
       */
+
+      localStorage.setItem(
+        "principeData",
+        JSON.stringify(userData)
+      );
+
+
+      nicknameDisplay.textContent =
+        userData.nickname;
+
+
+      showScreen("activation-screen");
+
 
       setTimeout(() => {
 
         introScreen.classList.add("hidden");
 
-        setTimeout(() => {
-
-          introScreen.style.display = "none";
-
-          mainSite.classList.add("visible");
-
-        }, 800);
-
-      }, 3000);
+      },3000);
 
 
-      /*
-        Guarda o nickname no navegador.
-        Assim podemos usar esse nome
-        em futuras melhorias do site.
-      */
+      setTimeout(() => {
 
-      localStorage.setItem("principeNickname", nickname);
+        introScreen.style.display = "none";
+
+        document
+          .getElementById("main-site")
+          .classList.add("visible");
+
+        showUserBadge();
+
+      },3900);
 
     }
 
 
-    /* ================================
-       ENTER NO CAMPO DE NICKNAME
-    ================================= */
+    /* =========================================
+       MOSTRAR INFORMAÇÕES NO SITE
+    ========================================= */
 
-    nicknameInput.addEventListener("keydown", function(event) {
+    function showUserBadge() {
 
-      if (event.key === "Enter") {
+      const container =
+        document.getElementById(
+          "user-badge-container"
+        );
 
-        activateMode();
+      container.innerHTML = `
+        <div class="user-badge">
+          👑 PRÍNCIPE:
+          <strong>${escapeHTML(userData.nickname)}</strong>
+          &nbsp;•&nbsp;
+          ${escapeHTML(userData.mascot)}
+          &nbsp;•&nbsp;
+          ${escapeHTML(userData.platform)}
+        </div>
+      `;
+
+    }
+
+
+    /* =========================================
+       PROTEÇÃO BÁSICA DE TEXTO
+    ========================================= */
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+
+    }
+
+
+    /* =========================================
+       ENTER NO NICKNAME
+    ========================================= */
+
+    nicknameInput.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+          saveNicknameAndContinue();
+        }
 
       }
+    );
 
-    });
 
-
-    /* ================================
-       CARREGAR NICKNAME SALVO
-    ================================= */
-
-    const savedNickname = localStorage.getItem("principeNickname");
-
+    /* =========================================
+       INÍCIO
+    ========================================= */
 
     /*
-      Não pulamos a tela inicial automaticamente.
-      O visitante ainda pode ativar o Modo Príncipe
-      sempre que entrar no site.
+      Mesmo que exista uma escolha salva,
+      a experiência de entrada continua aparecendo.
+      Isso permite que cada visitante passe
+      pelo processo do Modo Príncipe.
     */
 
   </script>
