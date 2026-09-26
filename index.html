@@ -1,1776 +1,1781 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>1PRINCIPEBR | Modo Príncipe</title>
-
-  <meta
-    name="description"
-    content="1PRINCIPEBR. Games, lives, clipes, resenha e muita diversão. Ative seu Modo Príncipe."
-  >
-
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-
-    /* =========================================
-       TELA DE ENTRADA
-    ========================================= */
-
-    #intro-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: #050507;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow-y: auto;
-      padding: 30px 15px;
-      transition: opacity .8s ease, visibility .8s ease;
-    }
-
-    #intro-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .intro-content {
-      width: min(94%, 850px);
-      position: relative;
-      z-index: 2;
-    }
-
-    .intro-brand {
-      color: #f7f4ff;
-      font-size: clamp(25px, 5vw, 48px);
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin-bottom: 25px;
-    }
-
-    .intro-brand span {
-      color: #b86cff;
-    }
-
-    .intro-crown {
-      color: #b86cff;
-      font-size: clamp(65px, 12vw, 105px);
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 18px rgba(138,43,226,.45));
-      animation: crownFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes crownFloat {
-      0%,100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-7px);
-      }
-    }
-
-    .intro-title {
-      color: #f7f4ff;
-      font-size: clamp(18px, 3vw, 28px);
-      font-weight: 800;
-      line-height: 1.5;
-      margin-bottom: 28px;
-    }
-
-    .intro-title span,
-    .step-title span,
-    .activation-title span {
-      color: #b86cff;
-    }
-
-    .intro-button,
-    .continue-button,
-    .nickname-button {
-      border: 1px solid rgba(184,108,255,.5);
-      background: linear-gradient(135deg,#8a2be2,#5f18a8);
-      color: white;
-      padding: 15px 28px;
-      border-radius: 7px;
-      font-family: 'Orbitron',sans-serif;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: .25s;
-      box-shadow: 0 0 25px rgba(138,43,226,.18);
-    }
-
-    .intro-button:hover,
-    .continue-button:hover,
-    .nickname-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(138,43,226,.28);
-    }
-
-    /* =========================================
-       TELAS INTERNAS
-    ========================================= */
-
-    .wizard-screen {
-      display: none;
-      opacity: 0;
-      transition: opacity .5s ease;
-    }
-
-    .wizard-screen.active {
-      display: block;
-      opacity: 1;
-    }
-
-    .step-title {
-      color: #f7f4ff;
-      font-size: clamp(22px,5vw,38px);
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .step-description {
-      color: #aaa3b8;
-      font-family: Arial,sans-serif;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-    .step-counter {
-      color: #b86cff;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
-    }
-
-    /* =========================================
-       NICKNAME
-    ========================================= */
-
-    .nickname-input {
-      width: min(100%,380px);
-      padding: 16px 18px;
-      background: #0b0a10;
-      border: 1px solid rgba(184,108,255,.3);
-      border-radius: 7px;
-      outline: none;
-      color: white;
-      font-family: 'Orbitron',sans-serif;
-      font-size: 12px;
-      text-align: center;
-      margin-bottom: 15px;
-      transition: .25s;
-    }
-
-    .nickname-input:focus {
-      border-color: #b86cff;
-      box-shadow: 0 0 20px rgba(138,43,226,.15);
-    }
-
-    .nickname-input::placeholder {
-      color: #6f6879;
-    }
-
-    /* =========================================
-       CARDS DE ESCOLHA
-    ========================================= */
-
-    .choice-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 12px;
-      margin: 25px auto;
-      max-width: 800px;
-    }
-
-    .choice-card {
-      min-height: 115px;
-      padding: 18px 10px;
-      background: #0b090d;
-      border: 1px solid rgba(184,108,255,.2);
-      border-radius: 9px;
-      cursor: pointer;
-      transition: .25s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-    }
-
-    .choice-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(184,108,255,.55);
-      background: #100b15;
-    }
-
-    .choice-card.selected {
-      border-color: #b86cff;
-      background: linear-gradient(
-        145deg,
-        rgba(138,43,226,.22),
-        rgba(11,9,13,.95)
-      );
-      box-shadow: 0 0 22px rgba(138,43,226,.18);
-    }
-
-    .choice-icon {
-      font-size: 35px;
-      margin-bottom: 10px;
-    }
-
-    .choice-name {
-      color: #f7f4ff;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: .5px;
-    }
-
-    .choice-check {
-      color: #b86cff;
-      font-size: 9px;
-      font-weight: 900;
-      margin-top: 6px;
-      opacity: 0;
-    }
-
-    .choice-card.selected .choice-check {
-      opacity: 1;
-    }
-
-    /* =========================================
-       CONTADOR DOS GÊNEROS
-    ========================================= */
-
-    .genre-counter {
-      color: #aaa3b8;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .genre-counter strong {
-      color: #b86cff;
-    }
-
-    .continue-button.disabled {
-      opacity: .35;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* =========================================
-       ATIVAÇÃO FINAL
-    ========================================= */
-
-    .activation-crown {
-      color: #b86cff;
-      font-size: clamp(80px,15vw,130px);
-      filter: drop-shadow(0 0 22px rgba(138,43,226,.55));
-      animation: activationCrown 1.8s ease-in-out infinite;
-      margin-bottom: 20px;
-    }
-
-    @keyframes activationCrown {
-
-      0%,100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 15px rgba(138,43,226,.4));
-      }
-
-      50% {
-        transform: scale(1.06);
-        filter: drop-shadow(0 0 30px rgba(138,43,226,.7));
-      }
-
-    }
-
-    .activation-title {
-      color: #f7f4ff;
-      font-size: clamp(22px,5vw,38px);
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .activation-user {
-      color: #aaa3b8;
-      font-family: Arial,sans-serif;
-      font-size: 14px;
-    }
-
-    /* =========================================
-       SITE PRINCIPAL
-    ========================================= */
-
-    #main-site {
-      display: none;
-      opacity: 0;
-      transition: opacity .9s ease;
-    }
-
-    #main-site.visible {
-      display: block;
-      opacity: 1;
-    }
-
-    /* =========================================
-       BARRA DO USUÁRIO
-    ========================================= */
-
-    .user-badge {
-      margin-top: 15px;
-      display: inline-block;
-      padding: 9px 13px;
-      border: 1px solid rgba(184,108,255,.25);
-      background: rgba(11,9,13,.7);
-      color: #aaa3b8;
-      font-size: 9px;
-      border-radius: 5px;
-    }
-
-    .user-badge strong {
-      color: #b86cff;
-    }
-
-    /* =========================================
-       JOGOS
-    ========================================= */
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 18px;
-      margin-top: 35px;
-    }
-
-    .game-card {
-      position: relative;
-      min-height: 210px;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid rgba(184,108,255,.22);
-      background: #09090b;
-      transition: .25s;
-      cursor: pointer;
-    }
-
-    .game-card:hover {
-      transform: translateY(-7px) scale(1.02);
-      border-color: #8a2be2;
-      box-shadow: 0 18px 40px rgba(138,43,226,.20);
-    }
-
-    .game-card img {
-      width: 100%;
-      height: 100%;
-      min-height: 210px;
-      object-fit: cover;
-      display: block;
-      transition: .35s;
-    }
-
-    .game-card:hover img {
-      transform: scale(1.08);
-    }
-
-    .game-card::after {
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(
-          to top,
-          rgba(0,0,0,.92) 0%,
-          rgba(0,0,0,.55) 42%,
-          rgba(0,0,0,.05) 80%
-        );
-      pointer-events:none;
-    }
-
-    .game-info {
-      position:absolute;
-      z-index:2;
-      left:18px;
-      right:18px;
-      bottom:17px;
-    }
-
-    .game-info b {
-      display:block;
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:.5px;
-    }
-
-    .game-info small {
-      display:block;
-      color:#d0c8da;
-      margin-top:7px;
-      font-size:8px;
-      line-height:1.4;
-    }
-
-    .other-games {
-      grid-column:span 2;
-    }
-
-    /* =========================================
-       RESPONSIVO
-    ========================================= */
-
-    @media(max-width:900px) {
-
-      .choice-grid {
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .games-grid {
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .other-games {
-        grid-column:span 2;
-      }
-
-    }
-
-    @media(max-width:600px) {
-
-      .choice-grid {
-        grid-template-columns:repeat(2,1fr);
-      }
-
-    }
-
-    @media(max-width:480px) {
-
-      .choice-grid {
-        grid-template-columns:repeat(2,1fr);
-        gap:8px;
-      }
-
-      .choice-card {
-        min-height:105px;
-      }
-
-      .games-grid {
-        grid-template-columns:1fr;
-      }
-
-      .other-games {
-        grid-column:span 1;
-      }
-
-      .intro-brand {
-        letter-spacing:2px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1PRINCIPEBR | Modo Príncipe</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --purple: #8A2BE2;
+  --purple-light: #B86CFF;
+  --black: #050507;
+  --dark: #0b0a10;
+  --white: #f7f4ff;
+  --muted: #aaa3b8;
+  --red: #ff3158;
+  --green: #65ff9a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    linear-gradient(rgba(138,43,226,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138,43,226,.035) 1px, transparent 1px);
+  background-size: 45px 45px;
+}
+
+.glow {
+  position: fixed;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: var(--purple);
+  filter: blur(130px);
+  opacity: .12;
+  z-index: -1;
+}
+
+.glow-one {
+  top: 5%;
+  left: -180px;
+}
+
+.glow-two {
+  bottom: 0;
+  right: -180px;
+}
+
+/* =========================
+   TELAS DE ENTRADA
+========================= */
+
+.entry-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at center, rgba(138,43,226,.12), transparent 40%),
+    #030305;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.entry-screen.active {
+  display: flex;
+}
+
+.entry-box {
+  width: min(900px, 100%);
+}
+
+.entry-crown {
+  font-size: 80px;
+  color: var(--purple-light);
+  text-shadow:
+    0 0 15px rgba(184,108,255,.7),
+    0 0 50px rgba(138,43,226,.45);
+  animation: crownPulse 2s infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes crownPulse {
+  0%,100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.08);
+    filter: brightness(1.35);
+  }
+}
+
+.entry-logo {
+  font-size: clamp(40px, 8vw, 90px);
+  font-weight: 900;
+  letter-spacing: -3px;
+}
+
+.entry-logo span {
+  color: var(--purple-light);
+}
+
+.entry-subtitle {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+
+.entry-button {
+  margin-top: 35px;
+  padding: 17px 28px;
+  border: 1px solid var(--purple-light);
+  background: var(--purple);
+  color: white;
+  font-family: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 7px;
+  box-shadow: 0 0 30px rgba(138,43,226,.25);
+  transition: .2s;
+}
+
+.entry-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 45px rgba(138,43,226,.45);
+}
+
+.nickname-input {
+  width: min(500px, 100%);
+  margin-top: 30px;
+  padding: 18px;
+  border: 1px solid rgba(184,108,255,.4);
+  background: #09080c;
+  color: white;
+  font-family: inherit;
+  text-align: center;
+  outline: none;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.nickname-input:focus {
+  border-color: var(--purple-light);
+  box-shadow: 0 0 25px rgba(138,43,226,.2);
+}
+
+.error-message {
+  min-height: 25px;
+  margin-top: 15px;
+  color: var(--red);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.error-message.correct {
+  color: var(--green);
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.choice-card {
+  min-height: 105px;
+  padding: 18px 10px;
+  background: linear-gradient(145deg, #130d19, #08080b);
+  border: 1px solid rgba(184,108,255,.2);
+  cursor: pointer;
+  transition: .2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 7px;
+}
+
+.choice-card:hover {
+  border-color: var(--purple-light);
+  transform: translateY(-3px);
+}
+
+.choice-card.selected {
+  border-color: var(--purple-light);
+  background: rgba(138,43,226,.18);
+  box-shadow: 0 0 25px rgba(138,43,226,.2);
+}
+
+.choice-icon {
+  font-size: 31px;
+}
+
+.choice-name {
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.genre-grid {
+  max-height: 390px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.genre-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.genre-grid::-webkit-scrollbar-thumb {
+  background: var(--purple);
+}
+
+.counter {
+  margin-top: 18px;
+  color: var(--purple-light);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.counter.warning {
+  color: var(--red);
+}
+
+.activation-title {
+  font-size: clamp(35px, 7vw, 75px);
+  font-weight: 900;
+  color: var(--purple-light);
+  animation: activationPulse 1.2s infinite;
+}
+
+@keyframes activationPulse {
+  0%,100% {
+    text-shadow: 0 0 10px rgba(184,108,255,.4);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(184,108,255,.8),
+      0 0 50px rgba(138,43,226,.5);
+  }
+}
+
+.activation-small {
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* =========================
+   SITE PRINCIPAL
+========================= */
+
+#main-site {
+  display: none;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 7%;
+  background: rgba(5,5,7,.82);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(138,43,226,.2);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.logo span,
+h1 span,
+h2 span {
+  color: var(--purple-light);
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+}
+
+nav a {
+  color: #bbb;
+  font-size: 12px;
+  transition: .2s;
+}
+
+nav a:hover {
+  color: var(--purple-light);
+}
+
+.hero {
+  min-height: 88vh;
+  padding: 70px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.hero-content {
+  max-width: 720px;
+}
+
+.crown {
+  color: var(--purple-light);
+  font-size: 52px;
+  margin-bottom: 12px;
+}
+
+.eyebrow {
+  color: var(--purple-light);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: clamp(48px, 9vw, 100px);
+  line-height: .95;
+  font-weight: 900;
+  letter-spacing: -3px;
+}
+
+h2 {
+  font-size: clamp(22px, 4vw, 38px);
+  margin-top: 22px;
+}
+
+.description,
+.section-text {
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 650px;
+  margin-top: 18px;
+  font-family: Arial, sans-serif;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 15px 21px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  transition: transform .2s, box-shadow .2s;
+  background: var(--purple);
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(138,43,226,.3);
+}
+
+.hero-card {
+  width: 300px;
+  min-width: 260px;
+  padding: 22px;
+  background: linear-gradient(145deg, #120d18, #070709);
+  border: 1px solid rgba(184,108,255,.35);
+  box-shadow: 0 0 50px rgba(138,43,226,.12);
+  text-align: center;
+}
+
+.avatar-placeholder {
+  height: 280px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(138,43,226,.28), #08070a 62%);
+  font-size: 70px;
+  font-weight: 900;
+  color: var(--purple-light);
+  border: 1px solid rgba(184,108,255,.2);
+}
+
+.card-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  margin: 18px 0;
+}
+
+.hero-card p {
+  font-weight: 900;
+}
+
+.hero-card small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.user-badge {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px solid rgba(184,108,255,.25);
+  background: rgba(138,43,226,.08);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.user-badge strong {
+  color: var(--purple-light);
+}
+
+.section {
+  padding: 100px 7%;
+  max-width: 1250px;
+  margin: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+  margin-top: 35px;
+}
+
+.game {
+  min-height: 190px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+  background: #09090b;
+  border: 1px solid rgba(184,108,255,.18);
+  transition: .25s;
+}
+
+.game:hover {
+  transform: translateY(-5px);
+  border-color: var(--purple);
+  box-shadow: 0 15px 35px rgba(138,43,226,.13);
+}
+
+.game img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.game::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 35%, rgba(0,0,0,.9));
+}
+
+.game-info {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+
+.game b {
+  font-size: 18px;
+}
+
+.game small {
+  color: #d0c8dc;
+  margin-top: 8px;
+  display: block;
+  font-size: 8px;
+}
+
+.clips {
+  grid-template-columns: repeat(3,1fr);
+}
+
+.clip {
+  min-height: 190px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #130d19, #09090b);
+  border: 1px solid rgba(184,108,255,.18);
+  color: var(--purple-light);
+  font-weight: 800;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 14px;
+  margin-top: 35px;
+}
+
+.social-grid a {
+  padding: 25px;
+  border: 1px solid rgba(184,108,255,.2);
+  background: #0b090d;
+  font-weight: 800;
+  transition: .2s;
+}
+
+.social-grid a:hover {
+  border-color: var(--purple);
+  background: #120c18;
+}
+
+.social-grid small {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  margin-top: 9px;
+}
+
+.rules {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 14px;
+  margin-top: 35px;
+}
+
+.rule {
+  padding: 25px;
+  background: #0b090d;
+  border: 1px solid rgba(184,108,255,.18);
+}
+
+.rule b {
+  color: var(--purple-light);
+}
+
+.rule small {
+  display: block;
+  color: var(--muted);
+  margin-top: 10px;
+  line-height: 1.7;
+  font-family: Arial, sans-serif;
+}
+
+.final-card {
+  margin-top: 25px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(184,108,255,.3);
+  background: radial-gradient(circle, rgba(138,43,226,.12), #0a080c);
+}
+
+.final-card h3 {
+  color: var(--purple-light);
+  font-size: 25px;
+}
+
+.final-card p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 45px 20px;
+  border-top: 1px solid rgba(184,108,255,.15);
+  color: var(--muted);
+}
+
+footer strong {
+  color: var(--purple-light);
+}
+
+footer p {
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 800px) {
+
+  header {
+    padding: 17px 5%;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .hero {
+    padding: 55px 6%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-card {
+    width: 100%;
+  }
+
+  .grid,
+  .clips,
+  .social-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .choice-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+
+  .grid,
+  .clips,
+  .social-grid,
+  .rules {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  h1 {
+    letter-spacing: -2px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================================
-       EXPERIÊNCIA DE ENTRADA
-  ========================================== -->
+<div class="glow glow-one"></div>
+<div class="glow glow-two"></div>
 
-  <div id="intro-screen">
+<!-- =========================
+     1. ATIVAR MODO PRÍNCIPE
+========================= -->
 
-    <div class="intro-content">
+<div id="welcome-screen" class="entry-screen active">
+  <div class="entry-box">
 
+    <div class="entry-crown">♛</div>
 
-      <!-- =====================================
-           TELA 1
-      ====================================== -->
+    <div class="entry-logo">
+      1<span>PRINCIPEBR</span>
+    </div>
 
-      <div id="welcome-screen" class="wizard-screen active">
+    <div class="entry-subtitle">
+      CLIQUE ABAIXO E ATIVE SEU MODO PRÍNCIPE
+    </div>
 
-        <div class="intro-crown">♛</div>
+    <button class="entry-button" onclick="goToNickname()">
+      ATIVAR MODO PRÍNCIPE 👑
+    </button>
 
-        <div class="intro-brand">
-          <span>1</span>PRINCIPEBR
-        </div>
+  </div>
+</div>
 
-        <div class="intro-title">
-          CLIQUE AQUI E ATIVE<br>
-          SEU <span>MODO PRÍNCIPE</span>
-        </div>
+<!-- =========================
+     2. NICKNAME
+========================= -->
 
-        <button
-          class="intro-button"
-          onclick="showNickname()"
-        >
-          ATIVAR MODO PRÍNCIPE
-        </button>
+<div id="nickname-screen" class="entry-screen">
+  <div class="entry-box">
 
+    <div class="entry-crown">♛</div>
+
+    <h2>DIGITE SEU NICKNAME</h2>
+
+    <p class="entry-subtitle">
+      SEU NICKNAME PRECISA TER "PRINCIPE"
+    </p>
+
+    <input
+      id="nickname"
+      class="nickname-input"
+      type="text"
+      placeholder="Ex: principe123"
+      maxlength="30"
+      autocomplete="off"
+    >
+
+    <div id="nickname-error" class="error-message"></div>
+
+    <button class="entry-button" onclick="saveNicknameAndContinue()">
+      CONFIRMAR NICKNAME
+    </button>
+
+  </div>
+</div>
+
+<!-- =========================
+     3. MASCOTE
+========================= -->
+
+<div id="mascot-screen" class="entry-screen">
+  <div class="entry-box">
+
+    <div class="entry-crown">♛</div>
+
+    <h2>ESCOLHA SEU MASCOTE</h2>
+
+    <p class="entry-subtitle">
+      ESCOLHA O REPRESENTANTE DO SEU MODO PRÍNCIPE
+    </p>
+
+    <div class="choice-grid">
+
+      <div class="choice-card" onclick="selectMascot(this,'Dragão')">
+        <div class="choice-icon">🐉</div>
+        <div class="choice-name">DRAGÃO</div>
       </div>
 
-
-      <!-- =====================================
-           TELA 2: NICKNAME
-      ====================================== -->
-
-      <div id="nickname-screen" class="wizard-screen">
-
-        <div class="step-counter">
-          ETAPA 1 DE 4
-        </div>
-
-        <div class="intro-crown">♛</div>
-
-        <div class="step-title">
-          IDENTIFIQUE-SE, <span>PRÍNCIPE</span>
-        </div>
-
-        <div class="step-description">
-          Primeiro, escolha o nickname que será usado
-          durante sua experiência no Modo Príncipe.
-        </div>
-
-        <input
-          id="nickname"
-          class="nickname-input"
-          type="text"
-          maxlength="20"
-          placeholder="DIGITE SEU NICKNAME"
-          autocomplete="off"
-        >
-
-        <br>
-
-        <button
-          class="nickname-button"
-          onclick="saveNicknameAndContinue()"
-        >
-          CONTINUAR
-        </button>
-
+      <div class="choice-card" onclick="selectMascot(this,'Lobo')">
+        <div class="choice-icon">🐺</div>
+        <div class="choice-name">LOBO</div>
       </div>
 
-
-      <!-- =====================================
-           TELA 3: MASCOTE
-      ====================================== -->
-
-      <div id="mascot-screen" class="wizard-screen">
-
-        <div class="step-counter">
-          ETAPA 2 DE 4
-        </div>
-
-        <div class="step-title">
-          ESCOLHA SEU <span>MASCOTE</span>
-        </div>
-
-        <div class="step-description">
-          Todo Príncipe precisa de um companheiro.
-          Escolha o mascote que representa você.
-        </div>
-
-        <div class="choice-grid">
-
-          <div class="choice-card" data-mascot="Dragão" onclick="selectMascot(this)">
-            <div class="choice-icon">🐉</div>
-            <div class="choice-name">DRAGÃO</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Lobo" onclick="selectMascot(this)">
-            <div class="choice-icon">🐺</div>
-            <div class="choice-name">LOBO</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Raposa" onclick="selectMascot(this)">
-            <div class="choice-icon">🦊</div>
-            <div class="choice-name">RAPOSA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Tigre" onclick="selectMascot(this)">
-            <div class="choice-icon">🐯</div>
-            <div class="choice-name">TIGRE</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Águia" onclick="selectMascot(this)">
-            <div class="choice-icon">🦅</div>
-            <div class="choice-name">ÁGUIA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Panda" onclick="selectMascot(this)">
-            <div class="choice-icon">🐼</div>
-            <div class="choice-name">PANDA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Serpente" onclick="selectMascot(this)">
-            <div class="choice-icon">🐍</div>
-            <div class="choice-name">SERPENTE</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-mascot="Fênix" onclick="selectMascot(this)">
-            <div class="choice-icon">🔥</div>
-            <div class="choice-name">FÊNIX</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-        </div>
-
-        <button
-          id="mascot-continue"
-          class="continue-button disabled"
-          onclick="continueFromMascot()"
-        >
-          CONTINUAR
-        </button>
-
+      <div class="choice-card" onclick="selectMascot(this,'Raposa')">
+        <div class="choice-icon">🦊</div>
+        <div class="choice-name">RAPOSA</div>
       </div>
 
-
-      <!-- =====================================
-           TELA 4: PLATAFORMA
-      ====================================== -->
-
-      <div id="platform-screen" class="wizard-screen">
-
-        <div class="step-counter">
-          ETAPA 3 DE 4
-        </div>
-
-        <div class="step-title">
-          ESCOLHA SUA <span>PLATAFORMA</span>
-        </div>
-
-        <div class="step-description">
-          Onde você mais joga?
-        </div>
-
-        <div class="choice-grid">
-
-          <div class="choice-card" data-platform="PC" onclick="selectPlatform(this)">
-            <div class="choice-icon">🖥️</div>
-            <div class="choice-name">PC</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-platform="PlayStation 5" onclick="selectPlatform(this)">
-            <div class="choice-icon">🎮</div>
-            <div class="choice-name">PS5</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-platform="PlayStation 4" onclick="selectPlatform(this)">
-            <div class="choice-icon">🎮</div>
-            <div class="choice-name">PS4</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-platform="Xbox" onclick="selectPlatform(this)">
-            <div class="choice-icon">🟩</div>
-            <div class="choice-name">XBOX</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-platform="Nintendo" onclick="selectPlatform(this)">
-            <div class="choice-icon">🔴</div>
-            <div class="choice-name">NINTENDO</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card" data-platform="Mobile" onclick="selectPlatform(this)">
-            <div class="choice-icon">📱</div>
-            <div class="choice-name">MOBILE</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-        </div>
-
-        <button
-          id="platform-continue"
-          class="continue-button disabled"
-          onclick="continueFromPlatform()"
-        >
-          CONTINUAR
-        </button>
-
+      <div class="choice-card" onclick="selectMascot(this,'Tigre')">
+        <div class="choice-icon">🐯</div>
+        <div class="choice-name">TIGRE</div>
       </div>
 
-
-      <!-- =====================================
-           TELA 5: GÊNEROS
-      ====================================== -->
-
-      <div id="genre-screen" class="wizard-screen">
-
-        <div class="step-counter">
-          ETAPA 4 DE 4
-        </div>
-
-        <div class="step-title">
-          ESCOLHA SEUS <span>GÊNEROS</span>
-        </div>
-
-        <div class="step-description">
-          Escolha exatamente 3 gêneros de jogos que você mais gosta.
-        </div>
-
-        <div class="genre-counter">
-          SELECIONADOS:
-          <strong id="genre-count">0 / 3</strong>
-        </div>
-
-        <div class="choice-grid">
-
-          <div class="choice-card genre-card" data-genre="FPS" onclick="selectGenre(this)">
-            <div class="choice-icon">🔫</div>
-            <div class="choice-name">FPS</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Battle Royale" onclick="selectGenre(this)">
-            <div class="choice-icon">🏗️</div>
-            <div class="choice-name">BATTLE ROYALE</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="RPG" onclick="selectGenre(this)">
-            <div class="choice-icon">⚔️</div>
-            <div class="choice-name">RPG</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Luta" onclick="selectGenre(this)">
-            <div class="choice-icon">🥊</div>
-            <div class="choice-name">LUTA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Corrida" onclick="selectGenre(this)">
-            <div class="choice-icon">🏎️</div>
-            <div class="choice-name">CORRIDA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Terror" onclick="selectGenre(this)">
-            <div class="choice-icon">👻</div>
-            <div class="choice-name">TERROR</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Mundo Aberto" onclick="selectGenre(this)">
-            <div class="choice-icon">🌍</div>
-            <div class="choice-name">MUNDO ABERTO</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Sandbox" onclick="selectGenre(this)">
-            <div class="choice-icon">🧱</div>
-            <div class="choice-name">SANDBOX</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Esportes" onclick="selectGenre(this)">
-            <div class="choice-icon">⚽</div>
-            <div class="choice-name">ESPORTES</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Aventura" onclick="selectGenre(this)">
-            <div class="choice-icon">🧙</div>
-            <div class="choice-name">AVENTURA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Simulação" onclick="selectGenre(this)">
-            <div class="choice-icon">🏭</div>
-            <div class="choice-name">SIMULAÇÃO</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-          <div class="choice-card genre-card" data-genre="Estratégia" onclick="selectGenre(this)">
-            <div class="choice-icon">♟️</div>
-            <div class="choice-name">ESTRATÉGIA</div>
-            <div class="choice-check">✓ ESCOLHIDO</div>
-          </div>
-
-        </div>
-
-        <button
-          id="genre-continue"
-          class="continue-button disabled"
-          onclick="finishChoices()"
-        >
-          ATIVAR MODO PRÍNCIPE
-        </button>
-
+      <div class="choice-card" onclick="selectMascot(this,'Águia')">
+        <div class="choice-icon">🦅</div>
+        <div class="choice-name">ÁGUIA</div>
       </div>
 
+      <div class="choice-card" onclick="selectMascot(this,'Panda')">
+        <div class="choice-icon">🐼</div>
+        <div class="choice-name">PANDA</div>
+      </div>
 
-      <!-- =====================================
-           TELA FINAL
-      ====================================== -->
+      <div class="choice-card" onclick="selectMascot(this,'Serpente')">
+        <div class="choice-icon">🐍</div>
+        <div class="choice-name">SERPENTE</div>
+      </div>
 
-      <div id="activation-screen" class="wizard-screen">
-
-        <div class="activation-crown">
-          ♛
-        </div>
-
-        <div class="activation-title">
-          MODO <span>PRÍNCIPE</span>
-        </div>
-
-        <div class="activation-title">
-          ATIVADO
-        </div>
-
-        <div class="activation-user">
-          BEM-VINDO,
-          <span id="nickname-display"></span>
-          👑
-        </div>
-
+      <div class="choice-card" onclick="selectMascot(this,'Fênix')">
+        <div class="choice-icon">🔥</div>
+        <div class="choice-name">FÊNIX</div>
       </div>
 
     </div>
 
+    <button
+      id="mascot-button"
+      class="entry-button"
+      onclick="goToPlatform()"
+      disabled
+      style="opacity:.4;"
+    >
+      CONTINUAR
+    </button>
+
   </div>
+</div>
 
+<!-- =========================
+     4. PLATAFORMA
+========================= -->
 
-  <!-- =========================================
-       SITE PRINCIPAL
-  ========================================== -->
+<div id="platform-screen" class="entry-screen">
+  <div class="entry-box">
 
-  <div id="main-site">
+    <div class="entry-crown">♛</div>
 
-    <header>
+    <h2>QUAL É SUA PLATAFORMA?</h2>
 
-      <div class="logo">
-        <span>1</span>PRINCIPEBR
+    <p class="entry-subtitle">
+      O MODO PRÍNCIPE ACEITA TODO MUNDO 🎮
+    </p>
+
+    <div class="choice-grid">
+
+      <div class="choice-card" onclick="selectPlatform(this,'PC')">
+        <div class="choice-icon">🖥️</div>
+        <div class="choice-name">PC</div>
       </div>
 
-      <nav>
-        <a href="#inicio">INÍCIO</a>
-        <a href="#sobre">SOBRE</a>
-        <a href="#jogos">JOGOS</a>
-        <a href="#clipes">CLIPES</a>
-        <a href="#redes">REDES</a>
-        <a href="#live">LIVE</a>
-        <a href="#comunidade">COMUNIDADE</a>
-      </nav>
-
-    </header>
-
-
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
-
-
-    <main id="inicio">
-
-      <!-- =====================================
-           HERO
-      ====================================== -->
-
-      <section class="hero">
-
-        <div class="hero-content">
-
-          <div class="crown">
-            ♛
-          </div>
-
-          <p class="eyebrow">
-            MODO PRÍNCIPE ATIVADO
-          </p>
-
-          <h1>
-            1<span>PRINCIPEBR</span>
-          </h1>
-
-          <h2>
-            ATIVANDO <span>MODO PRÍNCIPE</span>
-          </h2>
-
-          <p class="description">
-            Gameplay, resenha, clipes e muita diversão.
-            Aqui o Modo Príncipe é ativado para cada partida,
-            cada live e cada momento. Prepare-se para jogos insanos,
-            momentos inesperados e muita energia. 🎮🔥
-          </p>
-
-          <div id="user-badge-container"></div>
-
-          <div class="buttons">
-
-            <a
-              class="button"
-              href="https://www.twitch.tv/1principebr"
-              target="_blank"
-              style="background:#8a2be2;"
-            >
-              ASSISTIR LIVE
-            </a>
-
-            <a
-              class="button"
-              href="#redes"
-              style="border:1px solid rgba(184,108,255,.3);"
-            >
-              VER REDES
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <div class="hero-card">
-
-          <div class="avatar-placeholder">
-            ♛
-          </div>
-
-          <div class="card-line"></div>
-
-          <p>
-            MODO PRÍNCIPE
-          </p>
-
-          <small>
-            1PRINCIPEBR
-          </small>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           SOBRE
-      ====================================== -->
-
-      <section id="sobre" class="section">
-
-        <p class="eyebrow">
-          SOBRE
-        </p>
-
-        <h2>
-          SOBRE O <span>1PRINCIPEBR</span>
-        </h2>
-
-        <p class="section-text">
-          O 1principebr é um espaço criado para juntar games,
-          lives, clipes, resenha e diversão. Aqui cada partida
-          pode virar um momento inesquecível. O objetivo é evoluir,
-          jogar e se divertir sempre. 👑🎮🔥
-        </p>
-
-      </section>
-
-
-      <!-- =====================================
-           JOGOS
-      ====================================== -->
-
-      <section id="jogos" class="section">
-
-        <p class="eyebrow">
-          GAMEPLAY
-        </p>
-
-        <h2>
-          MEUS <span>JOGOS</span>
-        </h2>
-
-        <p class="section-text">
-          Alguns dos jogos que fazem parte do Modo Príncipe.
-          Cada partida pode virar uma história, um clipe ou uma
-          resenha absurda. 🎮🔥
-        </p>
-
-
-        <div class="games-grid">
-
-          <article class="game-card">
-
-            <img
-              src="images/fortnite.jpg"
-              alt="Fortnite"
-            >
-
-            <div class="game-info">
-
-              <b>FORTNITE</b>
-
-              <small>
-                BUILD • EDIT • COMPETITIVO
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/minecraft.jpg"
-              alt="Minecraft"
-            >
-
-            <div class="game-info">
-
-              <b>MINECRAFT</b>
-
-              <small>
-                SOBREVIVÊNCIA • MODS • AVENTURA
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/gta.jpg"
-              alt="GTA"
-            >
-
-            <div class="game-info">
-
-              <b>GTA</b>
-
-              <small>
-                MUNDO ABERTO • AÇÃO • RESENHA
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/fps.jpg"
-              alt="Jogos de FPS"
-            >
-
-            <div class="game-info">
-
-              <b>FPS</b>
-
-              <small>
-                TIRO • AÇÃO • COMPETITIVO
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/luta.jpg"
-              alt="Jogos de luta"
-            >
-
-            <div class="game-info">
-
-              <b>LUTA</b>
-
-              <small>
-                COMBATE • SKILL • BATALHAS
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/roblox.jpg"
-              alt="Roblox"
-            >
-
-            <div class="game-info">
-
-              <b>ROBLOX</b>
-
-              <small>
-                DIVERSÃO • AVENTURA • RESENHA
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card">
-
-            <img
-              src="images/simuladores.jpg"
-              alt="Jogos de simuladores"
-            >
-
-            <div class="game-info">
-
-              <b>SIMULADORES</b>
-
-              <small>
-                LOJAS • CONSTRUÇÃO • DIVERSÃO
-              </small>
-
-            </div>
-
-          </article>
-
-
-          <article class="game-card other-games">
-
-            <img
-              src="images/outros.jpg"
-              alt="Vários outros jogos"
-            >
-
-            <div class="game-info">
-
-              <b>OUTROS</b>
-
-              <small>
-                VÁRIOS JOGOS • QUALQUER LOUCURA • RESENHA
-              </small>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           CLIPES
-      ====================================== -->
-
-      <section id="clipes" class="section">
-
-        <p class="eyebrow">
-          MOMENTOS
-        </p>
-
-        <h2>
-          MEUS <span>CLIPES</span>
-        </h2>
-
-        <p class="section-text">
-          Os melhores momentos do Modo Príncipe.
-          Aqui podem entrar seus clipes favoritos das lives.
-        </p>
-
-        <div class="grid clips">
-
-          <div class="clip">
-            CLIPE #01
-          </div>
-
-          <div class="clip">
-            CLIPE #02
-          </div>
-
-          <div class="clip">
-            CLIPE #03
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           REDES
-      ====================================== -->
-
-      <section id="redes" class="section">
-
-        <p class="eyebrow">
-          CONECTE-SE
-        </p>
-
-        <h2>
-          MINHAS <span>REDES</span>
-        </h2>
-
-        <p class="section-text">
-          Acompanhe o 1principebr também fora do site.
-        </p>
-
-        <div class="social-grid">
-
-          <a
-            href="https://www.twitch.tv/1principebr"
-            target="_blank"
-          >
-            TWITCH
-
-            <small>
-              LIVES E GAMEPLAY
-            </small>
-          </a>
-
-
-          <a
-            href="https://www.tiktok.com/@ikv_principe12"
-            target="_blank"
-          >
-            TIKTOK
-
-            <small>
-              CLIPES E MOMENTOS
-            </small>
-          </a>
-
-
-          <a
-            href="https://www.instagram.com/1principebr/"
-            target="_blank"
-          >
-            INSTAGRAM
-
-            <small>
-              FOTOS E NOVIDADES
-            </small>
-          </a>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           LIVE
-      ====================================== -->
-
-      <section id="live" class="section">
-
-        <p class="eyebrow">
-          AO VIVO
-        </p>
-
-        <h2>
-          MODO PRÍNCIPE <span>LIVE</span>
-        </h2>
-
-        <p class="section-text">
-          Quando a live começa, o Modo Príncipe entra em ação.
-          Vem acompanhar a gameplay e participar da resenha. 🎮🔥
-        </p>
-
-        <div class="buttons">
-
-          <a
-            class="button"
-            href="https://www.twitch.tv/1principebr"
-            target="_blank"
-            style="background:#8a2be2;"
-          >
-            IR PARA A TWITCH
-          </a>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           COMUNIDADE
-      ====================================== -->
-
-      <section id="comunidade" class="section">
-
-        <p class="eyebrow">
-          COMUNIDADE
-        </p>
-
-        <h2>
-          REGRAS DO <span>MODO PRÍNCIPE</span>
-        </h2>
-
-        <p class="section-text">
-          Aqui a resenha é livre, mas sempre com respeito.
-          Todo mundo pode participar da comunidade.
-        </p>
-
-
-        <div class="grid">
-
-          <div class="game">
-
-            <b>👑 RESPEITO</b>
-
-            <small>
-              RESPEITE TODO MUNDO DA COMUNIDADE.
-            </small>
-
-          </div>
-
-
-          <div class="game">
-
-            <b>🔥 MODO PRÍNCIPE</b>
-
-            <small>
-              QUANDO EU ATIVO O MODO PRÍNCIPE, NINGUÉM ME DERROTA. 👑
-            </small>
-
-          </div>
-
-
-          <div class="game">
-
-            <b>🎮 GAMEPLAY</b>
-
-            <small>
-              JOGUE, EVOLUA E APROVEITE CADA PARTIDA.
-            </small>
-
-          </div>
-
-
-          <div class="game">
-
-            <b>😂 RESENHA</b>
-
-            <small>
-              RESENHA PURA E MUITA DIVERSÃO.
-            </small>
-
-          </div>
-
-        </div>
-
-
-        <div
-          style="
-            margin-top:35px;
-            padding:30px;
-            text-align:center;
-            border:1px solid rgba(184,108,255,.2);
-            background:#0b090d;
-          "
-        >
-
-          <h2 style="margin-top:0;">
-            MODO PRÍNCIPE:
-            <span>ATIVADO</span>
-          </h2>
-
-          <p
-            class="section-text"
-            style="margin-left:auto;margin-right:auto;"
-          >
-            RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
-          </p>
-
-          <p style="margin-top:20px;color:#aaa3b8;">
-            NÃO TEMOS O MELHOR SETUP.
-            TEMOS ALGO MAIOR: FORÇA DE VONTADE. 👑🔥
-          </p>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <footer>
-
-      <strong>
-        1PRINCIPEBR
-      </strong>
-
-      <p>
-        Modo Príncipe: ativado. 👑🟣
-      </p>
-
-    </footer>
+      <div class="choice-card" onclick="selectPlatform(this,'PlayStation 5')">
+        <div class="choice-icon">🎮</div>
+        <div class="choice-name">PS5</div>
+      </div>
+
+      <div class="choice-card" onclick="selectPlatform(this,'PlayStation 4')">
+        <div class="choice-icon">🎮</div>
+        <div class="choice-name">PS4</div>
+      </div>
+
+      <div class="choice-card" onclick="selectPlatform(this,'Xbox')">
+        <div class="choice-icon">◉</div>
+        <div class="choice-name">XBOX</div>
+      </div>
+
+      <div class="choice-card" onclick="selectPlatform(this,'Nintendo')">
+        <div class="choice-icon">▣</div>
+        <div class="choice-name">NINTENDO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectPlatform(this,'Mobile')">
+        <div class="choice-icon">📱</div>
+        <div class="choice-name">MOBILE</div>
+      </div>
+
+    </div>
+
+    <button
+      id="platform-button"
+      class="entry-button"
+      onclick="goToGenres()"
+      disabled
+      style="opacity:.4;"
+    >
+      CONTINUAR
+    </button>
+
+  </div>
+</div>
+
+<!-- =========================
+     5. TODOS OS GÊNEROS
+========================= -->
+
+<div id="genre-screen" class="entry-screen">
+  <div class="entry-box">
+
+    <div class="entry-crown">♛</div>
+
+    <h2>ESCOLHA SEUS GÊNEROS FAVORITOS</h2>
+
+    <p class="entry-subtitle">
+      ESCOLHA EXATAMENTE 3
+    </p>
+
+    <div id="genre-counter" class="counter">
+      0 / 3
+    </div>
+
+    <div class="choice-grid genre-grid">
+
+      <div class="choice-card" onclick="selectGenre(this,'Ação')">
+        <div class="choice-icon">⚔️</div>
+        <div class="choice-name">AÇÃO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Aventura')">
+        <div class="choice-icon">🗺️</div>
+        <div class="choice-name">AVENTURA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Arcade')">
+        <div class="choice-icon">👾</div>
+        <div class="choice-name">ARCADE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Battle Royale')">
+        <div class="choice-icon">🏆</div>
+        <div class="choice-name">BATTLE ROYALE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Beat em Up')">
+        <div class="choice-icon">👊</div>
+        <div class="choice-name">BEAT EM UP</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Cartas')">
+        <div class="choice-icon">🃏</div>
+        <div class="choice-name">CARTAS</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Casual')">
+        <div class="choice-icon">🎈</div>
+        <div class="choice-name">CASUAL</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Corrida')">
+        <div class="choice-icon">🏎️</div>
+        <div class="choice-name">CORRIDA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Estratégia')">
+        <div class="choice-icon">♟️</div>
+        <div class="choice-name">ESTRATÉGIA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Esportes')">
+        <div class="choice-icon">⚽</div>
+        <div class="choice-name">ESPORTES</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'FPS')">
+        <div class="choice-icon">🔫</div>
+        <div class="choice-name">FPS</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Furtividade')">
+        <div class="choice-icon">🥷</div>
+        <div class="choice-name">FURTIVIDADE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Hack and Slash')">
+        <div class="choice-icon">⚔️</div>
+        <div class="choice-name">HACK AND SLASH</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Horror')">
+        <div class="choice-icon">👻</div>
+        <div class="choice-name">HORROR</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Luta')">
+        <div class="choice-icon">🥊</div>
+        <div class="choice-name">LUTA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'MMO')">
+        <div class="choice-icon">🌐</div>
+        <div class="choice-name">MMO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'MOBA')">
+        <div class="choice-icon">🛡️</div>
+        <div class="choice-name">MOBA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Metroidvania')">
+        <div class="choice-icon">🗝️</div>
+        <div class="choice-name">METROIDVANIA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Mundo Aberto')">
+        <div class="choice-icon">🌎</div>
+        <div class="choice-name">MUNDO ABERTO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Musical')">
+        <div class="choice-icon">🎵</div>
+        <div class="choice-name">MUSICAL</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Novela Visual')">
+        <div class="choice-icon">📖</div>
+        <div class="choice-name">NOVELA VISUAL</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Plataforma')">
+        <div class="choice-icon">🧱</div>
+        <div class="choice-name">PLATAFORMA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Puzzle')">
+        <div class="choice-icon">🧩</div>
+        <div class="choice-name">PUZZLE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'RPG')">
+        <div class="choice-icon">🧙</div>
+        <div class="choice-name">RPG</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Roguelike')">
+        <div class="choice-icon">🎲</div>
+        <div class="choice-name">ROGUELIKE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Roguelite')">
+        <div class="choice-icon">🔄</div>
+        <div class="choice-name">ROGUELITE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Sandbox')">
+        <div class="choice-icon">🏗️</div>
+        <div class="choice-name">SANDBOX</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Simulação')">
+        <div class="choice-icon">🚜</div>
+        <div class="choice-name">SIMULAÇÃO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Sobrevivência')">
+        <div class="choice-icon">🏕️</div>
+        <div class="choice-name">SOBREVIVÊNCIA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Soulslike')">
+        <div class="choice-icon">💀</div>
+        <div class="choice-name">SOULSLIKE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Stealth')">
+        <div class="choice-icon">🕶️</div>
+        <div class="choice-name">STEALTH</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Terror')">
+        <div class="choice-icon">😱</div>
+        <div class="choice-name">TERROR</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Tower Defense')">
+        <div class="choice-icon">🏰</div>
+        <div class="choice-name">TOWER DEFENSE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Tiro em Terceira Pessoa')">
+        <div class="choice-icon">🎯</div>
+        <div class="choice-name">TPS</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Ritmo')">
+        <div class="choice-icon">🥁</div>
+        <div class="choice-name">RITMO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Estratégia em Tempo Real')">
+        <div class="choice-icon">⏱️</div>
+        <div class="choice-name">RTS</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Estratégia por Turnos')">
+        <div class="choice-icon">♟️</div>
+        <div class="choice-name">TURNOS</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'MMORPG')">
+        <div class="choice-icon">🧝</div>
+        <div class="choice-name">MMORPG</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Metaverso')">
+        <div class="choice-icon">🌐</div>
+        <div class="choice-name">METAVERSO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Tycoon')">
+        <div class="choice-icon">💰</div>
+        <div class="choice-name">TYCOON</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Gerenciamento')">
+        <div class="choice-icon">📊</div>
+        <div class="choice-name">GERENCIAMENTO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Construção')">
+        <div class="choice-icon">🏗️</div>
+        <div class="choice-name">CONSTRUÇÃO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Investigação')">
+        <div class="choice-icon">🔎</div>
+        <div class="choice-name">INVESTIGAÇÃO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Detetive')">
+        <div class="choice-icon">🕵️</div>
+        <div class="choice-name">DETETIVE</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Fantasia')">
+        <div class="choice-icon">🧚</div>
+        <div class="choice-name">FANTASIA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Ficção Científica')">
+        <div class="choice-icon">🚀</div>
+        <div class="choice-name">FICÇÃO CIENTÍFICA</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Visual Novel')">
+        <div class="choice-icon">📚</div>
+        <div class="choice-name">VISUAL NOVEL</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Party Game')">
+        <div class="choice-icon">🎉</div>
+        <div class="choice-name">PARTY GAME</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Cooperativo')">
+        <div class="choice-icon">🤝</div>
+        <div class="choice-name">COOPERATIVO</div>
+      </div>
+
+      <div class="choice-card" onclick="selectGenre(this,'Multijogador')">
+        <div class="choice-icon">👥</div>
+        <div class="choice-name">MULTIJOGADOR</div>
+      </div>
+
+    </div>
+
+    <button
+      id="genre-button"
+      class="entry-button"
+      onclick="finishChoices()"
+      disabled
+      style="opacity:.4;"
+    >
+      ATIVAR MODO PRÍNCIPE
+    </button>
+
+  </div>
+</div>
+
+<!-- =========================
+     6. ATIVAÇÃO
+========================= -->
+
+<div id="activation-screen" class="entry-screen">
+  <div class="entry-box">
+
+    <div class="entry-crown">♛</div>
+
+    <div class="activation-title">
+      MODO PRÍNCIPE ATIVADO
+    </div>
+
+    <div id="activation-message" class="activation-small"></div>
+
+  </div>
+</div>
+
+<!-- =========================
+     SITE
+========================= -->
+
+<div id="main-site">
+
+<header>
+  <div class="logo">
+    1<span>PRINCIPEBR</span>
+  </div>
+
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#jogos">Jogos</a>
+    <a href="#clipes">Clipes</a>
+    <a href="#redes">Redes</a>
+    <a href="#live">Live</a>
+    <a href="#comunidade">Comunidade</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+
+  <div class="hero-content">
+
+    <div class="crown">♛</div>
+
+    <div class="eyebrow">
+      MODO PRÍNCIPE
+    </div>
+
+    <h1>
+      1<span>PRINCIPEBR</span>
+    </h1>
+
+    <h2>
+      ATIVANDO MODO PRÍNCIPE
+    </h2>
+
+    <p class="description">
+      Games, lives, clipes, resenha e muita diversão.
+      Aqui qualquer plataforma e qualquer estilo de jogo
+      tem espaço. O Modo Príncipe é para todo mundo.
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="#live">
+        ASSISTIR LIVE
+      </a>
+
+      <a class="button" href="#redes">
+        VER REDES
+      </a>
+    </div>
+
+    <div id="user-badge"></div>
 
   </div>
 
+  <div class="hero-card">
 
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================== -->
+    <div class="avatar-placeholder">
+      👑
+    </div>
 
-  <script>
+    <div class="card-line"></div>
 
-    /* =========================================
-       VARIÁVEIS
-    ========================================= */
+    <p>MODO PRÍNCIPE</p>
 
-    let userData = {
-      nickname: "",
-      mascot: "",
-      platform: "",
-      genres: []
-    };
+    <small>
+      RESENHA • GAMES • LIVE • COMUNIDADE
+    </small>
 
+  </div>
 
-    /* =========================================
-       ELEMENTOS
-    ========================================= */
+</section>
 
-    const introScreen =
-      document.getElementById("intro-screen");
+<!-- SOBRE -->
 
-    const nicknameInput =
-      document.getElementById("nickname");
+<section class="section" id="sobre">
 
-    const nicknameDisplay =
-      document.getElementById("nickname-display");
+  <div class="eyebrow">SOBRE</div>
 
+  <h2>
+    BEM-VINDO AO <span>MODO PRÍNCIPE</span>
+  </h2>
 
-    /* =========================================
-       TROCAR DE TELA
-    ========================================= */
+  <p class="section-text">
+    O 1PRINCIPEBR é um espaço para quem gosta de games,
+    diversão, competição e resenha. PC, PlayStation, Xbox,
+    Nintendo ou Mobile. Aqui todo jogador tem espaço.
+  </p>
 
-    function showScreen(screenId) {
+</section>
 
-      const screens =
-        document.querySelectorAll(".wizard-screen");
+<!-- JOGOS -->
 
-      screens.forEach(screen => {
-        screen.classList.remove("active");
-      });
+<section class="section" id="jogos">
 
-      const target =
-        document.getElementById(screenId);
+  <div class="eyebrow">CONTEÚDO</div>
 
-      target.classList.add("active");
+  <h2>
+    MEUS <span>JOGOS</span>
+  </h2>
 
+  <div class="grid">
+
+    <div class="game">
+      <img src="images/fortnite.jpg" alt="Fortnite">
+      <div class="game-info">
+        <b>FORTNITE</b>
+        <small>BATTLE ROYALE</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/minecraft.jpg" alt="Minecraft">
+      <div class="game-info">
+        <b>MINECRAFT</b>
+        <small>SANDBOX</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/gta.jpg" alt="GTA">
+      <div class="game-info">
+        <b>GTA</b>
+        <small>MUNDO ABERTO</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/fps.jpg" alt="FPS">
+      <div class="game-info">
+        <b>FPS</b>
+        <small>TIRO</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/luta.jpg" alt="Jogos de luta">
+      <div class="game-info">
+        <b>LUTA</b>
+        <small>COMBATE</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/roblox.jpg" alt="Roblox">
+      <div class="game-info">
+        <b>ROBLOX</b>
+        <small>MULTIGÊNERO</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/simuladores.jpg" alt="Simuladores">
+      <div class="game-info">
+        <b>SIMULADORES</b>
+        <small>SIMULAÇÃO</small>
+      </div>
+    </div>
+
+    <div class="game">
+      <img src="images/outros.jpg" alt="Outros jogos">
+      <div class="game-info">
+        <b>OUTROS</b>
+        <small>DE TUDO UM POUCO</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CLIPES -->
+
+<section class="section" id="clipes">
+
+  <div class="eyebrow">MELHORES MOMENTOS</div>
+
+  <h2>
+    <span>CLIPES</span>
+  </h2>
+
+  <div class="grid clips">
+
+    <div class="clip">
+      CLIPE #01
+    </div>
+
+    <div class="clip">
+      CLIPE #02
+    </div>
+
+    <div class="clip">
+      CLIPE #03
+    </div>
+
+  </div>
+
+</section>
+
+<!-- REDES -->
+
+<section class="section" id="redes">
+
+  <div class="eyebrow">CONECTE-SE</div>
+
+  <h2>
+    MINHAS <span>REDES</span>
+  </h2>
+
+  <div class="social-grid">
+
+    <a href="https://www.twitch.tv/1principebr" target="_blank">
+      TWITCH
+      <small>LIVE E GAMEPLAY</small>
+    </a>
+
+    <a href="https://www.tiktok.com/@ikv_principe12" target="_blank">
+      TIKTOK
+      <small>CLIPES E SHORTS</small>
+    </a>
+
+    <a href="https://www.instagram.com/1principebr/" target="_blank">
+      INSTAGRAM
+      <small>CONTEÚDO E NOVIDADES</small>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- LIVE -->
+
+<section class="section" id="live">
+
+  <div class="eyebrow">AO VIVO</div>
+
+  <h2>
+    <span>MODO PRÍNCIPE</span> LIVE
+  </h2>
+
+  <p class="section-text">
+    Quando a coroa aparece, a live começou. 🎮👑
+  </p>
+
+  <div class="buttons">
+    <a
+      class="button"
+      href="https://www.twitch.tv/1principebr"
+      target="_blank"
+    >
+      ENTRAR NA LIVE
+    </a>
+  </div>
+
+</section>
+
+<!-- COMUNIDADE -->
+
+<section class="section" id="comunidade">
+
+  <div class="eyebrow">COMUNIDADE</div>
+
+  <h2>
+    REGRAS DO <span>MODO PRÍNCIPE</span>
+  </h2>
+
+  <div class="rules">
+
+    <div class="rule">
+      <b>🔥 MODO PRÍNCIPE</b>
+      <small>
+        QUANDO EU ATIVO O MODO PRÍNCIPE, NINGUÉM ME DERROTA. 👑
+      </small>
+    </div>
+
+    <div class="rule">
+      <b>🤝 RESPEITO</b>
+      <small>
+        RESPEITE TODO MUNDO DA COMUNIDADE.
+      </small>
+    </div>
+
+    <div class="rule">
+      <b>🎮 GAMEPLAY</b>
+      <small>
+        JOGUE, COMPARTILHE E CURTA OS MOMENTOS.
+      </small>
+    </div>
+
+    <div class="rule">
+      <b>😂 RESENHA</b>
+      <small>
+        RESENHA PURA E MUITA DIVERSÃO.
+      </small>
+    </div>
+
+  </div>
+
+  <div class="final-card">
+
+    <h3>
+      MODO PRÍNCIPE: ATIVADO 👑
+    </h3>
+
+    <p>
+      RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
+    </p>
+
+    <p>
+      NÃO TEMOS O MELHOR SETUP. TEMOS ALGO MAIOR:
+      FORÇA DE VONTADE. 👑🔥
+    </p>
+
+  </div>
+
+</section>
+
+<footer>
+
+  <strong>1PRINCIPEBR</strong>
+
+  <p>
+    MODO PRÍNCIPE • GAMES • LIVE • COMUNIDADE
+  </p>
+
+</footer>
+
+</div>
+
+<script>
+
+/* =========================
+   DADOS DO USUÁRIO
+========================= */
+
+let userData = {
+  nickname: "",
+  mascot: "",
+  platform: "",
+  genres: []
+};
+
+/* =========================
+   TROCAR TELAS
+========================= */
+
+function showScreen(id) {
+
+  document.querySelectorAll(".entry-screen")
+    .forEach(screen => screen.classList.remove("active"));
+
+  document.getElementById(id).classList.add("active");
+}
+
+/* =========================
+   PRIMEIRA TELA
+========================= */
+
+function goToNickname() {
+  showScreen("nickname-screen");
+
+  setTimeout(() => {
+    document.getElementById("nickname").focus();
+  }, 200);
+}
+
+/* =========================
+   NICKNAME
+========================= */
+
+function saveNicknameAndContinue() {
+
+  const input = document.getElementById("nickname");
+  const error = document.getElementById("nickname-error");
+
+  const nickname = input.value.trim();
+
+  if (!nickname) {
+
+    error.textContent = "INCORRETO ❌ DIGITE UM NICKNAME.";
+    error.classList.remove("correct");
+
+    return;
+  }
+
+  /*
+    REGRA DO PRÍNCIPE:
+    O nickname precisa conter "principe".
+    Funciona com letras maiúsculas ou minúsculas.
+  */
+
+  if (!nickname.toLowerCase().includes("principe")) {
+
+    error.textContent =
+      'INCORRETO ❌ O NICKNAME PRECISA TER "PRINCIPE".';
+
+    error.classList.remove("correct");
+
+    input.style.borderColor = "var(--red)";
+
+    return;
+  }
+
+  userData.nickname = nickname;
+
+  error.textContent = "CORRETO ✓ MODO PRÍNCIPE LIBERADO.";
+
+  error.classList.add("correct");
+
+  input.style.borderColor = "var(--green)";
+
+  setTimeout(() => {
+    showScreen("mascot-screen");
+  }, 700);
+}
+
+/* =========================
+   MASCOTE
+========================= */
+
+function selectMascot(card, mascot) {
+
+  document.querySelectorAll("#mascot-screen .choice-card")
+    .forEach(item => item.classList.remove("selected"));
+
+  card.classList.add("selected");
+
+  userData.mascot = mascot;
+
+  const button = document.getElementById("mascot-button");
+
+  button.disabled = false;
+  button.style.opacity = "1";
+}
+
+function goToPlatform() {
+
+  if (!userData.mascot) return;
+
+  showScreen("platform-screen");
+}
+
+/* =========================
+   PLATAFORMA
+========================= */
+
+function selectPlatform(card, platform) {
+
+  document.querySelectorAll("#platform-screen .choice-card")
+    .forEach(item => item.classList.remove("selected"));
+
+  card.classList.add("selected");
+
+  userData.platform = platform;
+
+  const button = document.getElementById("platform-button");
+
+  button.disabled = false;
+  button.style.opacity = "1";
+}
+
+function goToGenres() {
+
+  if (!userData.platform) return;
+
+  showScreen("genre-screen");
+}
+
+/* =========================
+   GÊNEROS
+========================= */
+
+function selectGenre(card, genre) {
+
+  const index = userData.genres.indexOf(genre);
+
+  if (index !== -1) {
+
+    userData.genres.splice(index, 1);
+
+    card.classList.remove("selected");
+
+  } else {
+
+    if (userData.genres.length >= 3) {
+
+      return;
     }
 
+    userData.genres.push(genre);
 
-    /* =========================================
-       ATIVAR MODO
-    ========================================= */
+    card.classList.add("selected");
+  }
 
-    function showNickname() {
+  updateGenreCounter();
+}
 
-      showScreen("nickname-screen");
+function updateGenreCounter() {
 
-      setTimeout(() => {
-        nicknameInput.focus();
-      },300);
+  const counter = document.getElementById("genre-counter");
+  const button = document.getElementById("genre-button");
 
+  counter.textContent =
+    userData.genres.length + " / 3";
+
+  if (userData.genres.length === 3) {
+
+    counter.classList.remove("warning");
+
+    button.disabled = false;
+    button.style.opacity = "1";
+
+  } else {
+
+    button.disabled = true;
+    button.style.opacity = ".4";
+  }
+}
+
+/* =========================
+   FINALIZAR
+========================= */
+
+function finishChoices() {
+
+  if (userData.genres.length !== 3) {
+    return;
+  }
+
+  localStorage.setItem(
+    "principeData",
+    JSON.stringify(userData)
+  );
+
+  document.getElementById("activation-message").textContent =
+    "BEM-VINDO, " +
+    userData.nickname.toUpperCase() +
+    " 👑";
+
+  showScreen("activation-screen");
+
+  setTimeout(() => {
+
+    document.querySelectorAll(".entry-screen")
+      .forEach(screen => screen.classList.remove("active"));
+
+    document.getElementById("main-site").style.display = "block";
+
+    showUserBadge();
+
+    window.scrollTo(0, 0);
+
+  }, 3000);
+}
+
+/* =========================
+   BADGE DO USUÁRIO
+========================= */
+
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+function showUserBadge() {
+
+  const badge = document.getElementById("user-badge");
+
+  const safeNickname =
+    escapeHTML(userData.nickname);
+
+  badge.innerHTML = `
+    <div class="user-badge">
+      👑 <strong>${safeNickname}</strong><br>
+      🐾 Mascote: <strong>${escapeHTML(userData.mascot)}</strong><br>
+      🎮 Plataforma: <strong>${escapeHTML(userData.platform)}</strong><br>
+      🎯 Gêneros:
+      <strong>${userData.genres.map(escapeHTML).join(" • ")}</strong>
+    </div>
+  `;
+}
+
+/* =========================
+   ENTER NO NICKNAME
+========================= */
+
+document.getElementById("nickname").addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Enter") {
+      saveNicknameAndContinue();
     }
 
+  }
+);
 
-    /* =========================================
-       NICKNAME
-    ========================================= */
-
-    function saveNicknameAndContinue() {
-
-      const nickname =
-        nicknameInput.value.trim();
-
-      if (nickname === "") {
-
-        nicknameInput.focus();
-
-        nicknameInput.style.borderColor =
-          "#8a2be2";
-
-        return;
-
-      }
-
-      userData.nickname = nickname;
-
-      showScreen("mascot-screen");
-
-    }
-
-
-    /* =========================================
-       MASCOTE
-    ========================================= */
-
-    function selectMascot(card) {
-
-      document
-        .querySelectorAll("[data-mascot]")
-        .forEach(item => {
-          item.classList.remove("selected");
-        });
-
-      card.classList.add("selected");
-
-      userData.mascot =
-        card.dataset.mascot;
-
-      document
-        .getElementById("mascot-continue")
-        .classList.remove("disabled");
-
-    }
-
-
-    function continueFromMascot() {
-
-      if (userData.mascot === "") {
-        return;
-      }
-
-      showScreen("platform-screen");
-
-    }
-
-
-    /* =========================================
-       PLATAFORMA
-    ========================================= */
-
-    function selectPlatform(card) {
-
-      document
-        .querySelectorAll("[data-platform]")
-        .forEach(item => {
-          item.classList.remove("selected");
-        });
-
-      card.classList.add("selected");
-
-      userData.platform =
-        card.dataset.platform;
-
-      document
-        .getElementById("platform-continue")
-        .classList.remove("disabled");
-
-    }
-
-
-    function continueFromPlatform() {
-
-      if (userData.platform === "") {
-        return;
-      }
-
-      showScreen("genre-screen");
-
-    }
-
-
-    /* =========================================
-       GÊNEROS
-    ========================================= */
-
-    function selectGenre(card) {
-
-      const isSelected =
-        card.classList.contains("selected");
-
-      if (isSelected) {
-
-        card.classList.remove("selected");
-
-        userData.genres =
-          userData.genres.filter(
-            genre =>
-              genre !== card.dataset.genre
-          );
-
-      } else {
-
-        if (userData.genres.length >= 3) {
-          return;
-        }
-
-        card.classList.add("selected");
-
-        userData.genres.push(
-          card.dataset.genre
-        );
-
-      }
-
-
-      updateGenreCounter();
-
-    }
-
-
-    function updateGenreCounter() {
-
-      const counter =
-        document.getElementById("genre-count");
-
-      counter.textContent =
-        userData.genres.length + " / 3";
-
-
-      const button =
-        document.getElementById("genre-continue");
-
-
-      if (userData.genres.length === 3) {
-
-        button.classList.remove("disabled");
-
-      } else {
-
-        button.classList.add("disabled");
-
-      }
-
-    }
-
-
-    /* =========================================
-       FINALIZAR ESCOLHAS
-    ========================================= */
-
-    function finishChoices() {
-
-      if (userData.genres.length !== 3) {
-        return;
-      }
-
-
-      /*
-        Guarda tudo localmente apenas para teste.
-        Futuramente isso será substituído
-        pelo banco de dados do Príncipe.
-      */
-
-      localStorage.setItem(
-        "principeData",
-        JSON.stringify(userData)
-      );
-
-
-      nicknameDisplay.textContent =
-        userData.nickname;
-
-
-      showScreen("activation-screen");
-
-
-      setTimeout(() => {
-
-        introScreen.classList.add("hidden");
-
-      },3000);
-
-
-      setTimeout(() => {
-
-        introScreen.style.display = "none";
-
-        document
-          .getElementById("main-site")
-          .classList.add("visible");
-
-        showUserBadge();
-
-      },3900);
-
-    }
-
-
-    /* =========================================
-       MOSTRAR INFORMAÇÕES NO SITE
-    ========================================= */
-
-    function showUserBadge() {
-
-      const container =
-        document.getElementById(
-          "user-badge-container"
-        );
-
-      container.innerHTML = `
-        <div class="user-badge">
-          👑 PRÍNCIPE:
-          <strong>${escapeHTML(userData.nickname)}</strong>
-          &nbsp;•&nbsp;
-          ${escapeHTML(userData.mascot)}
-          &nbsp;•&nbsp;
-          ${escapeHTML(userData.platform)}
-        </div>
-      `;
-
-    }
-
-
-    /* =========================================
-       PROTEÇÃO BÁSICA DE TEXTO
-    ========================================= */
-
-    function escapeHTML(text) {
-
-      const div =
-        document.createElement("div");
-
-      div.textContent = text;
-
-      return div.innerHTML;
-
-    }
-
-
-    /* =========================================
-       ENTER NO NICKNAME
-    ========================================= */
-
-    nicknameInput.addEventListener(
-      "keydown",
-      function(event) {
-
-        if (event.key === "Enter") {
-          saveNicknameAndContinue();
-        }
-
-      }
-    );
-
-
-    /* =========================================
-       INÍCIO
-    ========================================= */
-
-    /*
-      Mesmo que exista uma escolha salva,
-      a experiência de entrada continua aparecendo.
-      Isso permite que cada visitante passe
-      pelo processo do Modo Príncipe.
-    */
-
-  </script>
+</script>
 
 </body>
 </html>
