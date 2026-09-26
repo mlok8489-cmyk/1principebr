@@ -87,6 +87,7 @@ body::before {
   justify-content: center;
   text-align: center;
   padding: 25px;
+  overflow-y: auto;
 }
 
 .entry-screen.active {
@@ -95,6 +96,7 @@ body::before {
 
 .entry-box {
   width: min(900px, 100%);
+  padding: 30px 0;
 }
 
 .entry-crown {
@@ -112,6 +114,7 @@ body::before {
     transform: scale(1);
     filter: brightness(1);
   }
+
   50% {
     transform: scale(1.08);
     filter: brightness(1.35);
@@ -136,7 +139,7 @@ body::before {
 }
 
 .entry-button {
-  margin-top: 35px;
+  margin-top: 25px;
   padding: 17px 28px;
   border: 1px solid var(--purple-light);
   background: var(--purple);
@@ -149,9 +152,13 @@ body::before {
   transition: .2s;
 }
 
-.entry-button:hover {
+.entry-button:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 0 45px rgba(138,43,226,.45);
+}
+
+.entry-button:disabled {
+  cursor: not-allowed;
 }
 
 .nickname-input {
@@ -231,15 +238,23 @@ body::before {
 .genre-grid {
   max-height: 390px;
   overflow-y: auto;
-  padding-right: 8px;
+  padding: 5px 8px 5px 0;
+  margin-top: 25px;
+  margin-bottom: 5px;
 }
 
 .genre-grid::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
+}
+
+.genre-grid::-webkit-scrollbar-track {
+  background: #09080c;
+  border-radius: 10px;
 }
 
 .genre-grid::-webkit-scrollbar-thumb {
   background: var(--purple);
+  border-radius: 10px;
 }
 
 .counter {
@@ -264,6 +279,7 @@ body::before {
   0%,100% {
     text-shadow: 0 0 10px rgba(184,108,255,.4);
   }
+
   50% {
     text-shadow:
       0 0 20px rgba(184,108,255,.8),
@@ -647,6 +663,10 @@ footer p {
   .choice-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .genre-grid {
+    max-height: 340px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -664,6 +684,14 @@ footer p {
 
   h1 {
     letter-spacing: -2px;
+  }
+
+  .entry-box {
+    padding: 20px 0;
+  }
+
+  .entry-crown {
+    font-size: 60px;
   }
 }
 </style>
@@ -866,10 +894,11 @@ footer p {
 </div>
 
 <!-- =========================
-     5. TODOS OS GÊNEROS
+     5. GÊNEROS
 ========================= -->
 
 <div id="genre-screen" class="entry-screen">
+
   <div class="entry-box">
 
     <div class="entry-crown">♛</div>
@@ -883,6 +912,8 @@ footer p {
     <div id="genre-counter" class="counter">
       0 / 3
     </div>
+
+    <!-- LISTA DE GÊNEROS -->
 
     <div class="choice-grid genre-grid">
 
@@ -1138,6 +1169,14 @@ footer p {
 
     </div>
 
+    <!-- CONTADOR -->
+
+    <div id="genre-counter-bottom" class="counter">
+      0 / 3
+    </div>
+
+    <!-- BOTÃO FORA DA ÁREA DE ROLAGEM -->
+
     <button
       id="genre-button"
       class="entry-button"
@@ -1145,7 +1184,7 @@ footer p {
       disabled
       style="opacity:.4;"
     >
-      ATIVAR MODO PRÍNCIPE
+      ATIVAR MODO PRÍNCIPE 👑
     </button>
 
   </div>
@@ -1170,12 +1209,13 @@ footer p {
 </div>
 
 <!-- =========================
-     SITE
+     SITE PRINCIPAL
 ========================= -->
 
 <div id="main-site">
 
 <header>
+
   <div class="logo">
     1<span>PRINCIPEBR</span>
   </div>
@@ -1189,7 +1229,10 @@ footer p {
     <a href="#live">Live</a>
     <a href="#comunidade">Comunidade</a>
   </nav>
+
 </header>
+
+<!-- HERO -->
 
 <section class="hero" id="inicio">
 
@@ -1216,6 +1259,7 @@ footer p {
     </p>
 
     <div class="buttons">
+
       <a class="button" href="#live">
         ASSISTIR LIVE
       </a>
@@ -1223,6 +1267,7 @@ footer p {
       <a class="button" href="#redes">
         VER REDES
       </a>
+
     </div>
 
     <div id="user-badge"></div>
@@ -1251,7 +1296,9 @@ footer p {
 
 <section class="section" id="sobre">
 
-  <div class="eyebrow">SOBRE</div>
+  <div class="eyebrow">
+    SOBRE
+  </div>
 
   <h2>
     BEM-VINDO AO <span>MODO PRÍNCIPE</span>
@@ -1269,7 +1316,9 @@ footer p {
 
 <section class="section" id="jogos">
 
-  <div class="eyebrow">CONTEÚDO</div>
+  <div class="eyebrow">
+    CONTEÚDO
+  </div>
 
   <h2>
     MEUS <span>JOGOS</span>
@@ -1349,7 +1398,9 @@ footer p {
 
 <section class="section" id="clipes">
 
-  <div class="eyebrow">MELHORES MOMENTOS</div>
+  <div class="eyebrow">
+    MELHORES MOMENTOS
+  </div>
 
   <h2>
     <span>CLIPES</span>
@@ -1377,7 +1428,9 @@ footer p {
 
 <section class="section" id="redes">
 
-  <div class="eyebrow">CONECTE-SE</div>
+  <div class="eyebrow">
+    CONECTE-SE
+  </div>
 
   <h2>
     MINHAS <span>REDES</span>
@@ -1408,7 +1461,9 @@ footer p {
 
 <section class="section" id="live">
 
-  <div class="eyebrow">AO VIVO</div>
+  <div class="eyebrow">
+    AO VIVO
+  </div>
 
   <h2>
     <span>MODO PRÍNCIPE</span> LIVE
@@ -1419,6 +1474,7 @@ footer p {
   </p>
 
   <div class="buttons">
+
     <a
       class="button"
       href="https://www.twitch.tv/1principebr"
@@ -1426,6 +1482,7 @@ footer p {
     >
       ENTRAR NA LIVE
     </a>
+
   </div>
 
 </section>
@@ -1434,7 +1491,9 @@ footer p {
 
 <section class="section" id="comunidade">
 
-  <div class="eyebrow">COMUNIDADE</div>
+  <div class="eyebrow">
+    COMUNIDADE
+  </div>
 
   <h2>
     REGRAS DO <span>MODO PRÍNCIPE</span>
@@ -1533,6 +1592,7 @@ function showScreen(id) {
 ========================= */
 
 function goToNickname() {
+
   showScreen("nickname-screen");
 
   setTimeout(() => {
@@ -1553,16 +1613,17 @@ function saveNicknameAndContinue() {
 
   if (!nickname) {
 
-    error.textContent = "INCORRETO ❌ DIGITE UM NICKNAME.";
+    error.textContent =
+      "INCORRETO ❌ DIGITE UM NICKNAME.";
+
     error.classList.remove("correct");
 
     return;
   }
 
   /*
-    REGRA DO PRÍNCIPE:
-    O nickname precisa conter "principe".
-    Funciona com letras maiúsculas ou minúsculas.
+    O NICKNAME PRECISA CONTER "PRINCIPE".
+    NÃO IMPORTA SE ESTÁ EM MAIÚSCULO OU MINÚSCULO.
   */
 
   if (!nickname.toLowerCase().includes("principe")) {
@@ -1579,7 +1640,8 @@ function saveNicknameAndContinue() {
 
   userData.nickname = nickname;
 
-  error.textContent = "CORRETO ✓ MODO PRÍNCIPE LIBERADO.";
+  error.textContent =
+    "CORRETO ✓ MODO PRÍNCIPE LIBERADO.";
 
   error.classList.add("correct");
 
@@ -1603,7 +1665,8 @@ function selectMascot(card, mascot) {
 
   userData.mascot = mascot;
 
-  const button = document.getElementById("mascot-button");
+  const button =
+    document.getElementById("mascot-button");
 
   button.disabled = false;
   button.style.opacity = "1";
@@ -1629,7 +1692,8 @@ function selectPlatform(card, platform) {
 
   userData.platform = platform;
 
-  const button = document.getElementById("platform-button");
+  const button =
+    document.getElementById("platform-button");
 
   button.disabled = false;
   button.style.opacity = "1";
@@ -1648,7 +1712,8 @@ function goToGenres() {
 
 function selectGenre(card, genre) {
 
-  const index = userData.genres.indexOf(genre);
+  const index =
+    userData.genres.indexOf(genre);
 
   if (index !== -1) {
 
@@ -1659,7 +1724,6 @@ function selectGenre(card, genre) {
   } else {
 
     if (userData.genres.length >= 3) {
-
       return;
     }
 
@@ -1673,15 +1737,28 @@ function selectGenre(card, genre) {
 
 function updateGenreCounter() {
 
-  const counter = document.getElementById("genre-counter");
-  const button = document.getElementById("genre-button");
+  const counterTop =
+    document.getElementById("genre-counter");
 
-  counter.textContent =
-    userData.genres.length + " / 3";
+  const counterBottom =
+    document.getElementById("genre-counter-bottom");
 
-  if (userData.genres.length === 3) {
+  const button =
+    document.getElementById("genre-button");
 
-    counter.classList.remove("warning");
+  const amount =
+    userData.genres.length;
+
+  counterTop.textContent =
+    amount + " / 3";
+
+  counterBottom.textContent =
+    amount + " / 3";
+
+  if (amount === 3) {
+
+    counterTop.classList.remove("warning");
+    counterBottom.classList.remove("warning");
 
     button.disabled = false;
     button.style.opacity = "1";
@@ -1694,7 +1771,7 @@ function updateGenreCounter() {
 }
 
 /* =========================
-   FINALIZAR
+   FINALIZAR ESCOLHAS
 ========================= */
 
 function finishChoices() {
@@ -1720,7 +1797,8 @@ function finishChoices() {
     document.querySelectorAll(".entry-screen")
       .forEach(screen => screen.classList.remove("active"));
 
-    document.getElementById("main-site").style.display = "block";
+    document.getElementById("main-site").style.display =
+      "block";
 
     showUserBadge();
 
@@ -1744,7 +1822,8 @@ function escapeHTML(text) {
 
 function showUserBadge() {
 
-  const badge = document.getElementById("user-badge");
+  const badge =
+    document.getElementById("user-badge");
 
   const safeNickname =
     escapeHTML(userData.nickname);
@@ -1752,8 +1831,10 @@ function showUserBadge() {
   badge.innerHTML = `
     <div class="user-badge">
       👑 <strong>${safeNickname}</strong><br>
-      🐾 Mascote: <strong>${escapeHTML(userData.mascot)}</strong><br>
-      🎮 Plataforma: <strong>${escapeHTML(userData.platform)}</strong><br>
+      🐾 Mascote:
+      <strong>${escapeHTML(userData.mascot)}</strong><br>
+      🎮 Plataforma:
+      <strong>${escapeHTML(userData.platform)}</strong><br>
       🎯 Gêneros:
       <strong>${userData.genres.map(escapeHTML).join(" • ")}</strong>
     </div>
