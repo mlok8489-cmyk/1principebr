@@ -4,19 +4,233 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>1principebr | Ativando Modo Príncipe</title>
+  <title>1PRINCIPEBR | Modo Príncipe</title>
 
   <meta
     name="description"
-    content="Site oficial do 1principebr. Lives, clipes, jogos e redes sociais."
+    content="1PRINCIPEBR. Games, lives, clipes, resenha e muita diversão. Ative seu Modo Príncipe."
   >
 
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* =========================
+    /* ================================
+       TELA DE ENTRADA
+    ================================= */
+
+    #intro-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #050507;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-content {
+      width: min(90%, 600px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .intro-brand {
+      color: #f7f4ff;
+      font-size: clamp(25px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 30px;
+    }
+
+    .intro-brand span {
+      color: #b86cff;
+    }
+
+    .intro-crown {
+      font-size: clamp(65px, 12vw, 110px);
+      color: #b86cff;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 18px rgba(138, 43, 226, 0.45));
+      animation: crownFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes crownFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    .intro-title {
+      color: #f7f4ff;
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 800;
+      letter-spacing: 1px;
+      line-height: 1.4;
+      margin-bottom: 30px;
+    }
+
+    .intro-title span {
+      color: #b86cff;
+    }
+
+    .intro-button,
+    .nickname-button {
+      border: 1px solid rgba(184, 108, 255, 0.5);
+      background: linear-gradient(135deg, #8a2be2, #5f18a8);
+      color: white;
+      padding: 15px 28px;
+      border-radius: 7px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.18);
+    }
+
+    .intro-button:hover,
+    .nickname-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(138, 43, 226, 0.28);
+    }
+
+    /* ================================
+       TELA DO NICKNAME
+    ================================= */
+
+    #nickname-screen {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #nickname-screen.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .nickname-title {
+      color: #f7f4ff;
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .nickname-subtitle {
+      color: #aaa3b8;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .nickname-input {
+      width: min(100%, 380px);
+      padding: 16px 18px;
+      background: #0b0a10;
+      border: 1px solid rgba(184, 108, 255, 0.3);
+      border-radius: 7px;
+      outline: none;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 15px;
+      transition: 0.25s;
+    }
+
+    .nickname-input:focus {
+      border-color: #b86cff;
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.15);
+    }
+
+    .nickname-input::placeholder {
+      color: #6f6879;
+    }
+
+    /* ================================
+       TELA DE ATIVAÇÃO
+    ================================= */
+
+    #activation-screen {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #activation-screen.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .activation-crown {
+      font-size: clamp(75px, 14vw, 125px);
+      color: #b86cff;
+      filter: drop-shadow(0 0 22px rgba(138, 43, 226, 0.55));
+      animation: activationCrown 1.8s ease-in-out infinite;
+      margin-bottom: 25px;
+    }
+
+    @keyframes activationCrown {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.4));
+      }
+
+      50% {
+        transform: scale(1.06);
+        filter: drop-shadow(0 0 30px rgba(138, 43, 226, 0.7));
+      }
+    }
+
+    .activation-title {
+      color: #f7f4ff;
+      font-size: clamp(22px, 5vw, 38px);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .activation-title span {
+      color: #b86cff;
+    }
+
+    .activation-user {
+      color: #aaa3b8;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    /* ================================
+       SITE PRINCIPAL
+    ================================= */
+
+    #main-site {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+
+    #main-site.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    /* ================================
        JOGOS
-    ========================= */
+    ================================= */
 
     .games-grid {
       display: grid;
@@ -30,7 +244,7 @@
       min-height: 210px;
       overflow: hidden;
       border-radius: 10px;
-      border: 1px solid rgba(184, 108, 255, .22);
+      border: 1px solid rgba(184,108,255,.22);
       background: #09090b;
       transition: .25s;
       cursor: pointer;
@@ -38,8 +252,8 @@
 
     .game-card:hover {
       transform: translateY(-7px) scale(1.02);
-      border-color: var(--purple);
-      box-shadow: 0 18px 40px rgba(138, 43, 226, .20);
+      border-color: #8a2be2;
+      box-shadow: 0 18px 40px rgba(138,43,226,.20);
     }
 
     .game-card img {
@@ -62,9 +276,9 @@
       background:
         linear-gradient(
           to top,
-          rgba(0, 0, 0, .92) 0%,
-          rgba(0, 0, 0, .55) 42%,
-          rgba(0, 0, 0, .05) 80%
+          rgba(0,0,0,.92) 0%,
+          rgba(0,0,0,.55) 42%,
+          rgba(0,0,0,.05) 80%
         );
       pointer-events: none;
     }
@@ -100,6 +314,19 @@
       object-position: center;
     }
 
+    /* ================================
+       NICKNAME NO SITE
+    ================================= */
+
+    .welcome-user {
+      color: #b86cff;
+      font-weight: 900;
+    }
+
+    /* ================================
+       RESPONSIVO
+    ================================= */
+
     @media (max-width: 900px) {
       .games-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -118,646 +345,811 @@
       .other-games {
         grid-column: span 1;
       }
+
+      .intro-brand {
+        letter-spacing: 2px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- EFEITOS DE FUNDO -->
-  <div class="glow glow-one"></div>
-  <div class="glow glow-two"></div>
+  <!-- =================================
+       TELA INICIAL
+  ================================== -->
 
-  <!-- =========================
-       CABEÇALHO
-  ========================= -->
+  <div id="intro-screen">
 
-  <header>
-    <a href="#inicio" class="logo">
-      1<span>PRINCIPEBR</span>
-    </a>
+    <div class="intro-content">
 
-    <nav>
-      <a href="#inicio">INÍCIO</a>
-      <a href="#sobre">SOBRE</a>
-      <a href="#jogos">JOGOS</a>
-      <a href="#clipes">CLIPES</a>
-      <a href="#redes">REDES</a>
-      <a href="#live">LIVE</a>
-      <a href="#comunidade">COMUNIDADE</a>
-    </nav>
-  </header>
+      <!-- PRIMEIRA TELA -->
+      <div id="welcome-screen">
+
+        <div class="intro-crown">♛</div>
+
+        <div class="intro-brand">
+          <span>1</span>PRINCIPEBR
+        </div>
+
+        <div class="intro-title">
+          CLIQUE AQUI E ATIVE<br>
+          SEU <span>MODO PRÍNCIPE</span>
+        </div>
+
+        <button class="intro-button" onclick="showNickname()">
+          ATIVAR MODO PRÍNCIPE
+        </button>
+
+      </div>
 
 
-  <!-- =========================
-       INÍCIO
-  ========================= -->
+      <!-- TELA DO NICKNAME -->
+      <div id="nickname-screen">
 
-  <main id="inicio">
+        <div class="intro-crown">♛</div>
 
-    <section class="hero">
+        <div class="nickname-title">
+          IDENTIFIQUE-SE, <span>PRÍNCIPE</span>
+        </div>
 
-      <div class="hero-content">
+        <div class="nickname-subtitle">
+          Digite seu nickname para entrar no Modo Príncipe.
+        </div>
 
-        <div class="crown">♛</div>
+        <input
+          id="nickname"
+          class="nickname-input"
+          type="text"
+          maxlength="20"
+          placeholder="DIGITE SEU NICKNAME"
+          autocomplete="off"
+        >
+
+        <br>
+
+        <button class="nickname-button" onclick="activateMode()">
+          CONFIRMAR E ENTRAR
+        </button>
+
+      </div>
+
+
+      <!-- TELA DE ATIVAÇÃO -->
+      <div id="activation-screen">
+
+        <div class="activation-crown">♛</div>
+
+        <div class="activation-title">
+          MODO <span>PRÍNCIPE</span>
+        </div>
+
+        <div class="activation-title">
+          ATIVADO
+        </div>
+
+        <div class="activation-user">
+          BEM-VINDO, <span id="nickname-display"></span> 👑
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================
+       SITE PRINCIPAL
+  ================================== -->
+
+  <div id="main-site">
+
+    <!-- HEADER -->
+
+    <header>
+
+      <div class="logo">
+        <span>1</span>PRINCIPEBR
+      </div>
+
+      <nav>
+        <a href="#inicio">INÍCIO</a>
+        <a href="#sobre">SOBRE</a>
+        <a href="#jogos">JOGOS</a>
+        <a href="#clipes">CLIPES</a>
+        <a href="#redes">REDES</a>
+        <a href="#live">LIVE</a>
+        <a href="#comunidade">COMUNIDADE</a>
+      </nav>
+
+    </header>
+
+
+    <!-- EFEITOS DE FUNDO -->
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+
+    <!-- =================================
+         HERO
+    ================================== -->
+
+    <main id="inicio">
+
+      <section class="hero">
+
+        <div class="hero-content">
+
+          <div class="crown">♛</div>
+
+          <p class="eyebrow">
+            MODO PRÍNCIPE ATIVADO
+          </p>
+
+          <h1>
+            1<span>PRINCIPEBR</span>
+          </h1>
+
+          <h2>
+            ATIVANDO <span>MODO PRÍNCIPE</span>
+          </h2>
+
+          <p class="description">
+            Gameplay, resenha, clipes e muita diversão.
+            Aqui o Modo Príncipe é ativado para cada partida,
+            cada live e cada momento. Prepare-se para jogos insanos,
+            momentos inesperados e muita energia. 🎮🔥
+          </p>
+
+          <div class="buttons">
+
+            <a
+              class="button"
+              href="https://www.twitch.tv/1principebr"
+              target="_blank"
+              style="background:#8a2be2;"
+            >
+              ASSISTIR LIVE
+            </a>
+
+            <a
+              class="button"
+              href="#redes"
+              style="border:1px solid rgba(184,108,255,.3);"
+            >
+              VER REDES
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- CARD -->
+
+        <div class="hero-card">
+
+          <div class="avatar-placeholder">
+            ♛
+          </div>
+
+          <div class="card-line"></div>
+
+          <p>
+            MODO PRÍNCIPE
+          </p>
+
+          <small>
+            1PRINCIPEBR
+          </small>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           SOBRE
+      ================================== -->
+
+      <section id="sobre" class="section">
 
         <p class="eyebrow">
-          BEM-VINDO AO REINO
+          SOBRE
         </p>
 
-        <h1>
-          1<span>PRINCIPEBR</span>
-        </h1>
-
         <h2>
-          ATIVANDO MODO <span>PRÍNCIPE</span>
+          SOBRE O <span>1PRINCIPEBR</span>
         </h2>
 
-        <p class="description">
-          Gameplay, resenha, clipes e muita diversão.
-          Aqui é onde o modo príncipe é ativado.
-          Prepare-se para partidas insanas, momentos inesperados
-          e muita energia nas lives. 🎮🔥
+        <p class="section-text">
+          O 1principebr é um espaço criado para juntar games,
+          lives, clipes, resenha e diversão. Aqui cada partida
+          pode virar um momento inesquecível. O objetivo é evoluir,
+          jogar e se divertir sempre. 👑🎮🔥
+        </p>
+
+      </section>
+
+
+      <!-- =================================
+           JOGOS
+      ================================== -->
+
+      <section id="jogos" class="section">
+
+        <p class="eyebrow">
+          GAMEPLAY
+        </p>
+
+        <h2>
+          MEUS <span>JOGOS</span>
+        </h2>
+
+        <p class="section-text">
+          Alguns dos jogos que fazem parte do Modo Príncipe.
+          Cada partida pode virar uma história, um clipe ou uma
+          resenha absurda. 🎮🔥
+        </p>
+
+
+        <div class="games-grid">
+
+          <article class="game-card">
+
+            <img
+              src="images/fortnite.jpg"
+              alt="Fortnite"
+            >
+
+            <div class="game-info">
+
+              <b>FORTNITE</b>
+
+              <small>
+                BUILD • EDIT • COMPETITIVO
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/minecraft.jpg"
+              alt="Minecraft"
+            >
+
+            <div class="game-info">
+
+              <b>MINECRAFT</b>
+
+              <small>
+                SOBREVIVÊNCIA • MODS • AVENTURA
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/gta.jpg"
+              alt="GTA"
+            >
+
+            <div class="game-info">
+
+              <b>GTA</b>
+
+              <small>
+                MUNDO ABERTO • AÇÃO • RESENHA
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/fps.jpg"
+              alt="Jogos de FPS"
+            >
+
+            <div class="game-info">
+
+              <b>FPS</b>
+
+              <small>
+                TIRO • AÇÃO • COMPETITIVO
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/luta.jpg"
+              alt="Jogos de luta"
+            >
+
+            <div class="game-info">
+
+              <b>LUTA</b>
+
+              <small>
+                COMBATE • SKILL • BATALHAS
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/roblox.jpg"
+              alt="Roblox"
+            >
+
+            <div class="game-info">
+
+              <b>ROBLOX</b>
+
+              <small>
+                DIVERSÃO • AVENTURA • RESENHA
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <img
+              src="images/simuladores.jpg"
+              alt="Jogos de simuladores"
+            >
+
+            <div class="game-info">
+
+              <b>SIMULADORES</b>
+
+              <small>
+                LOJAS • CONSTRUÇÃO • DIVERSÃO
+              </small>
+
+            </div>
+
+          </article>
+
+
+          <article class="game-card other-games">
+
+            <img
+              src="images/outros.jpg"
+              alt="Vários outros jogos"
+            >
+
+            <div class="game-info">
+
+              <b>OUTROS</b>
+
+              <small>
+                VÁRIOS JOGOS • QUALQUER LOUCURA • RESENHA
+              </small>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           CLIPES
+      ================================== -->
+
+      <section id="clipes" class="section">
+
+        <p class="eyebrow">
+          MOMENTOS
+        </p>
+
+        <h2>
+          MEUS <span>CLIPES</span>
+        </h2>
+
+        <p class="section-text">
+          Os melhores momentos do Modo Príncipe.
+          Aqui podem entrar seus clipes favoritos das lives.
+        </p>
+
+        <div class="grid clips">
+
+          <div class="clip">
+            CLIPE #01
+          </div>
+
+          <div class="clip">
+            CLIPE #02
+          </div>
+
+          <div class="clip">
+            CLIPE #03
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           REDES
+      ================================== -->
+
+      <section id="redes" class="section">
+
+        <p class="eyebrow">
+          CONECTE-SE
+        </p>
+
+        <h2>
+          MINHAS <span>REDES</span>
+        </h2>
+
+        <p class="section-text">
+          Acompanhe o 1principebr também fora do site.
+        </p>
+
+
+        <div class="social-grid">
+
+          <a
+            href="https://www.twitch.tv/1principebr"
+            target="_blank"
+          >
+
+            TWITCH
+
+            <small>
+              LIVES E GAMEPLAY
+            </small>
+
+          </a>
+
+
+          <a
+            href="https://www.tiktok.com/@ikv_principe12"
+            target="_blank"
+          >
+
+            TIKTOK
+
+            <small>
+              CLIPES E MOMENTOS
+            </small>
+
+          </a>
+
+
+          <a
+            href="https://www.instagram.com/1principebr/"
+            target="_blank"
+          >
+
+            INSTAGRAM
+
+            <small>
+              FOTOS E NOVIDADES
+            </small>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           LIVE
+      ================================== -->
+
+      <section id="live" class="section">
+
+        <p class="eyebrow">
+          AO VIVO
+        </p>
+
+        <h2>
+          MODO PRÍNCIPE <span>LIVE</span>
+        </h2>
+
+        <p class="section-text">
+          Quando a live começa, o Modo Príncipe entra em ação.
+          Vem acompanhar a gameplay e participar da resenha. 🎮🔥
         </p>
 
         <div class="buttons">
 
           <a
+            class="button"
             href="https://www.twitch.tv/1principebr"
             target="_blank"
-            class="button"
-            style="
-              background: var(--purple);
-              color: white;
-              box-shadow: 0 0 25px rgba(138,43,226,.25);
-            "
+            style="background:#8a2be2;"
           >
-            ASSISTIR LIVE
-          </a>
-
-          <a
-            href="#redes"
-            class="button"
-            style="
-              border: 1px solid rgba(184,108,255,.35);
-              color: var(--purple-light);
-            "
-          >
-            VER REDES
+            IR PARA A TWITCH
           </a>
 
         </div>
 
-      </div>
+      </section>
 
 
-      <!-- CARD DO PRÍNCIPE -->
+      <!-- =================================
+           COMUNIDADE
+      ================================== -->
 
-      <div class="hero-card">
+      <section id="comunidade" class="section">
 
-        <div class="avatar-placeholder">
-          1P
-        </div>
-
-        <div class="card-line"></div>
-
-        <p>
-          MODO PRÍNCIPE
+        <p class="eyebrow">
+          COMUNIDADE
         </p>
-
-        <small>
-          ATIVADO 👑
-        </small>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SOBRE
-    ========================= -->
-
-    <section id="sobre" class="section">
-
-      <p class="eyebrow">
-        O REINO
-      </p>
-
-      <h2>
-        SOBRE O <span>1PRINCIPEBR</span>
-      </h2>
-
-      <p class="section-text">
-        O 1principebr é um espaço criado para juntar games,
-        lives, clipes, resenha e diversão.
-        Aqui cada partida pode virar um momento inesquecível.
-        O objetivo é evoluir, jogar e se divertir sempre.
-        👑🎮🔥
-      </p>
-
-    </section>
-
-
-    <!-- =========================
-         JOGOS
-    ========================= -->
-
-    <section id="jogos" class="section">
-
-      <p class="eyebrow">
-        GAMEPLAY
-      </p>
-
-      <h2>
-        MEUS <span>JOGOS</span>
-      </h2>
-
-      <p class="section-text">
-        Alguns dos jogos que fazem parte do reino.
-        Cada partida pode virar uma história,
-        um clipe ou uma resenha absurda. 🎮🔥
-      </p>
-
-
-      <div class="games-grid">
-
-        <!-- FORTNITE -->
-
-        <article class="game-card">
-
-          <img
-            src="images/fortnite.jpg"
-            alt="Fortnite"
-          >
-
-          <div class="game-info">
-
-            <b>
-              FORTNITE
-            </b>
-
-            <small>
-              BUILD • EDIT • COMPETITIVO
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- MINECRAFT -->
-
-        <article class="game-card">
-
-          <img
-            src="images/minecraft.jpg"
-            alt="Minecraft"
-          >
-
-          <div class="game-info">
-
-            <b>
-              MINECRAFT
-            </b>
-
-            <small>
-              SOBREVIVÊNCIA • MODS • AVENTURA
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- GTA -->
-
-        <article class="game-card">
-
-          <img
-            src="images/gta.jpg"
-            alt="GTA"
-          >
-
-          <div class="game-info">
-
-            <b>
-              GTA
-            </b>
-
-            <small>
-              MUNDO ABERTO • AÇÃO • RESENHA
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- FPS -->
-
-        <article class="game-card">
-
-          <img
-            src="images/fps.jpg"
-            alt="Jogos de tiro"
-          >
-
-          <div class="game-info">
-
-            <b>
-              FPS
-            </b>
-
-            <small>
-              TIRO • AÇÃO • BALA COMENDO
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- LUTA -->
-
-        <article class="game-card">
-
-          <img
-            src="images/luta.jpg"
-            alt="Jogos de luta"
-          >
-
-          <div class="game-info">
-
-            <b>
-              LUTA
-            </b>
-
-            <small>
-              COMBOS • BATALHAS • X1
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- ROBLOX -->
-
-        <article class="game-card">
-
-          <img
-            src="images/roblox.jpg"
-            alt="Roblox"
-          >
-
-          <div class="game-info">
-
-            <b>
-              ROBLOX
-            </b>
-
-            <small>
-              DIVERSÃO • AVENTURA • RESENHA
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- SIMULADORES -->
-
-        <article class="game-card">
-
-          <img
-            src="images/simuladores.jpg"
-            alt="Jogos de simuladores"
-          >
-
-          <div class="game-info">
-
-            <b>
-              SIMULADORES
-            </b>
-
-            <small>
-              LOJAS • SIMULAÇÃO • DIVERSÃO
-            </small>
-
-          </div>
-
-        </article>
-
-
-        <!-- OUTROS -->
-
-        <article class="game-card other-games">
-
-          <img
-            src="images/outros.jpg"
-            alt="Vários outros jogos"
-          >
-
-          <div class="game-info">
-
-            <b>
-              OUTROS
-            </b>
-
-            <small>
-              VÁRIOS JOGOS • QUALQUER LOUCURA • RESENHA
-            </small>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CLIPES
-    ========================= -->
-
-    <section id="clipes" class="section">
-
-      <p class="eyebrow">
-        MELHORES MOMENTOS
-      </p>
-
-      <h2>
-        MEUS <span>CLIPES</span>
-      </h2>
-
-      <p class="section-text">
-        Os melhores momentos das partidas.
-        Em breve, os clipes estarão aqui. 🎬🔥
-      </p>
-
-      <div class="grid clips">
-
-        <div class="clip">
-          CLIPE #01
-        </div>
-
-        <div class="clip">
-          CLIPE #02
-        </div>
-
-        <div class="clip">
-          CLIPE #03
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         REDES SOCIAIS
-    ========================= -->
-
-    <section id="redes" class="section">
-
-      <p class="eyebrow">
-        CONECTE-SE
-      </p>
-
-      <h2>
-        MINHAS <span>REDES</span>
-      </h2>
-
-      <p class="section-text">
-        Acompanhe o reino também nas redes sociais.
-      </p>
-
-
-      <div class="social-grid">
-
-        <a
-          href="https://www.twitch.tv/1principebr"
-          target="_blank"
-        >
-
-          TWITCH
-
-          <small>
-            LIVES E GAMEPLAY
-          </small>
-
-        </a>
-
-
-        <a
-          href="https://www.tiktok.com/@ikv_principe12"
-          target="_blank"
-        >
-
-          TIKTOK
-
-          <small>
-            CLIPES E MOMENTOS
-          </small>
-
-        </a>
-
-
-        <a
-          href="https://www.instagram.com/1principebr/"
-          target="_blank"
-        >
-
-          INSTAGRAM
-
-          <small>
-            CONTEÚDO E NOVIDADES
-          </small>
-
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         LIVE
-    ========================= -->
-
-    <section id="live" class="section">
-
-      <p class="eyebrow">
-        AO VIVO
-      </p>
-
-      <h2>
-        VEM PARA A <span>LIVE</span>
-      </h2>
-
-      <p class="section-text">
-        Quando a live começar, o modo príncipe entra em ação.
-        Cola na transmissão e participa da resenha. 👑🎮
-      </p>
-
-      <div class="buttons">
-
-        <a
-          href="https://www.twitch.tv/1principebr"
-          target="_blank"
-          class="button"
-          style="
-            background: var(--purple);
-            color: white;
-          "
-        >
-          ENTRAR NA LIVE
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         COMUNIDADE
-    ========================= -->
-
-    <section id="comunidade" class="section">
-
-      <p class="eyebrow">
-        O REINO
-      </p>
-
-      <h2>
-        NOSSA <span>COMUNIDADE</span>
-      </h2>
-
-      <p class="section-text">
-        Aqui a resenha é garantida.
-        Todo mundo chega para jogar, conversar
-        e curtir os momentos juntos. 👑🔥
-      </p>
-
-
-      <div class="grid">
-
-        <div class="game">
-
-          <b>
-            🤝 RESPEITO
-          </b>
-
-          <small>
-            RESPEITE TODO MUNDO DA COMUNIDADE.
-          </small>
-
-        </div>
-
-
-        <div class="game">
-
-          <b>
-            🎮 GAMEPLAY
-          </b>
-
-          <small>
-            JOGUE, EVOLUA E APROVEITE CADA PARTIDA.
-          </small>
-
-        </div>
-
-
-        <div class="game">
-
-          <b>
-            🔥 MODO PRÍNCIPE
-          </b>
-
-          <small>
-            QUANDO EU ATIVO O MODO PRÍNCIPE,
-            NINGUÉM ME DERROTA. 👑
-          </small>
-
-        </div>
-
-
-        <div class="game">
-
-          <b>
-            😂 RESENHA
-          </b>
-
-          <small>
-            RESENHA PURA E MUITA DIVERSÃO.
-          </small>
-
-        </div>
-
-      </div>
-
-
-      <div
-        style="
-          margin-top: 35px;
-          padding: 35px;
-          text-align: center;
-          border: 1px solid rgba(184,108,255,.2);
-          background: linear-gradient(145deg,#130d19,#09090b);
-        "
-      >
 
         <h2>
-          MODO PRÍNCIPE:
-          <span>ATIVADO</span>
+          REGRAS DO <span>MODO PRÍNCIPE</span>
         </h2>
 
-        <p
-          class="section-text"
-          style="
-            margin-left: auto;
-            margin-right: auto;
-          "
-        >
-          RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
+        <p class="section-text">
+          Aqui a resenha é livre, mas sempre com respeito.
+          Todo mundo pode participar da comunidade.
         </p>
 
-        <p
+
+        <div class="grid">
+
+          <div class="game">
+
+            <b>👑 RESPEITO</b>
+
+            <small>
+              RESPEITE TODO MUNDO DA COMUNIDADE.
+            </small>
+
+          </div>
+
+
+          <div class="game">
+
+            <b>🔥 MODO PRÍNCIPE</b>
+
+            <small>
+              QUANDO EU ATIVO O MODO PRÍNCIPE, NINGUÉM ME DERROTA. 👑
+            </small>
+
+          </div>
+
+
+          <div class="game">
+
+            <b>🎮 GAMEPLAY</b>
+
+            <small>
+              JOGUE, EVOLUA E APROVEITE CADA PARTIDA.
+            </small>
+
+          </div>
+
+
+          <div class="game">
+
+            <b>😂 RESENHA</b>
+
+            <small>
+              RESENHA PURA E MUITA DIVERSÃO.
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div
           style="
-            margin-top: 18px;
-            font-weight: 900;
-            color: var(--purple-light);
+            margin-top:35px;
+            padding:30px;
+            text-align:center;
+            border:1px solid rgba(184,108,255,.2);
+            background:#0b090d;
           "
         >
-          NÃO TEMOS O MELHOR SETUP.
-          TEMOS ALGO MAIOR:
-          FORÇA DE VONTADE. 👑🔥
-        </p>
 
-      </div>
+          <h2 style="margin-top:0;">
+            MODO PRÍNCIPE: <span>ATIVADO</span>
+          </h2>
 
-    </section>
+          <p class="section-text" style="margin-left:auto;margin-right:auto;">
+            RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
+          </p>
 
-  </main>
+          <p style="margin-top:20px;color:#aaa3b8;">
+            NÃO TEMOS O MELHOR SETUP.
+            TEMOS ALGO MAIOR: FORÇA DE VONTADE. 👑🔥
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
 
 
-  <!-- =========================
-       RODAPÉ
-  ========================= -->
+    <!-- =================================
+         FOOTER
+    ================================== -->
 
-  <footer>
+    <footer>
 
-    <strong>
-      1PRINCIPEBR
-    </strong>
+      <strong>
+        1PRINCIPEBR
+      </strong>
 
-    <p>
-      ATIVANDO MODO PRÍNCIPE 👑
-    </p>
+      <p>
+        Modo Príncipe: ativado. 👑🟣
+      </p>
 
-  </footer>
+    </footer>
+
+  </div>
+
+
+  <!-- =================================
+       JAVASCRIPT
+  ================================== -->
+
+  <script>
+
+    const introScreen = document.getElementById("intro-screen");
+
+    const welcomeScreen = document.getElementById("welcome-screen");
+
+    const nicknameScreen = document.getElementById("nickname-screen");
+
+    const activationScreen = document.getElementById("activation-screen");
+
+    const mainSite = document.getElementById("main-site");
+
+    const nicknameInput = document.getElementById("nickname");
+
+    const nicknameDisplay = document.getElementById("nickname-display");
+
+
+    /* ================================
+       ABRIR TELA DE NICKNAME
+    ================================= */
+
+    function showNickname() {
+
+      welcomeScreen.style.display = "none";
+
+      nicknameScreen.classList.add("active");
+
+      setTimeout(() => {
+        nicknameInput.focus();
+      }, 300);
+
+    }
+
+
+    /* ================================
+       ATIVAR MODO PRÍNCIPE
+    ================================= */
+
+    function activateMode() {
+
+      let nickname = nicknameInput.value.trim();
+
+      if (nickname === "") {
+
+        nicknameInput.focus();
+
+        nicknameInput.style.borderColor = "#8a2be2";
+
+        return;
+
+      }
+
+
+      nicknameDisplay.textContent = nickname;
+
+
+      nicknameScreen.classList.remove("active");
+
+
+      setTimeout(() => {
+
+        nicknameScreen.style.display = "none";
+
+        activationScreen.classList.add("active");
+
+      }, 400);
+
+
+      /*
+        Pequena pausa para a animação
+        da coroa antes de abrir o site.
+      */
+
+      setTimeout(() => {
+
+        introScreen.classList.add("hidden");
+
+        setTimeout(() => {
+
+          introScreen.style.display = "none";
+
+          mainSite.classList.add("visible");
+
+        }, 800);
+
+      }, 3000);
+
+
+      /*
+        Guarda o nickname no navegador.
+        Assim podemos usar esse nome
+        em futuras melhorias do site.
+      */
+
+      localStorage.setItem("principeNickname", nickname);
+
+    }
+
+
+    /* ================================
+       ENTER NO CAMPO DE NICKNAME
+    ================================= */
+
+    nicknameInput.addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+
+        activateMode();
+
+      }
+
+    });
+
+
+    /* ================================
+       CARREGAR NICKNAME SALVO
+    ================================= */
+
+    const savedNickname = localStorage.getItem("principeNickname");
+
+
+    /*
+      Não pulamos a tela inicial automaticamente.
+      O visitante ainda pode ativar o Modo Príncipe
+      sempre que entrar no site.
+    */
+
+  </script>
 
 </body>
 </html>
