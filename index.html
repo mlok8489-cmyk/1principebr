@@ -1,2107 +1,2520 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1PRINCIPEBR | Modo Príncipe</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&display=swap');
-
-:root {
-  --purple: #8A2BE2;
-  --purple-light: #B86CFF;
-  --black: #050507;
-  --dark: #0b0a10;
-  --white: #f7f4ff;
-  --muted: #aaa3b8;
-  --red: #ff3158;
-  --green: #65ff9a;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Orbitron', sans-serif;
-  background: var(--black);
-  color: var(--white);
-  overflow-x: hidden;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
-  background:
-    linear-gradient(rgba(138,43,226,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(138,43,226,.035) 1px, transparent 1px);
-  background-size: 45px 45px;
-}
-
-.glow {
-  position: fixed;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  background: var(--purple);
-  filter: blur(130px);
-  opacity: .12;
-  z-index: -1;
-}
-
-.glow-one {
-  top: 5%;
-  left: -180px;
-}
-
-.glow-two {
-  bottom: 0;
-  right: -180px;
-}
-
-/* =========================
-   TELAS DE ENTRADA
-========================= */
-
-.entry-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background:
-    radial-gradient(circle at center, rgba(138,43,226,.12), transparent 40%),
-    #030305;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 25px;
-  overflow-y: auto;
-}
-
-.entry-screen.active {
-  display: flex;
-}
-
-.entry-box {
-  width: min(900px, 100%);
-  padding: 30px 0;
-}
-
-.entry-crown {
-  font-size: 80px;
-  color: var(--purple-light);
-  text-shadow:
-    0 0 15px rgba(184,108,255,.7),
-    0 0 50px rgba(138,43,226,.45);
-  animation: crownPulse 2s infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes crownPulse {
-  0%,100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-
-  50% {
-    transform: scale(1.08);
-    filter: brightness(1.35);
-  }
-}
-
-.entry-logo {
-  font-size: clamp(40px, 8vw, 90px);
-  font-weight: 900;
-  letter-spacing: -3px;
-}
-
-.entry-logo span {
-  color: var(--purple-light);
-}
-
-.entry-subtitle {
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 13px;
-  letter-spacing: 3px;
-}
-
-.entry-button {
-  margin-top: 25px;
-  padding: 17px 28px;
-  border: 1px solid var(--purple-light);
-  background: var(--purple);
-  color: white;
-  font-family: inherit;
-  font-weight: 900;
-  cursor: pointer;
-  border-radius: 7px;
-  box-shadow: 0 0 30px rgba(138,43,226,.25);
-  transition: .2s;
-}
-
-.entry-button:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 0 45px rgba(138,43,226,.45);
-}
-
-.entry-button:disabled {
-  cursor: not-allowed;
-}
-
-.nickname-input {
-  width: min(500px, 100%);
-  margin-top: 30px;
-  padding: 18px;
-  border: 1px solid rgba(184,108,255,.4);
-  background: #09080c;
-  color: white;
-  font-family: inherit;
-  text-align: center;
-  outline: none;
-  border-radius: 7px;
-  font-size: 15px;
-}
-
-.nickname-input:focus {
-  border-color: var(--purple-light);
-  box-shadow: 0 0 25px rgba(138,43,226,.2);
-}
-
-.error-message {
-  min-height: 25px;
-  margin-top: 15px;
-  color: var(--red);
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-.error-message.correct {
-  color: var(--green);
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.choice-card {
-  min-height: 105px;
-  padding: 18px 10px;
-  background: linear-gradient(145deg, #130d19, #08080b);
-  border: 1px solid rgba(184,108,255,.2);
-  cursor: pointer;
-  transition: .2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 7px;
-}
-
-.choice-card:hover {
-  border-color: var(--purple-light);
-  transform: translateY(-3px);
-}
-
-.choice-card.selected {
-  border-color: var(--purple-light);
-  background: rgba(138,43,226,.18);
-  box-shadow: 0 0 25px rgba(138,43,226,.2);
-}
-
-.choice-icon {
-  font-size: 31px;
-}
-
-.choice-name {
-  font-size: 10px;
-  font-weight: 900;
-}
-
-.genre-grid {
-  max-height: 390px;
-  overflow-y: auto;
-  padding: 5px 8px 5px 0;
-  margin-top: 25px;
-  margin-bottom: 5px;
-}
-
-.genre-grid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.genre-grid::-webkit-scrollbar-track {
-  background: #09080c;
-  border-radius: 10px;
-}
-
-.genre-grid::-webkit-scrollbar-thumb {
-  background: var(--purple);
-  border-radius: 10px;
-}
-
-.counter {
-  margin-top: 18px;
-  color: var(--purple-light);
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.counter.warning {
-  color: var(--red);
-}
-
-.activation-title {
-  font-size: clamp(35px, 7vw, 75px);
-  font-weight: 900;
-  color: var(--purple-light);
-  animation: activationPulse 1.2s infinite;
-}
-
-@keyframes activationPulse {
-  0%,100% {
-    text-shadow: 0 0 10px rgba(184,108,255,.4);
-  }
-
-  50% {
-    text-shadow:
-      0 0 20px rgba(184,108,255,.8),
-      0 0 50px rgba(138,43,226,.5);
-  }
-}
-
-.activation-small {
-  margin-top: 15px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-/* =========================
-   SITE PRINCIPAL
-========================= */
-
-#main-site {
-  display: none;
-}
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 7%;
-  background: rgba(5,5,7,.82);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(138,43,226,.2);
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 1px;
-}
-
-.logo span,
-h1 span,
-h2 span {
-  color: var(--purple-light);
-}
-
-nav {
-  display: flex;
-  gap: 24px;
-}
-
-nav a {
-  color: #bbb;
-  font-size: 12px;
-  transition: .2s;
-}
-
-nav a:hover {
-  color: var(--purple-light);
-}
-
-.hero {
-  min-height: 88vh;
-  padding: 70px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 50px;
-}
-
-.hero-content {
-  max-width: 720px;
-}
-
-.crown {
-  color: var(--purple-light);
-  font-size: 52px;
-  margin-bottom: 12px;
-}
-
-.eyebrow {
-  color: var(--purple-light);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 4px;
-  margin-bottom: 16px;
-}
-
-h1 {
-  font-size: clamp(48px, 9vw, 100px);
-  line-height: .95;
-  font-weight: 900;
-  letter-spacing: -3px;
-}
-
-h2 {
-  font-size: clamp(22px, 4vw, 38px);
-  margin-top: 22px;
-}
-
-.description,
-.section-text {
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 650px;
-  margin-top: 18px;
-  font-family: Arial, sans-serif;
-}
-
-.buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.button {
-  padding: 15px 21px;
-  border-radius: 7px;
-  font-size: 11px;
-  font-weight: 800;
-  transition: transform .2s, box-shadow .2s;
-  background: var(--purple);
-}
-
-.button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(138,43,226,.3);
-}
-
-.hero-card {
-  width: 300px;
-  min-width: 260px;
-  padding: 22px;
-  background: linear-gradient(145deg, #120d18, #070709);
-  border: 1px solid rgba(184,108,255,.35);
-  box-shadow: 0 0 50px rgba(138,43,226,.12);
-  text-align: center;
-}
-
-.avatar-placeholder {
-  height: 280px;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle, rgba(138,43,226,.28), #08070a 62%);
-  font-size: 70px;
-  font-weight: 900;
-  color: var(--purple-light);
-  border: 1px solid rgba(184,108,255,.2);
-}
-
-.card-line {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--purple), transparent);
-  margin: 18px 0;
-}
-
-.hero-card p {
-  font-weight: 900;
-}
-
-.hero-card small {
-  color: var(--muted);
-  font-size: 9px;
-}
-
-.user-badge {
-  margin-top: 20px;
-  display: inline-block;
-  padding: 12px 16px;
-  border: 1px solid rgba(184,108,255,.25);
-  background: rgba(138,43,226,.08);
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.8;
-}
-
-.user-badge strong {
-  color: var(--purple-light);
-}
-
-.section {
-  padding: 100px 7%;
-  max-width: 1250px;
-  margin: auto;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 14px;
-  margin-top: 35px;
-}
-
-.game {
-  min-height: 190px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
-  position: relative;
-  background: #09090b;
-  border: 1px solid rgba(184,108,255,.18);
-  transition: .25s;
-}
-
-.game:hover {
-  transform: translateY(-5px);
-  border-color: var(--purple);
-  box-shadow: 0 15px 35px rgba(138,43,226,.13);
-}
-
-.game img {
-  width: 100%;
-  height: 100%;
-  min-height: 190px;
-  object-fit: cover;
-  position: absolute;
-  inset: 0;
-}
-
-.game::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(transparent 35%, rgba(0,0,0,.9));
-}
-
-.game-info {
-  position: relative;
-  z-index: 2;
-  padding: 20px;
-}
-
-.game b {
-  font-size: 18px;
-}
-
-.game small {
-  color: #d0c8dc;
-  margin-top: 8px;
-  display: block;
-  font-size: 8px;
-}
-
-.clips {
-  grid-template-columns: repeat(3,1fr);
-}
-
-.clip {
-  min-height: 190px;
-  padding: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #130d19, #09090b);
-  border: 1px solid rgba(184,108,255,.18);
-  color: var(--purple-light);
-  font-weight: 800;
-}
-
-.social-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 14px;
-  margin-top: 35px;
-}
-
-.social-grid a {
-  padding: 25px;
-  border: 1px solid rgba(184,108,255,.2);
-  background: #0b090d;
-  font-weight: 800;
-  transition: .2s;
-}
-
-.social-grid a:hover {
-  border-color: var(--purple);
-  background: #120c18;
-}
-
-.social-grid small {
-  display: block;
-  color: var(--muted);
-  font-size: 8px;
-  margin-top: 9px;
-}
-
-.rules {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 14px;
-  margin-top: 35px;
-}
-
-.rule {
-  padding: 25px;
-  background: #0b090d;
-  border: 1px solid rgba(184,108,255,.18);
-}
-
-.rule b {
-  color: var(--purple-light);
-}
-
-.rule small {
-  display: block;
-  color: var(--muted);
-  margin-top: 10px;
-  line-height: 1.7;
-  font-family: Arial, sans-serif;
-}
-
-.final-card {
-  margin-top: 25px;
-  padding: 30px;
-  text-align: center;
-  border: 1px solid rgba(184,108,255,.3);
-  background: radial-gradient(circle, rgba(138,43,226,.12), #0a080c);
-}
-
-.final-card h3 {
-  color: var(--purple-light);
-  font-size: 25px;
-}
-
-.final-card p {
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 10px;
-}
-
-footer {
-  text-align: center;
-  padding: 45px 20px;
-  border-top: 1px solid rgba(184,108,255,.15);
-  color: var(--muted);
-}
-
-footer strong {
-  color: var(--purple-light);
-}
-
-footer p {
-  margin-top: 10px;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-}
-
-@media (max-width: 800px) {
-
-  header {
-    padding: 17px 5%;
-  }
-
-  nav {
-    display: none;
-  }
-
-  .hero {
-    padding: 55px 6%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-card {
-    width: 100%;
-  }
-
-  .grid,
-  .clips,
-  .social-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .choice-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .genre-grid {
-    max-height: 340px;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .grid,
-  .clips,
-  .social-grid,
-  .rules {
-    grid-template-columns: 1fr;
-  }
-
-  .choice-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  h1 {
-    letter-spacing: -2px;
-  }
-
-  .entry-box {
-    padding: 20px 0;
-  }
-
-  .entry-crown {
-    font-size: 60px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>1PRINCIPEBR | Modo Príncipe</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --purple: #8A2BE2;
+      --purple-light: #B86CFF;
+      --black: #050507;
+      --dark: #0b0a10;
+      --card: #111019;
+      --white: #f7f4ff;
+      --muted: #aaa3b8;
+      --red: #ff3158;
+      --green: #65ff9a;
+
+      --magic: var(--purple);
+      --magic-light: var(--purple-light);
+      --magic-rgb: 138, 43, 226;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Orbitron", sans-serif;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(var(--magic-rgb), .18), transparent 35%),
+        var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background .5s ease, color .4s ease;
+    }
+
+    body.magic-mode {
+      --magic: #168cff;
+      --magic-light: #65c7ff;
+      --magic-rgb: 22, 140, 255;
+    }
+
+    body.fire-element {
+      --magic: #ff4b16;
+      --magic-light: #ff9b50;
+      --magic-rgb: 255, 75, 22;
+    }
+
+    body.water-element {
+      --magic: #00bfff;
+      --magic-light: #71e7ff;
+      --magic-rgb: 0, 191, 255;
+    }
+
+    body.air-element {
+      --magic: #b8eaff;
+      --magic-light: #ffffff;
+      --magic-rgb: 184, 234, 255;
+    }
+
+    body.earth-element {
+      --magic: #8f9d4c;
+      --magic-light: #c6d878;
+      --magic-rgb: 143, 157, 76;
+    }
+
+    body.lightning-element {
+      --magic: #ffe600;
+      --magic-light: #fff58a;
+      --magic-rgb: 255, 230, 0;
+    }
+
+    body.shadow-element {
+      --magic: #721cff;
+      --magic-light: #b77aff;
+      --magic-rgb: 114, 28, 255;
+    }
+
+    body.light-element {
+      --magic: #fff2a1;
+      --magic-light: #ffffff;
+      --magic-rgb: 255, 242, 161;
+    }
+
+    body.ice-element {
+      --magic: #70dfff;
+      --magic-light: #d5f8ff;
+      --magic-rgb: 112, 223, 255;
+    }
+
+    body.gravity-element {
+      --magic: #9c5cff;
+      --magic-light: #d09dff;
+      --magic-rgb: 156, 92, 255;
+    }
+
+    body.void-element {
+      --magic: #263dff;
+      --magic-light: #7381ff;
+      --magic-rgb: 38, 61, 255;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(var(--magic-rgb), .28) 1px, transparent 1px);
+      background-size: 70px 70px;
+      opacity: .12;
+      animation: stars 18s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes stars {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(70px);
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity .5s ease;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .loading-crown {
+      font-size: 55px;
+      animation: crownFloat 1.5s ease-in-out infinite;
+    }
+
+    .loading-title {
+      margin-top: 15px;
+      color: var(--magic-light);
+      font-size: 20px;
+      letter-spacing: 4px;
+    }
+
+    @keyframes crownFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+      50% {
+        transform: translateY(-12px) rotate(3deg);
+      }
+    }
+
+    /* =========================
+       SCREENS
+    ========================= */
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center, rgba(var(--magic-rgb), .14), transparent 45%),
+        var(--black);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .screen-box {
+      width: min(650px, 100%);
+      text-align: center;
+      padding: 45px 30px;
+      border: 1px solid rgba(var(--magic-rgb), .35);
+      border-radius: 25px;
+      background: rgba(10, 9, 15, .88);
+      box-shadow:
+        0 0 60px rgba(var(--magic-rgb), .13),
+        inset 0 0 40px rgba(var(--magic-rgb), .025);
+      backdrop-filter: blur(15px);
+      animation: screenIn .6s ease;
+    }
+
+    @keyframes screenIn {
+      from {
+        opacity: 0;
+        transform: scale(.94) translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .screen-icon {
+      font-size: 70px;
+      margin-bottom: 20px;
+    }
+
+    .screen-box h1 {
+      font-size: clamp(25px, 5vw, 45px);
+      margin-bottom: 15px;
+      color: var(--magic-light);
+      text-shadow: 0 0 25px rgba(var(--magic-rgb), .5);
+    }
+
+    .screen-box p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .small-label {
+      color: var(--magic-light);
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .nickname-input {
+      width: 100%;
+      padding: 17px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(var(--magic-rgb), .4);
+      background: #08070c;
+      color: white;
+      outline: none;
+      font-family: inherit;
+      margin-bottom: 12px;
+      text-align: center;
+      transition: .25s;
+    }
+
+    .nickname-input:focus {
+      border-color: var(--magic);
+      box-shadow: 0 0 25px rgba(var(--magic-rgb), .2);
+    }
+
+    .error {
+      color: var(--red);
+      font-size: 11px;
+      min-height: 18px;
+      margin-bottom: 10px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 15px 22px;
+      font-family: inherit;
+      font-weight: 800;
+      letter-spacing: 1px;
+      transition: .25s;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--magic), var(--magic-light));
+      color: #050507;
+      box-shadow: 0 0 25px rgba(var(--magic-rgb), .25);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 35px rgba(var(--magic-rgb), .5);
+    }
+
+    .secondary-btn {
+      color: var(--white);
+      border: 1px solid rgba(var(--magic-rgb), .35);
+      background: rgba(var(--magic-rgb), .08);
+    }
+
+    .secondary-btn:hover {
+      background: rgba(var(--magic-rgb), .18);
+    }
+
+    /* =========================
+       CHOICES
+    ========================= */
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .choice-card {
+      border: 1px solid rgba(var(--magic-rgb), .2);
+      background: rgba(var(--magic-rgb), .04);
+      border-radius: 15px;
+      padding: 18px 8px;
+      cursor: pointer;
+      transition: .25s;
+      min-height: 105px;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--magic);
+      box-shadow: 0 0 22px rgba(var(--magic-rgb), .2);
+    }
+
+    .choice-card.selected {
+      border-color: var(--magic);
+      background: rgba(var(--magic-rgb), .14);
+      box-shadow: 0 0 25px rgba(var(--magic-rgb), .25);
+    }
+
+    .choice-icon {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 9px;
+    }
+
+    .choice-name {
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .element-section-title {
+      text-align: left;
+      font-size: 11px;
+      color: var(--magic-light);
+      letter-spacing: 2px;
+      margin: 20px 0 10px;
+    }
+
+    .spell-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .spell-card {
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+      min-height: 145px;
+      padding: 20px;
+    }
+
+    .spell-card .choice-icon {
+      font-size: 38px;
+    }
+
+    .spell-description {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
+    .element-badge {
+      display: inline-block;
+      font-size: 8px;
+      padding: 5px 8px;
+      border-radius: 20px;
+      background: rgba(var(--magic-rgb), .1);
+      color: var(--magic-light);
+      margin-top: 10px;
+    }
+
+    /* =========================
+       MAIN SITE
+    ========================= */
+
+    #mainSite {
+      display: none;
+    }
+
+    body.site-ready #mainSite {
+      display: block;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 5, 7, .84);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(var(--magic-rgb), .16);
+    }
+
+    .nav {
+      width: min(1200px, calc(100% - 30px));
+      margin: auto;
+      min-height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--magic-light);
+      text-shadow: 0 0 15px rgba(var(--magic-rgb), .4);
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--muted);
+      transition: .2s;
+    }
+
+    nav a:hover {
+      color: var(--magic-light);
+    }
+
+    .mode-switch {
+      border: 1px solid rgba(var(--magic-rgb), .4);
+      background: rgba(var(--magic-rgb), .08);
+      color: var(--magic-light);
+      padding: 9px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .hero {
+      width: min(1200px, calc(100% - 30px));
+      min-height: 680px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .eyebrow {
+      color: var(--magic-light);
+      font-size: 11px;
+      letter-spacing: 4px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 8vw, 95px);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: -4px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--magic-light);
+      text-shadow: 0 0 35px rgba(var(--magic-rgb), .4);
+    }
+
+    .hero-description {
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.8;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .profile-badge {
+      margin-top: 25px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(var(--magic-rgb), .25);
+      background: rgba(var(--magic-rgb), .06);
+      border-radius: 15px;
+      padding: 12px 15px;
+    }
+
+    .badge-icon {
+      font-size: 25px;
+    }
+
+    .badge-text strong {
+      display: block;
+      font-size: 11px;
+      color: var(--magic-light);
+    }
+
+    .badge-text span {
+      display: block;
+      font-size: 8px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .avatar-orb {
+      width: 310px;
+      height: 310px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background:
+        radial-gradient(circle, rgba(var(--magic-rgb), .2), transparent 60%);
+      border: 1px solid rgba(var(--magic-rgb), .35);
+      box-shadow:
+        0 0 60px rgba(var(--magic-rgb), .2),
+        inset 0 0 50px rgba(var(--magic-rgb), .08);
+      animation: orbFloat 4s ease-in-out infinite;
+    }
+
+    .avatar-orb::before,
+    .avatar-orb::after {
+      content: "";
+      position: absolute;
+      inset: -20px;
+      border: 1px solid rgba(var(--magic-rgb), .15);
+      border-radius: 50%;
+      animation: rotateOrb 12s linear infinite;
+    }
+
+    .avatar-orb::after {
+      inset: -45px;
+      border-style: dashed;
+      animation-direction: reverse;
+      animation-duration: 18s;
+    }
+
+    .avatar-placeholder {
+      font-size: 110px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 25px rgba(var(--magic-rgb), .5));
+    }
+
+    .crown {
+      position: absolute;
+      top: 28px;
+      font-size: 50px;
+      z-index: 4;
+      transform: rotate(-8deg);
+    }
+
+    @keyframes orbFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes rotateOrb {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    section {
+      width: min(1200px, calc(100% - 30px));
+      margin: auto;
+      padding: 90px 0;
+    }
+
+    .section-title {
+      margin-bottom: 35px;
+    }
+
+    .section-title span {
+      display: block;
+      color: var(--magic-light);
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(25px, 5vw, 45px);
+    }
+
+    .about-box {
+      padding: 30px;
+      border: 1px solid rgba(var(--magic-rgb), .18);
+      background: rgba(var(--magic-rgb), .035);
+      border-radius: 20px;
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .game-card {
+      min-height: 180px;
+      border-radius: 17px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(var(--magic-rgb), .15);
+      background: #0b0a10;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      opacity: .5;
+      transition: .3s;
+    }
+
+    .game-card:hover img {
+      transform: scale(1.06);
+      opacity: .75;
+    }
+
+    .game-name {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 35px 15px 15px;
+      background: linear-gradient(transparent, rgba(0,0,0,.95));
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .clips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .clip {
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(var(--magic-rgb), .18);
+      border-radius: 17px;
+      background:
+        radial-gradient(circle, rgba(var(--magic-rgb), .12), transparent 60%),
+        #0b0a10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 10px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .social {
+      border: 1px solid rgba(var(--magic-rgb), .2);
+      border-radius: 17px;
+      padding: 25px;
+      background: rgba(var(--magic-rgb), .035);
+      transition: .25s;
+    }
+
+    .social:hover {
+      transform: translateY(-5px);
+      border-color: var(--magic);
+      box-shadow: 0 0 30px rgba(var(--magic-rgb), .15);
+    }
+
+    .social-icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .social strong {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .social span {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .live-box {
+      border: 1px solid rgba(var(--magic-rgb), .3);
+      border-radius: 22px;
+      padding: 45px 30px;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(var(--magic-rgb), .12), transparent 55%),
+        #0a090e;
+    }
+
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      font-size: 10px;
+      margin-bottom: 20px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    .rules {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rule {
+      border: 1px solid rgba(var(--magic-rgb), .14);
+      padding: 17px 20px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      background: rgba(var(--magic-rgb), .025);
+    }
+
+    .rule strong {
+      color: var(--magic-light);
+      margin-right: 7px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(var(--magic-rgb), .15);
+      padding: 35px 15px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    /* =========================
+       MAGIC EFFECTS
+    ========================= */
+
+    #magicParticles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--magic-light);
+      box-shadow: 0 0 12px var(--magic);
+      opacity: .7;
+      animation: particleFloat linear forwards;
+    }
+
+    @keyframes particleFloat {
+      from {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: .7;
+      }
+      85% {
+        opacity: .7;
+      }
+      to {
+        transform: translateY(-15vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .element-message {
+      position: fixed;
+      left: 50%;
+      top: 25px;
+      transform: translateX(-50%) translateY(-100px);
+      z-index: 9000;
+      padding: 14px 20px;
+      border: 1px solid rgba(var(--magic-rgb), .4);
+      background: rgba(7, 7, 10, .9);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      color: var(--magic-light);
+      font-size: 10px;
+      font-weight: 800;
+      box-shadow: 0 0 30px rgba(var(--magic-rgb), .2);
+      transition: .5s;
+      white-space: nowrap;
+    }
+
+    .element-message.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 850px) {
+      .nav {
+        padding: 12px 0;
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 50px;
+      }
+
+      .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons,
+      .profile-badge {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .avatar-orb {
+        width: 240px;
+        height: 240px;
+      }
+
+      .avatar-placeholder {
+        font-size: 85px;
+      }
+
+      .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .clips-grid,
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .spell-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-box {
+        padding: 30px 18px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="glow glow-one"></div>
-<div class="glow glow-two"></div>
+  <!-- =========================
+       LOADING
+  ========================= -->
 
-<!-- =========================
-     SUPABASE
-========================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-
-const SUPABASE_URL =
-  "https://qkaerwabeqozuekfsncc.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_n_RA2bKBircIEP5bsWUULQ_AmmtG-RW";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-</script>
-
-<!-- =========================
-     1. ATIVAR MODO PRÍNCIPE
-========================= -->
-
-<div id="welcome-screen" class="entry-screen active">
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <div class="entry-logo">
-      1<span>PRINCIPEBR</span>
+  <div id="loading">
+    <div class="loading-box">
+      <div class="loading-crown">👑</div>
+      <div class="loading-title">1PRINCIPEBR</div>
     </div>
-
-    <div class="entry-subtitle">
-      CLIQUE ABAIXO E ATIVE SEU MODO PRÍNCIPE
-    </div>
-
-    <button class="entry-button" onclick="goToNickname()">
-      ATIVAR MODO PRÍNCIPE 👑
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     2. NICKNAME
-========================= -->
-
-<div id="nickname-screen" class="entry-screen">
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <h2>DIGITE SEU NICKNAME</h2>
-
-    <p class="entry-subtitle">
-      SEU NICKNAME PRECISA TER "PRINCIPE"
-    </p>
-
-    <input
-      id="nickname"
-      class="nickname-input"
-      type="text"
-      placeholder="Ex: principe123"
-      maxlength="30"
-      autocomplete="off"
-    >
-
-    <div id="nickname-error" class="error-message"></div>
-
-    <button class="entry-button" onclick="saveNicknameAndContinue()">
-      CONFIRMAR NICKNAME
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     3. MASCOTE
-========================= -->
-
-<div id="mascot-screen" class="entry-screen">
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <h2>ESCOLHA SEU MASCOTE</h2>
-
-    <p class="entry-subtitle">
-      ESCOLHA O REPRESENTANTE DO SEU MODO PRÍNCIPE
-    </p>
-
-    <div class="choice-grid">
-
-      <div class="choice-card" onclick="selectMascot(this,'Dragão')">
-        <div class="choice-icon">🐉</div>
-        <div class="choice-name">DRAGÃO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Lobo')">
-        <div class="choice-icon">🐺</div>
-        <div class="choice-name">LOBO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Raposa')">
-        <div class="choice-icon">🦊</div>
-        <div class="choice-name">RAPOSA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Tigre')">
-        <div class="choice-icon">🐯</div>
-        <div class="choice-name">TIGRE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Águia')">
-        <div class="choice-icon">🦅</div>
-        <div class="choice-name">ÁGUIA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Panda')">
-        <div class="choice-icon">🐼</div>
-        <div class="choice-name">PANDA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Serpente')">
-        <div class="choice-icon">🐍</div>
-        <div class="choice-name">SERPENTE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectMascot(this,'Fênix')">
-        <div class="choice-icon">🔥</div>
-        <div class="choice-name">FÊNIX</div>
-      </div>
-
-    </div>
-
-    <button
-      id="mascot-button"
-      class="entry-button"
-      onclick="goToPlatform()"
-      disabled
-      style="opacity:.4;"
-    >
-      CONTINUAR
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     4. PLATAFORMA
-========================= -->
-
-<div id="platform-screen" class="entry-screen">
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <h2>QUAL É SUA PLATAFORMA?</h2>
-
-    <p class="entry-subtitle">
-      O MODO PRÍNCIPE ACEITA TODO MUNDO 🎮
-    </p>
-
-    <div class="choice-grid">
-
-      <div class="choice-card" onclick="selectPlatform(this,'PC')">
-        <div class="choice-icon">🖥️</div>
-        <div class="choice-name">PC</div>
-      </div>
-
-      <div class="choice-card" onclick="selectPlatform(this,'PlayStation 5')">
-        <div class="choice-icon">🎮</div>
-        <div class="choice-name">PS5</div>
-      </div>
-
-      <div class="choice-card" onclick="selectPlatform(this,'PlayStation 4')">
-        <div class="choice-icon">🎮</div>
-        <div class="choice-name">PS4</div>
-      </div>
-
-      <div class="choice-card" onclick="selectPlatform(this,'Xbox')">
-        <div class="choice-icon">◉</div>
-        <div class="choice-name">XBOX</div>
-      </div>
-
-      <div class="choice-card" onclick="selectPlatform(this,'Nintendo')">
-        <div class="choice-icon">▣</div>
-        <div class="choice-name">NINTENDO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectPlatform(this,'Mobile')">
-        <div class="choice-icon">📱</div>
-        <div class="choice-name">MOBILE</div>
-      </div>
-
-    </div>
-
-    <button
-      id="platform-button"
-      class="entry-button"
-      onclick="goToGenres()"
-      disabled
-      style="opacity:.4;"
-    >
-      CONTINUAR
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     5. GÊNEROS
-========================= -->
-
-<div id="genre-screen" class="entry-screen">
-
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <h2>ESCOLHA SEUS GÊNEROS FAVORITOS</h2>
-
-    <p class="entry-subtitle">
-      ESCOLHA EXATAMENTE 3
-    </p>
-
-    <div id="genre-counter" class="counter">
-      0 / 3
-    </div>
-
-    <div class="choice-grid genre-grid">
-
-      <div class="choice-card" onclick="selectGenre(this,'Ação')">
-        <div class="choice-icon">⚔️</div>
-        <div class="choice-name">AÇÃO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Aventura')">
-        <div class="choice-icon">🗺️</div>
-        <div class="choice-name">AVENTURA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Arcade')">
-        <div class="choice-icon">👾</div>
-        <div class="choice-name">ARCADE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Battle Royale')">
-        <div class="choice-icon">🏆</div>
-        <div class="choice-name">BATTLE ROYALE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Beat em Up')">
-        <div class="choice-icon">👊</div>
-        <div class="choice-name">BEAT EM UP</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Cartas')">
-        <div class="choice-icon">🃏</div>
-        <div class="choice-name">CARTAS</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Casual')">
-        <div class="choice-icon">🎈</div>
-        <div class="choice-name">CASUAL</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Corrida')">
-        <div class="choice-icon">🏎️</div>
-        <div class="choice-name">CORRIDA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Estratégia')">
-        <div class="choice-icon">♟️</div>
-        <div class="choice-name">ESTRATÉGIA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Esportes')">
-        <div class="choice-icon">⚽</div>
-        <div class="choice-name">ESPORTES</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'FPS')">
-        <div class="choice-icon">🔫</div>
-        <div class="choice-name">FPS</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Furtividade')">
-        <div class="choice-icon">🥷</div>
-        <div class="choice-name">FURTIVIDADE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Hack and Slash')">
-        <div class="choice-icon">⚔️</div>
-        <div class="choice-name">HACK AND SLASH</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Horror')">
-        <div class="choice-icon">👻</div>
-        <div class="choice-name">HORROR</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Luta')">
-        <div class="choice-icon">🥊</div>
-        <div class="choice-name">LUTA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'MMO')">
-        <div class="choice-icon">🌐</div>
-        <div class="choice-name">MMO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'MOBA')">
-        <div class="choice-icon">🛡️</div>
-        <div class="choice-name">MOBA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Metroidvania')">
-        <div class="choice-icon">🗝️</div>
-        <div class="choice-name">METROIDVANIA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Mundo Aberto')">
-        <div class="choice-icon">🌎</div>
-        <div class="choice-name">MUNDO ABERTO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Musical')">
-        <div class="choice-icon">🎵</div>
-        <div class="choice-name">MUSICAL</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Novela Visual')">
-        <div class="choice-icon">📖</div>
-        <div class="choice-name">NOVELA VISUAL</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Plataforma')">
-        <div class="choice-icon">🧱</div>
-        <div class="choice-name">PLATAFORMA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Puzzle')">
-        <div class="choice-icon">🧩</div>
-        <div class="choice-name">PUZZLE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'RPG')">
-        <div class="choice-icon">🧙</div>
-        <div class="choice-name">RPG</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Roguelike')">
-        <div class="choice-icon">🎲</div>
-        <div class="choice-name">ROGUELIKE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Roguelite')">
-        <div class="choice-icon">🔄</div>
-        <div class="choice-name">ROGUELITE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Sandbox')">
-        <div class="choice-icon">🏗️</div>
-        <div class="choice-name">SANDBOX</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Simulação')">
-        <div class="choice-icon">🚜</div>
-        <div class="choice-name">SIMULAÇÃO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Sobrevivência')">
-        <div class="choice-icon">🏕️</div>
-        <div class="choice-name">SOBREVIVÊNCIA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Soulslike')">
-        <div class="choice-icon">💀</div>
-        <div class="choice-name">SOULSLIKE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Stealth')">
-        <div class="choice-icon">🕶️</div>
-        <div class="choice-name">STEALTH</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Terror')">
-        <div class="choice-icon">😱</div>
-        <div class="choice-name">TERROR</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Tower Defense')">
-        <div class="choice-icon">🏰</div>
-        <div class="choice-name">TOWER DEFENSE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Tiro em Terceira Pessoa')">
-        <div class="choice-icon">🎯</div>
-        <div class="choice-name">TPS</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Ritmo')">
-        <div class="choice-icon">🥁</div>
-        <div class="choice-name">RITMO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Estratégia em Tempo Real')">
-        <div class="choice-icon">⏱️</div>
-        <div class="choice-name">RTS</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Estratégia por Turnos')">
-        <div class="choice-icon">♟️</div>
-        <div class="choice-name">TURNOS</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'MMORPG')">
-        <div class="choice-icon">🧝</div>
-        <div class="choice-name">MMORPG</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Metaverso')">
-        <div class="choice-icon">🌐</div>
-        <div class="choice-name">METAVERSO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Tycoon')">
-        <div class="choice-icon">💰</div>
-        <div class="choice-name">TYCOON</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Gerenciamento')">
-        <div class="choice-icon">📊</div>
-        <div class="choice-name">GERENCIAMENTO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Construção')">
-        <div class="choice-icon">🏗️</div>
-        <div class="choice-name">CONSTRUÇÃO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Investigação')">
-        <div class="choice-icon">🔎</div>
-        <div class="choice-name">INVESTIGAÇÃO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Detetive')">
-        <div class="choice-icon">🕵️</div>
-        <div class="choice-name">DETETIVE</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Fantasia')">
-        <div class="choice-icon">🧚</div>
-        <div class="choice-name">FANTASIA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Ficção Científica')">
-        <div class="choice-icon">🚀</div>
-        <div class="choice-name">FICÇÃO CIENTÍFICA</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Visual Novel')">
-        <div class="choice-icon">📚</div>
-        <div class="choice-name">VISUAL NOVEL</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Party Game')">
-        <div class="choice-icon">🎉</div>
-        <div class="choice-name">PARTY GAME</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Cooperativo')">
-        <div class="choice-icon">🤝</div>
-        <div class="choice-name">COOPERATIVO</div>
-      </div>
-
-      <div class="choice-card" onclick="selectGenre(this,'Multijogador')">
-        <div class="choice-icon">👥</div>
-        <div class="choice-name">MULTIJOGADOR</div>
-      </div>
-
-    </div>
-
-    <div id="genre-counter-bottom" class="counter">
-      0 / 3
-    </div>
-
-    <button
-      id="genre-button"
-      class="entry-button"
-      onclick="finishChoices()"
-      disabled
-      style="opacity:.4;"
-    >
-      ATIVAR MODO PRÍNCIPE 👑
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     6. ATIVAÇÃO
-========================= -->
-
-<div id="activation-screen" class="entry-screen">
-  <div class="entry-box">
-
-    <div class="entry-crown">♛</div>
-
-    <div class="activation-title">
-      MODO PRÍNCIPE ATIVADO
-    </div>
-
-    <div id="activation-message" class="activation-small"></div>
-
-  </div>
-</div>
-
-<!-- =========================
-     SITE PRINCIPAL
-========================= -->
-
-<div id="main-site">
-
-<header>
-
-  <div class="logo">
-    1<span>PRINCIPEBR</span>
   </div>
 
-  <nav>
-    <a href="#inicio">Início</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#jogos">Jogos</a>
-    <a href="#clipes">Clipes</a>
-    <a href="#redes">Redes</a>
-    <a href="#live">Live</a>
-    <a href="#comunidade">Comunidade</a>
-  </nav>
+  <!-- =========================
+       PARTICLES
+  ========================= -->
 
-</header>
+  <div id="magicParticles"></div>
+  <div id="elementMessage" class="element-message"></div>
 
-<section class="hero" id="inicio">
+  <!-- =========================
+       WELCOME
+  ========================= -->
 
-  <div class="hero-content">
+  <div id="welcomeScreen" class="screen">
+    <div class="screen-box">
+      <div class="screen-icon">👑</div>
+      <h1>ATIVAR MODO PRÍNCIPE</h1>
+      <p>
+        Bem-vindo ao universo do 1PRINCIPEBR.
+        Escolha sua identidade e entre para a comunidade.
+      </p>
 
-    <div class="crown">♛</div>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="primary-btn" onclick="startPrinceMode()">
+          👑 MODO PRÍNCIPE
+        </button>
 
-    <div class="eyebrow">
-      MODO PRÍNCIPE
-    </div>
-
-    <h1>
-      1<span>PRINCIPEBR</span>
-    </h1>
-
-    <h2>
-      ATIVANDO MODO PRÍNCIPE
-    </h2>
-
-    <p class="description">
-      Games, lives, clipes, resenha e muita diversão.
-      Aqui qualquer plataforma e qualquer estilo de jogo
-      tem espaço. O Modo Príncipe é para todo mundo.
-    </p>
-
-    <div class="buttons">
-
-      <a class="button" href="#live">
-        ASSISTIR LIVE
-      </a>
-
-      <a class="button" href="#redes">
-        VER REDES
-      </a>
-
-    </div>
-
-    <div id="user-badge"></div>
-
-  </div>
-
-  <div class="hero-card">
-
-    <div class="avatar-placeholder">
-      👑
-    </div>
-
-    <div class="card-line"></div>
-
-    <p>MODO PRÍNCIPE</p>
-
-    <small>
-      RESENHA • GAMES • LIVE • COMUNIDADE
-    </small>
-
-  </div>
-
-</section>
-
-<section class="section" id="sobre">
-
-  <div class="eyebrow">
-    SOBRE
-  </div>
-
-  <h2>
-    BEM-VINDO AO <span>MODO PRÍNCIPE</span>
-  </h2>
-
-  <p class="section-text">
-    O 1PRINCIPEBR é um espaço para quem gosta de games,
-    diversão, competição e resenha. PC, PlayStation, Xbox,
-    Nintendo ou Mobile. Aqui todo jogador tem espaço.
-  </p>
-
-</section>
-
-<section class="section" id="jogos">
-
-  <div class="eyebrow">
-    CONTEÚDO
-  </div>
-
-  <h2>
-    MEUS <span>JOGOS</span>
-  </h2>
-
-  <div class="grid">
-
-    <div class="game">
-      <img src="images/fortnite.jpg" alt="Fortnite">
-      <div class="game-info">
-        <b>FORTNITE</b>
-        <small>BATTLE ROYALE</small>
+        <button class="secondary-btn" onclick="startWizardMode()">
+          🧙‍♂️ SEJA MAGO
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="game">
-      <img src="images/minecraft.jpg" alt="Minecraft">
-      <div class="game-info">
-        <b>MINECRAFT</b>
-        <small>SANDBOX</small>
+  <!-- =========================
+       NICKNAME PRÍNCIPE
+  ========================= -->
+
+  <div id="nicknameScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">👑</div>
+      <h1>QUAL É SEU NOME?</h1>
+      <p>
+        Escolha seu nickname de príncipe.
+        Para ativar o perfil, o nome precisa conter "principe".
+      </p>
+
+      <label class="small-label">SEU NICKNAME</label>
+
+      <input
+        id="nicknameInput"
+        class="nickname-input"
+        type="text"
+        maxlength="30"
+        placeholder="Ex: 1principebr"
+      >
+
+      <div id="nicknameError" class="error"></div>
+
+      <button class="primary-btn" onclick="confirmNickname()">
+        CONTINUAR 👑
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       MASCOTE
+  ========================= -->
+
+  <div id="mascotScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">🐉</div>
+      <h1>ESCOLHA SEU MASCOTE</h1>
+      <p>
+        Escolha o animal que representa sua identidade no Modo Príncipe.
+      </p>
+
+      <div id="mascotGrid" class="choice-grid"></div>
+
+      <button class="primary-btn" onclick="confirmMascot()">
+        CONTINUAR 👑
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       PLATFORM
+  ========================= -->
+
+  <div id="platformScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">🎮</div>
+      <h1>SUA PLATAFORMA</h1>
+      <p>
+        Onde você joga?
+      </p>
+
+      <div id="platformGrid" class="choice-grid"></div>
+
+      <button class="primary-btn" onclick="confirmPlatform()">
+        CONTINUAR 🎮
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       GENRES
+  ========================= -->
+
+  <div id="genreScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">🎯</div>
+      <h1>SEUS JOGOS</h1>
+      <p>
+        Escolha exatamente 3 gêneros que você mais gosta.
+      </p>
+
+      <div id="genreGrid" class="choice-grid"></div>
+
+      <div id="genreError" class="error"></div>
+
+      <button class="primary-btn" onclick="finishPrinceChoices()">
+        ATIVAR MODO PRÍNCIPE 👑
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       WIZARD NICKNAME
+  ========================= -->
+
+  <div id="wizardNicknameScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">🧙‍♂️</div>
+      <h1>DESPERTAR PODER MÁGICO</h1>
+      <p>
+        Primeiro, escolha o nome que será usado pelo seu personagem mágico.
+      </p>
+
+      <label class="small-label">SEU NICKNAME</label>
+
+      <input
+        id="wizardNicknameInput"
+        class="nickname-input"
+        type="text"
+        maxlength="30"
+        placeholder="Ex: MagoPrincipe"
+      >
+
+      <div id="wizardNicknameError" class="error"></div>
+
+      <button class="primary-btn" onclick="confirmWizardNickname()">
+        DESPERTAR ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       SPELLS
+  ========================= -->
+
+  <div id="spellScreen" class="screen hidden">
+    <div class="screen-box">
+      <div class="screen-icon">🔮</div>
+
+      <h1>ESCOLHA SEU FEITIÇO</h1>
+
+      <p>
+        Seu feitiço irá definir a identidade mágica do seu site.
+        Escolha com sabedoria.
+      </p>
+
+      <div class="element-section-title">
+        ⚡ OS 5 ELEMENTOS
       </div>
-    </div>
 
-    <div class="game">
-      <img src="images/gta.jpg" alt="GTA">
-      <div class="game-info">
-        <b>GTA</b>
-        <small>MUNDO ABERTO</small>
+      <div id="elementGrid" class="choice-grid spell-grid"></div>
+
+      <div class="element-section-title">
+        ✨ OS 5 PODERES DIFERENCIADOS
       </div>
-    </div>
 
-    <div class="game">
-      <img src="images/fps.jpg" alt="FPS">
-      <div class="game-info">
-        <b>FPS</b>
-        <small>TIRO</small>
+      <div id="specialSpellGrid" class="choice-grid spell-grid"></div>
+
+      <div id="spellError" class="error"></div>
+
+      <button class="primary-btn" onclick="finishWizardChoices()">
+        DESPERTAR MEU PODER 🔮
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       ACTIVATION
+  ========================= -->
+
+  <div id="activationScreen" class="screen hidden">
+    <div class="screen-box">
+      <div id="activationIcon" class="screen-icon">👑</div>
+      <h1 id="activationTitle">MODO ATIVADO</h1>
+      <p id="activationText"></p>
+
+      <button class="primary-btn" onclick="enterSite()">
+        ENTRAR NO SITE 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       MAIN SITE
+  ========================= -->
+
+  <main id="mainSite">
+
+    <header>
+      <div class="nav">
+
+        <a href="#inicio" class="logo">
+          1PRINCIPEBR
+        </a>
+
+        <nav>
+          <a href="#inicio">INÍCIO</a>
+          <a href="#sobre">SOBRE</a>
+          <a href="#jogos">JOGOS</a>
+          <a href="#clipes">CLIPES</a>
+          <a href="#redes">REDES</a>
+          <a href="#live">LIVE</a>
+          <a href="#comunidade">COMUNIDADE</a>
+
+          <button id="modeSwitch" class="mode-switch" onclick="toggleMode()">
+            🧙 SEJA MAGO
+          </button>
+        </nav>
+
       </div>
-    </div>
+    </header>
 
-    <div class="game">
-      <img src="images/luta.jpg" alt="Jogos de luta">
-      <div class="game-info">
-        <b>LUTA</b>
-        <small>COMBATE</small>
+    <!-- HERO -->
+
+    <section id="inicio" class="hero">
+
+      <div>
+
+        <div id="heroEyebrow" class="eyebrow">
+          ATIVANDO MODO PRÍNCIPE
+        </div>
+
+        <h1>
+          <span>1</span>PRINCIPEBR
+        </h1>
+
+        <p id="heroDescription" class="hero-description">
+          Um espaço para games, lives, clipes, comunidade e muita gameplay.
+          Entre no Modo Príncipe e acompanhe essa jornada.
+        </p>
+
+        <div class="hero-buttons">
+          <a
+            class="primary-btn"
+            href="https://www.twitch.tv/1principebr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🔴 ASSISTIR LIVE
+          </a>
+
+          <a class="secondary-btn" href="#jogos">
+            🎮 VER JOGOS
+          </a>
+        </div>
+
+        <div id="profileBadge" class="profile-badge">
+          <div id="badgeIcon" class="badge-icon">👑</div>
+
+          <div class="badge-text">
+            <strong id="badgeName">1PRINCIPEBR</strong>
+            <span id="badgeDetails">MODO PRÍNCIPE</span>
+          </div>
+        </div>
+
       </div>
-    </div>
 
-    <div class="game">
-      <img src="images/roblox.jpg" alt="Roblox">
-      <div class="game-info">
-        <b>ROBLOX</b>
-        <small>MULTIGÊNERO</small>
+      <div class="hero-visual">
+
+        <div class="avatar-orb">
+
+          <div id="crown" class="crown">👑</div>
+
+          <div id="avatarPlaceholder" class="avatar-placeholder">
+            🧑🏿‍🎮
+          </div>
+
+        </div>
+
       </div>
-    </div>
 
-    <div class="game">
-      <img src="images/simuladores.jpg" alt="Simuladores">
-      <div class="game-info">
-        <b>SIMULADORES</b>
-        <small>SIMULAÇÃO</small>
+    </section>
+
+    <!-- SOBRE -->
+
+    <section id="sobre">
+
+      <div class="section-title">
+        <span>01 • IDENTIDADE</span>
+        <h2>SOBRE O 1PRINCIPEBR</h2>
       </div>
-    </div>
 
-    <div class="game">
-      <img src="images/outros.jpg" alt="Outros jogos">
-      <div class="game-info">
-        <b>OUTROS</b>
-        <small>DE TUDO UM POUCO</small>
+      <div id="aboutBox" class="about-box">
+        Bem-vindo ao universo do 1PRINCIPEBR.
+        Aqui a ideia é reunir games, lives, clipes e uma comunidade
+        que acompanha cada nova fase dessa jornada.
       </div>
-    </div>
 
-  </div>
+    </section>
 
-</section>
+    <!-- JOGOS -->
 
-<section class="section" id="clipes">
+    <section id="jogos">
 
-  <div class="eyebrow">
-    MELHORES MOMENTOS
-  </div>
+      <div class="section-title">
+        <span>02 • GAMEPLAY</span>
+        <h2>JOGOS</h2>
+      </div>
 
-  <h2>
-    <span>CLIPES</span>
-  </h2>
+      <div class="games-grid">
 
-  <div class="grid clips">
+        <a class="game-card" href="#live">
+          <img src="images/fortnite.jpg" alt="Fortnite">
+          <div class="game-name">FORTNITE</div>
+        </a>
 
-    <div class="clip">
-      CLIPE #01
-    </div>
+        <a class="game-card" href="#live">
+          <img src="images/minecraft.jpg" alt="Minecraft">
+          <div class="game-name">MINECRAFT</div>
+        </a>
 
-    <div class="clip">
-      CLIPE #02
-    </div>
+        <a class="game-card" href="#live">
+          <img src="images/gta.jpg" alt="GTA">
+          <div class="game-name">GTA</div>
+        </a>
 
-    <div class="clip">
-      CLIPE #03
-    </div>
+        <a class="game-card" href="#live">
+          <img src="images/fps.jpg" alt="FPS">
+          <div class="game-name">FPS</div>
+        </a>
 
-  </div>
+        <a class="game-card" href="#live">
+          <img src="images/luta.jpg" alt="Jogos de luta">
+          <div class="game-name">LUTA</div>
+        </a>
 
-</section>
+        <a class="game-card" href="#live">
+          <img src="images/roblox.jpg" alt="Roblox">
+          <div class="game-name">ROBLOX</div>
+        </a>
 
-<section class="section" id="redes">
+        <a class="game-card" href="#live">
+          <img src="images/simuladores.jpg" alt="Simuladores">
+          <div class="game-name">SIMULADORES</div>
+        </a>
 
-  <div class="eyebrow">
-    CONECTE-SE
-  </div>
+        <a class="game-card" href="#live">
+          <img src="images/outros.jpg" alt="Outros jogos">
+          <div class="game-name">OUTROS</div>
+        </a>
 
-  <h2>
-    MINHAS <span>REDES</span>
-  </h2>
+      </div>
 
-  <div class="social-grid">
+    </section>
 
-    <a href="https://www.twitch.tv/1principebr" target="_blank" rel="noopener noreferrer">
-      TWITCH
-      <small>LIVE E GAMEPLAY</small>
-    </a>
+    <!-- CLIPES -->
 
-    <a href="https://www.tiktok.com/@ikv_principe12" target="_blank" rel="noopener noreferrer">
-      TIKTOK
-      <small>CLIPES E SHORTS</small>
-    </a>
+    <section id="clipes">
 
-    <a href="https://www.instagram.com/1principebr/" target="_blank" rel="noopener noreferrer">
-      INSTAGRAM
-      <small>CONTEÚDO E NOVIDADES</small>
-    </a>
+      <div class="section-title">
+        <span>03 • MOMENTOS</span>
+        <h2>CLIPES</h2>
+      </div>
 
-  </div>
+      <div class="clips-grid">
 
-</section>
+        <div class="clip">
+          🎬<br>
+          SEU PRÓXIMO CLIP APARECERÁ AQUI
+        </div>
 
-<section class="section" id="live">
+        <div class="clip">
+          ⚡<br>
+          MOMENTO INSANO
+        </div>
 
-  <div class="eyebrow">
-    AO VIVO
-  </div>
+        <div class="clip">
+          👑<br>
+          MODO PRÍNCIPE
+        </div>
 
-  <h2>
-    <span>MODO PRÍNCIPE</span> LIVE
-  </h2>
+      </div>
 
-  <p class="section-text">
-    Quando a coroa aparece, a live começou. 🎮👑
-  </p>
+    </section>
 
-  <div class="buttons">
+    <!-- REDES -->
 
-    <a
-      class="button"
-      href="https://www.twitch.tv/1principebr"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      ENTRAR NA LIVE
-    </a>
+    <section id="redes">
 
-  </div>
+      <div class="section-title">
+        <span>04 • CONECTE-SE</span>
+        <h2>REDES</h2>
+      </div>
 
-</section>
+      <div class="social-grid">
 
-<section class="section" id="comunidade">
+        <a
+          class="social"
+          href="https://www.twitch.tv/1principebr"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="social-icon">🎥</div>
+          <strong>TWITCH</strong>
+          <span>Lives e gameplay ao vivo</span>
+        </a>
 
-  <div class="eyebrow">
-    COMUNIDADE
-  </div>
+        <a
+          class="social"
+          href="https://www.tiktok.com/@ikv_principe12"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="social-icon">🎵</div>
+          <strong>TIKTOK</strong>
+          <span>Clipes e vídeos curtos</span>
+        </a>
 
-  <h2>
-    REGRAS DO <span>MODO PRÍNCIPE</span>
-  </h2>
+        <a
+          class="social"
+          href="https://www.instagram.com/1principebr/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="social-icon">📸</div>
+          <strong>INSTAGRAM</strong>
+          <span>Conteúdos e novidades</span>
+        </a>
 
-  <div class="rules">
+      </div>
 
-    <div class="rule">
-      <b>🔥 MODO PRÍNCIPE</b>
-      <small>
-        QUANDO EU ATIVO O MODO PRÍNCIPE, NINGUÉM ME DERROTA. 👑
-      </small>
-    </div>
+    </section>
 
-    <div class="rule">
-      <b>🤝 RESPEITO</b>
-      <small>
-        RESPEITE TODO MUNDO DA COMUNIDADE.
-      </small>
-    </div>
+    <!-- LIVE -->
 
-    <div class="rule">
-      <b>🎮 GAMEPLAY</b>
-      <small>
-        JOGUE, COMPARTILHE E CURTA OS MOMENTOS.
-      </small>
-    </div>
+    <section id="live">
 
-    <div class="rule">
-      <b>😂 RESENHA</b>
-      <small>
-        RESENHA PURA E MUITA DIVERSÃO.
-      </small>
-    </div>
+      <div class="section-title">
+        <span>05 • AO VIVO</span>
+        <h2>LIVE</h2>
+      </div>
 
-  </div>
+      <div class="live-box">
 
-  <div class="final-card">
+        <div class="live-status">
+          <span class="live-dot"></span>
+          CANAL OFICIAL
+        </div>
 
-    <h3>
-      MODO PRÍNCIPE: ATIVADO 👑
-    </h3>
+        <h2 style="margin-bottom:15px;">
+          VENHA PARA A LIVE 👑
+        </h2>
 
-    <p>
-      RESENHA PURA • MUITA DIVERSÃO • GAMEPLAY INSANA
-    </p>
+        <p style="color:var(--muted);font-size:11px;line-height:1.8;margin-bottom:25px;">
+          Acompanhe as partidas, desafios, clipes e momentos do 1PRINCIPEBR.
+        </p>
 
-    <p>
-      NÃO TEMOS O MELHOR SETUP. TEMOS ALGO MAIOR:
-      FORÇA DE VONTADE. 👑🔥
-    </p>
+        <a
+          class="primary-btn"
+          href="https://www.twitch.tv/1principebr"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ABRIR TWITCH
+        </a>
 
-  </div>
+      </div>
 
-</section>
+    </section>
 
-<footer>
+    <!-- COMUNIDADE -->
 
-  <strong>1PRINCIPEBR</strong>
+    <section id="comunidade">
 
-  <p>
-    MODO PRÍNCIPE • GAMES • LIVE • COMUNIDADE
-  </p>
+      <div class="section-title">
+        <span>06 • COMUNIDADE</span>
+        <h2>REGRAS</h2>
+      </div>
 
-</footer>
+      <div class="rules">
 
-</div>
+        <div class="rule">
+          <strong>01.</strong>
+          Respeite todos os membros da comunidade.
+        </div>
 
-<script>
+        <div class="rule">
+          <strong>02.</strong>
+          Não pratique bullying, preconceito ou ataques pessoais.
+        </div>
 
-/* =====================================================
-   DADOS DO USUÁRIO
-===================================================== */
+        <div class="rule">
+          <strong>03.</strong>
+          Evite spam e mensagens repetitivas.
+        </div>
 
-let userData = {
-  nickname: "",
-  mascot: "",
-  platform: "",
-  genres: []
-};
+        <div class="rule">
+          <strong>04.</strong>
+          Não divulgue conteúdo impróprio ou ilegal.
+        </div>
 
+        <div class="rule">
+          <strong>05.</strong>
+          Respeite os moderadores e as regras da live.
+        </div>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+        <div class="rule">
+          <strong>06.</strong>
+          Entre para se divertir e deixe a comunidade melhor do que encontrou.
+        </div>
 
-async function saveUserDataToSupabase() {
+      </div>
 
-  try {
+    </section>
 
-    /*
-     * Esta função envia as escolhas para o Supabase.
-     *
-     * Ela usa a tabela "principe_profiles".
-     *
-     * Caso essa tabela ainda não exista no seu projeto,
-     * o site continua funcionando normalmente usando
-     * localStorage.
-     */
+    <footer>
+      © 2026 1PRINCIPEBR • MODO PRÍNCIPE 👑 • MODO MAGO 🧙‍♂️
+    </footer>
 
-    const { data: sessionData } =
-      await supabaseClient.auth.getSession();
+  </main>
 
-    const session =
-      sessionData?.session;
+  <script>
+    /* =========================================
+       SUPABASE
+    ========================================= */
 
-    if (!session?.user) {
-      console.log(
-        "Usuário não autenticado. Dados mantidos localmente."
-      );
-      return;
-    }
+    const SUPABASE_URL = "https://qkaerwabeqozuekfsncc.supabase.co";
 
-    const { error } =
-      await supabaseClient
-        .from("principe_profiles")
-        .upsert({
-          user_id: session.user.id,
-          nickname: userData.nickname,
-          mascot: userData.mascot,
-          platform: userData.platform,
-          genres: userData.genres
-        }, {
-          onConflict: "user_id"
-        });
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_n_RA2bKBircIEP5bsWUULQ_AmmtG-RW";
 
-    if (error) {
-
-      console.warn(
-        "Não foi possível salvar no Supabase:",
-        error.message
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
       );
 
-      return;
+
+    /* =========================================
+       USER DATA
+    ========================================= */
+
+    let userData = {
+      nickname: "",
+      mascot: "",
+      platform: "",
+      genres: [],
+      mode: "prince",
+      spell: "",
+      spellType: ""
+    };
+
+
+    let currentMode = "prince";
+
+
+    /* =========================================
+       CHOICES
+    ========================================= */
+
+    const mascots = [
+      ["🐉", "Dragão"],
+      ["🐺", "Lobo"],
+      ["🦊", "Raposa"],
+      ["🐯", "Tigre"],
+      ["🦅", "Águia"],
+      ["🐼", "Panda"],
+      ["🐍", "Serpente"],
+      ["🔥", "Fênix"]
+    ];
+
+    const platforms = [
+      ["💻", "PC"],
+      ["🎮", "PS5"],
+      ["🎮", "PS4"],
+      ["🟢", "Xbox"],
+      ["🔴", "Nintendo"],
+      ["📱", "Mobile"]
+    ];
+
+    const genres = [
+      ["🔫", "Tiro"],
+      ["⚔️", "Ação"],
+      ["🏗️", "Construção"],
+      ["🥊", "Luta"],
+      ["🏎️", "Corrida"],
+      ["⚽", "Esportes"],
+      ["🧟", "Terror"],
+      ["🌎", "Mundo Aberto"],
+      ["🎭", "Aventura"],
+      ["🧙", "RPG"],
+      ["🏪", "Simulador"],
+      ["🧩", "Estratégia"]
+    ];
+
+    const elementalSpells = [
+      {
+        icon: "🔥",
+        name: "Fogo",
+        type: "fire",
+        description: "Controle as chamas e transforme energia em poder."
+      },
+      {
+        icon: "💧",
+        name: "Água",
+        type: "water",
+        description: "Domine as correntes e adapte-se a qualquer situação."
+      },
+      {
+        icon: "🌪️",
+        name: "Ar",
+        type: "air",
+        description: "Movimente-se como o vento e nunca fique parado."
+      },
+      {
+        icon: "🪨",
+        name: "Terra",
+        type: "earth",
+        description: "Uma força resistente, firme e difícil de derrubar."
+      },
+      {
+        icon: "⚡",
+        name: "Raio",
+        type: "lightning",
+        description: "Velocidade e energia elétrica em sua forma máxima."
+      }
+    ];
+
+    const specialSpells = [
+      {
+        icon: "🌑",
+        name: "Sombra",
+        type: "shadow",
+        description: "Caminhe pelas trevas e esconda seu verdadeiro poder."
+      },
+      {
+        icon: "🌟",
+        name: "Luz",
+        type: "light",
+        description: "Uma energia luminosa capaz de iluminar todo o caminho."
+      },
+      {
+        icon: "❄️",
+        name: "Gelo",
+        type: "ice",
+        description: "Congele o campo e transforme o ambiente ao seu redor."
+      },
+      {
+        icon: "🌀",
+        name: "Gravidade",
+        type: "gravity",
+        description: "Altere as forças do espaço e faça tudo orbitar seu poder."
+      },
+      {
+        icon: "🕳️",
+        name: "Vazio",
+        type: "void",
+        description: "Um poder misterioso que desafia as regras da realidade."
+      }
+    ];
+
+
+    /* =========================================
+       SCREEN CONTROL
+    ========================================= */
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+      });
+
+      const target = document.getElementById(id);
+
+      if (target) {
+        target.classList.remove("hidden");
+      }
     }
 
-    console.log(
-      "Dados salvos no Supabase com sucesso."
-    );
 
-  } catch (error) {
+    /* =========================================
+       PRINCE MODE
+    ========================================= */
 
-    console.warn(
-      "Erro ao conectar ao Supabase:",
-      error
-    );
+    function startPrinceMode() {
 
-  }
+      currentMode = "prince";
 
-}
-
-
-/* =====================================================
-   TROCAR TELAS
-===================================================== */
-
-function showScreen(id) {
-
-  document.querySelectorAll(".entry-screen")
-    .forEach(screen => {
-      screen.classList.remove("active");
-    });
-
-  document.getElementById(id)
-    .classList.add("active");
-}
-
-
-/* =====================================================
-   PRIMEIRA TELA
-===================================================== */
-
-function goToNickname() {
-
-  showScreen("nickname-screen");
-
-  setTimeout(() => {
-
-    document.getElementById("nickname")
-      .focus();
-
-  }, 200);
-}
-
-
-/* =====================================================
-   NICKNAME
-===================================================== */
-
-function saveNicknameAndContinue() {
-
-  const input =
-    document.getElementById("nickname");
-
-  const error =
-    document.getElementById("nickname-error");
-
-  const nickname =
-    input.value.trim();
-
-  if (!nickname) {
-
-    error.textContent =
-      "INCORRETO ❌ DIGITE UM NICKNAME.";
-
-    error.classList.remove("correct");
-
-    return;
-  }
-
-  if (!nickname.toLowerCase().includes("principe")) {
-
-    error.textContent =
-      'INCORRETO ❌ O NICKNAME PRECISA TER "PRINCIPE".';
-
-    error.classList.remove("correct");
-
-    input.style.borderColor =
-      "var(--red)";
-
-    return;
-  }
-
-  userData.nickname =
-    nickname;
-
-  error.textContent =
-    "CORRETO ✓ MODO PRÍNCIPE LIBERADO.";
-
-  error.classList.add("correct");
-
-  input.style.borderColor =
-    "var(--green)";
-
-  setTimeout(() => {
-
-    showScreen("mascot-screen");
-
-  }, 700);
-}
-
-
-/* =====================================================
-   MASCOTE
-===================================================== */
-
-function selectMascot(card, mascot) {
-
-  document.querySelectorAll(
-    "#mascot-screen .choice-card"
-  ).forEach(item => {
-    item.classList.remove("selected");
-  });
-
-  card.classList.add("selected");
-
-  userData.mascot =
-    mascot;
-
-  const button =
-    document.getElementById("mascot-button");
-
-  button.disabled =
-    false;
-
-  button.style.opacity =
-    "1";
-}
-
-
-function goToPlatform() {
-
-  if (!userData.mascot)
-    return;
-
-  showScreen("platform-screen");
-}
-
-
-/* =====================================================
-   PLATAFORMA
-===================================================== */
-
-function selectPlatform(card, platform) {
-
-  document.querySelectorAll(
-    "#platform-screen .choice-card"
-  ).forEach(item => {
-    item.classList.remove("selected");
-  });
-
-  card.classList.add("selected");
-
-  userData.platform =
-    platform;
-
-  const button =
-    document.getElementById("platform-button");
-
-  button.disabled =
-    false;
-
-  button.style.opacity =
-    "1";
-}
-
-
-function goToGenres() {
-
-  if (!userData.platform)
-    return;
-
-  showScreen("genre-screen");
-}
-
-
-/* =====================================================
-   GÊNEROS
-===================================================== */
-
-function selectGenre(card, genre) {
-
-  const index =
-    userData.genres.indexOf(genre);
-
-  if (index !== -1) {
-
-    userData.genres.splice(
-      index,
-      1
-    );
-
-    card.classList.remove(
-      "selected"
-    );
-
-  } else {
-
-    if (userData.genres.length >= 3) {
-      return;
-    }
-
-    userData.genres.push(
-      genre
-    );
-
-    card.classList.add(
-      "selected"
-    );
-  }
-
-  updateGenreCounter();
-}
-
-
-function updateGenreCounter() {
-
-  const counterTop =
-    document.getElementById(
-      "genre-counter"
-    );
-
-  const counterBottom =
-    document.getElementById(
-      "genre-counter-bottom"
-    );
-
-  const button =
-    document.getElementById(
-      "genre-button"
-    );
-
-  const amount =
-    userData.genres.length;
-
-  counterTop.textContent =
-    amount + " / 3";
-
-  counterBottom.textContent =
-    amount + " / 3";
-
-  if (amount === 3) {
-
-    counterTop.classList.remove(
-      "warning"
-    );
-
-    counterBottom.classList.remove(
-      "warning"
-    );
-
-    button.disabled =
-      false;
-
-    button.style.opacity =
-      "1";
-
-  } else {
-
-    button.disabled =
-      true;
-
-    button.style.opacity =
-      ".4";
-  }
-}
-
-
-/* =====================================================
-   FINALIZAR ESCOLHAS
-===================================================== */
-
-async function finishChoices() {
-
-  if (userData.genres.length !== 3) {
-    return;
-  }
-
-  localStorage.setItem(
-    "principeData",
-    JSON.stringify(userData)
-  );
-
-  /*
-   * Tenta salvar no Supabase.
-   * O site não trava caso a tabela ainda
-   * não esteja criada.
-   */
-
-  await saveUserDataToSupabase();
-
-  document.getElementById(
-    "activation-message"
-  ).textContent =
-    "BEM-VINDO, " +
-    userData.nickname.toUpperCase() +
-    " 👑";
-
-  showScreen(
-    "activation-screen"
-  );
-
-  setTimeout(() => {
-
-    document.querySelectorAll(
-      ".entry-screen"
-    ).forEach(screen => {
-      screen.classList.remove("active");
-    });
-
-    document.getElementById(
-      "main-site"
-    ).style.display =
-      "block";
-
-    showUserBadge();
-
-    window.scrollTo(
-      0,
-      0
-    );
-
-  }, 3000);
-}
-
-
-/* =====================================================
-   BADGE DO USUÁRIO
-===================================================== */
-
-function escapeHTML(text) {
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    text;
-
-  return div.innerHTML;
-}
-
-
-function showUserBadge() {
-
-  const badge =
-    document.getElementById(
-      "user-badge"
-    );
-
-  const safeNickname =
-    escapeHTML(
-      userData.nickname
-    );
-
-  badge.innerHTML = `
-    <div class="user-badge">
-
-      👑 <strong>
-        ${safeNickname}
-      </strong>
-
-      <br>
-
-      🐾 Mascote:
-      <strong>
-        ${escapeHTML(userData.mascot)}
-      </strong>
-
-      <br>
-
-      🎮 Plataforma:
-      <strong>
-        ${escapeHTML(userData.platform)}
-      </strong>
-
-      <br>
-
-      🎯 Gêneros:
-      <strong>
-        ${userData.genres
-          .map(escapeHTML)
-          .join(" • ")}
-      </strong>
-
-    </div>
-  `;
-}
-
-
-/* =====================================================
-   RECUPERAR DADOS LOCAIS
-===================================================== */
-
-function loadSavedData() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        "principeData"
-      );
-
-    if (!saved)
-      return;
-
-    const parsed =
-      JSON.parse(saved);
-
-    if (
-      parsed &&
-      typeof parsed === "object"
-    ) {
+      document.body.className = "";
 
       userData = {
-        nickname:
-          parsed.nickname || "",
-
-        mascot:
-          parsed.mascot || "",
-
-        platform:
-          parsed.platform || "",
-
-        genres:
-          Array.isArray(parsed.genres)
-            ? parsed.genres
-            : []
+        nickname: "",
+        mascot: "",
+        platform: "",
+        genres: [],
+        mode: "prince",
+        spell: "",
+        spellType: ""
       };
 
+      showScreen("nicknameScreen");
+
+      setTimeout(() => {
+        document.getElementById("nicknameInput").focus();
+      }, 100);
     }
 
-  } catch (error) {
 
-    console.warn(
-      "Não foi possível carregar os dados locais.",
-      error
-    );
+    function confirmNickname() {
 
-  }
-}
+      const input =
+        document.getElementById("nicknameInput");
 
+      const error =
+        document.getElementById("nicknameError");
 
-/* =====================================================
-   ENTER NO NICKNAME
-===================================================== */
+      const nickname =
+        input.value.trim();
 
-document.getElementById(
-  "nickname"
-).addEventListener(
-  "keydown",
-  function(event) {
+      if (!nickname.toLowerCase().includes("principe")) {
 
-    if (event.key === "Enter") {
+        error.textContent =
+          'Seu nickname precisa conter "principe".';
 
-      saveNicknameAndContinue();
+        return;
+      }
 
+      if (nickname.length < 4) {
+
+        error.textContent =
+          "Digite um nickname válido.";
+
+        return;
+      }
+
+      error.textContent = "";
+
+      userData.nickname = nickname;
+
+      renderMascots();
+
+      showScreen("mascotScreen");
     }
 
-  }
-);
+
+    function renderMascots() {
+
+      const grid =
+        document.getElementById("mascotGrid");
+
+      grid.innerHTML = "";
+
+      mascots.forEach(item => {
+
+        const card =
+          document.createElement("div");
+
+        card.className = "choice-card";
+
+        card.innerHTML = `
+          <span class="choice-icon">${item[0]}</span>
+          <span class="choice-name">${item[1]}</span>
+        `;
+
+        card.onclick = () => {
+
+          document
+            .querySelectorAll("#mascotGrid .choice-card")
+            .forEach(c => c.classList.remove("selected"));
+
+          card.classList.add("selected");
+
+          userData.mascot = item[1];
+        };
+
+        grid.appendChild(card);
+      });
+    }
 
 
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
+    function confirmMascot() {
 
-loadSavedData();
+      if (!userData.mascot) {
+        return;
+      }
 
-</script>
+      renderPlatforms();
+
+      showScreen("platformScreen");
+    }
+
+
+    function renderPlatforms() {
+
+      const grid =
+        document.getElementById("platformGrid");
+
+      grid.innerHTML = "";
+
+      platforms.forEach(item => {
+
+        const card =
+          document.createElement("div");
+
+        card.className = "choice-card";
+
+        card.innerHTML = `
+          <span class="choice-icon">${item[0]}</span>
+          <span class="choice-name">${item[1]}</span>
+        `;
+
+        card.onclick = () => {
+
+          document
+            .querySelectorAll("#platformGrid .choice-card")
+            .forEach(c => c.classList.remove("selected"));
+
+          card.classList.add("selected");
+
+          userData.platform = item[1];
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+
+    function confirmPlatform() {
+
+      if (!userData.platform) {
+        return;
+      }
+
+      renderGenres();
+
+      showScreen("genreScreen");
+    }
+
+
+    function renderGenres() {
+
+      const grid =
+        document.getElementById("genreGrid");
+
+      grid.innerHTML = "";
+
+      genres.forEach(item => {
+
+        const card =
+          document.createElement("div");
+
+        card.className = "choice-card";
+
+        card.innerHTML = `
+          <span class="choice-icon">${item[0]}</span>
+          <span class="choice-name">${item[1]}</span>
+        `;
+
+        card.onclick = () => {
+
+          const index =
+            userData.genres.indexOf(item[1]);
+
+          if (index >= 0) {
+
+            userData.genres.splice(index, 1);
+
+            card.classList.remove("selected");
+
+          } else {
+
+            if (userData.genres.length >= 3) {
+              return;
+            }
+
+            userData.genres.push(item[1]);
+
+            card.classList.add("selected");
+          }
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+
+    async function finishPrinceChoices() {
+
+      const error =
+        document.getElementById("genreError");
+
+      if (userData.genres.length !== 3) {
+
+        error.textContent =
+          "Escolha exatamente 3 gêneros.";
+
+        return;
+      }
+
+      error.textContent = "";
+
+      localStorage.setItem(
+        "principeData",
+        JSON.stringify(userData)
+      );
+
+      await saveProfile();
+
+      document.body.className = "";
+
+      document.getElementById("activationIcon").textContent = "👑";
+
+      document.getElementById("activationTitle").textContent =
+        "MODO PRÍNCIPE ATIVADO";
+
+      document.getElementById("activationText").textContent =
+        `Bem-vindo, ${userData.nickname}! Seu mascote é ${userData.mascot} e seu poder começa agora.`;
+
+      showScreen("activationScreen");
+    }
+
+
+    /* =========================================
+       WIZARD MODE
+    ========================================= */
+
+    function startWizardMode() {
+
+      currentMode = "wizard";
+
+      document.body.className = "magic-mode";
+
+      userData = {
+        nickname: "",
+        mascot: "",
+        platform: "",
+        genres: [],
+        mode: "wizard",
+        spell: "",
+        spellType: ""
+      };
+
+      showScreen("wizardNicknameScreen");
+
+      setTimeout(() => {
+        document
+          .getElementById("wizardNicknameInput")
+          .focus();
+      }, 100);
+    }
+
+
+    function confirmWizardNickname() {
+
+      const input =
+        document.getElementById("wizardNicknameInput");
+
+      const error =
+        document.getElementById("wizardNicknameError");
+
+      const nickname =
+        input.value.trim();
+
+      if (nickname.length < 3) {
+
+        error.textContent =
+          "Digite um nickname com pelo menos 3 caracteres.";
+
+        return;
+      }
+
+      error.textContent = "";
+
+      userData.nickname = nickname;
+
+      renderSpells();
+
+      showScreen("spellScreen");
+    }
+
+
+    function renderSpells() {
+
+      renderSpellGroup(
+        "elementGrid",
+        elementalSpells
+      );
+
+      renderSpellGroup(
+        "specialSpellGrid",
+        specialSpells
+      );
+    }
+
+
+    function renderSpellGroup(id, spells) {
+
+      const grid =
+        document.getElementById(id);
+
+      grid.innerHTML = "";
+
+      spells.forEach(spell => {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "choice-card spell-card";
+
+        card.innerHTML = `
+          <span class="choice-icon">${spell.icon}</span>
+
+          <span class="choice-name">
+            ${spell.name}
+          </span>
+
+          <div class="spell-description">
+            ${spell.description}
+          </div>
+
+          <span class="element-badge">
+            ${spells === elementalSpells ? "ELEMENTO" : "PODER ESPECIAL"}
+          </span>
+        `;
+
+        card.onclick = () => {
+
+          document
+            .querySelectorAll("#elementGrid .choice-card, #specialSpellGrid .choice-card")
+            .forEach(c => c.classList.remove("selected"));
+
+          card.classList.add("selected");
+
+          userData.spell = spell.name;
+          userData.spellType = spell.type;
+
+          applyElement(spell.type);
+
+          showElementMessage(
+            `${spell.icon} PODER DESPERTADO: ${spell.name.toUpperCase()}`
+          );
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+
+    function finishWizardChoices() {
+
+      const error =
+        document.getElementById("spellError");
+
+      if (!userData.spell) {
+
+        error.textContent =
+          "Escolha seu feitiço antes de continuar.";
+
+        return;
+      }
+
+      error.textContent = "";
+
+      localStorage.setItem(
+        "principeData",
+        JSON.stringify(userData)
+      );
+
+      saveProfile();
+
+      document.getElementById("activationIcon").textContent =
+        getSpellIcon(userData.spellType);
+
+      document.getElementById("activationTitle").textContent =
+        "PODER DESPERTADO";
+
+      document.getElementById("activationText").textContent =
+        `Bem-vindo, ${userData.nickname}. O poder de ${userData.spell} agora faz parte da sua identidade.`;
+
+      showScreen("activationScreen");
+
+      createMagicParticles();
+    }
+
+
+    /* =========================================
+       ELEMENT SYSTEM
+    ========================================= */
+
+    function applyElement(type) {
+
+      const classes = [
+        "magic-mode",
+        "fire-element",
+        "water-element",
+        "air-element",
+        "earth-element",
+        "lightning-element",
+        "shadow-element",
+        "light-element",
+        "ice-element",
+        "gravity-element",
+        "void-element"
+      ];
+
+      document.body.classList.remove(...classes);
+
+      document.body.classList.add(
+        "magic-mode",
+        `${type}-element`
+      );
+
+      createMagicParticles();
+    }
+
+
+    function getSpellIcon(type) {
+
+      const icons = {
+        fire: "🔥",
+        water: "💧",
+        air: "🌪️",
+        earth: "🪨",
+        lightning: "⚡",
+        shadow: "🌑",
+        light: "🌟",
+        ice: "❄️",
+        gravity: "🌀",
+        void: "🕳️"
+      };
+
+      return icons[type] || "🔮";
+    }
+
+
+    function showElementMessage(message) {
+
+      const box =
+        document.getElementById("elementMessage");
+
+      box.textContent = message;
+
+      box.classList.add("show");
+
+      clearTimeout(window.elementMessageTimer);
+
+      window.elementMessageTimer =
+        setTimeout(() => {
+          box.classList.remove("show");
+        }, 2200);
+    }
+
+
+    function createMagicParticles() {
+
+      const container =
+        document.getElementById("magicParticles");
+
+      container.innerHTML = "";
+
+      for (let i = 0; i < 25; i++) {
+
+        const particle =
+          document.createElement("div");
+
+        particle.className = "particle";
+
+        particle.style.left =
+          `${Math.random() * 100}%`;
+
+        particle.style.animationDuration =
+          `${5 + Math.random() * 9}s`;
+
+        particle.style.animationDelay =
+          `${Math.random() * 5}s`;
+
+        particle.style.width =
+          `${3 + Math.random() * 5}px`;
+
+        particle.style.height =
+          particle.style.width;
+
+        container.appendChild(particle);
+      }
+    }
+
+
+    /* =========================================
+       ENTER SITE
+    ========================================= */
+
+    function enterSite() {
+
+      showScreen("");
+
+      document.querySelectorAll(".screen")
+        .forEach(screen => {
+          screen.classList.add("hidden");
+        });
+
+      document.body.classList.add("site-ready");
+
+      updateSiteForMode();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+
+    /* =========================================
+       SITE MODE
+    ========================================= */
+
+    function updateSiteForMode() {
+
+      const eyebrow =
+        document.getElementById("heroEyebrow");
+
+      const description =
+        document.getElementById("heroDescription");
+
+      const badgeIcon =
+        document.getElementById("badgeIcon");
+
+      const badgeName =
+        document.getElementById("badgeName");
+
+      const badgeDetails =
+        document.getElementById("badgeDetails");
+
+      const avatar =
+        document.getElementById("avatarPlaceholder");
+
+      const modeSwitch =
+        document.getElementById("modeSwitch");
+
+      const about =
+        document.getElementById("aboutBox");
+
+      if (userData.mode === "wizard") {
+
+        document.body.classList.add("magic-mode");
+
+        if (userData.spellType) {
+          applyElement(userData.spellType);
+        }
+
+        eyebrow.textContent =
+          `DESPERTANDO ${userData.spell.toUpperCase()}`;
+
+        description.textContent =
+          `O poder de ${userData.spell} foi despertado. O 1PRINCIPEBR agora possui uma identidade mágica própria, com efeitos e energia baseados no seu feitiço.`;
+
+        badgeIcon.textContent =
+          getSpellIcon(userData.spellType);
+
+        badgeName.textContent =
+          userData.nickname;
+
+        badgeDetails.textContent =
+          `🧙 MAGO • ${userData.spell.toUpperCase()}`;
+
+        avatar.textContent =
+          "🧙🏿‍♂️";
+
+        modeSwitch.textContent =
+          "👑 MODO PRÍNCIPE";
+
+        about.textContent =
+          `O Modo Mago transforma o 1PRINCIPEBR em uma experiência mágica. Seu feitiço escolhido é ${userData.spell}, e essa escolha influencia as cores, brilhos e efeitos visuais do site.`;
+
+      } else {
+
+        document.body.className = "";
+
+        eyebrow.textContent =
+          "ATIVANDO MODO PRÍNCIPE";
+
+        description.textContent =
+          "Um espaço para games, lives, clipes, comunidade e muita gameplay. Entre no Modo Príncipe e acompanhe essa jornada.";
+
+        badgeIcon.textContent =
+          "👑";
+
+        badgeName.textContent =
+          userData.nickname || "1PRINCIPEBR";
+
+        badgeDetails.textContent =
+          `👑 PRÍNCIPE • ${userData.mascot || "MASCOTE"}`;
+
+        avatar.textContent =
+          "🧑🏿‍🎮";
+
+        modeSwitch.textContent =
+          "🧙 SEJA MAGO";
+
+        about.textContent =
+          "Bem-vindo ao universo do 1PRINCIPEBR. Aqui a ideia é reunir games, lives, clipes e uma comunidade que acompanha cada nova fase dessa jornada.";
+      }
+    }
+
+
+    function toggleMode() {
+
+      if (userData.mode === "wizard") {
+
+        userData.mode = "prince";
+
+        document.body.className = "";
+
+        updateSiteForMode();
+
+        showElementMessage(
+          "👑 MODO PRÍNCIPE ATIVADO"
+        );
+
+      } else {
+
+        userData.mode = "wizard";
+
+        document.body.className =
+          "magic-mode";
+
+        if (!userData.spell) {
+
+          showScreen("wizardNicknameScreen");
+
+          return;
+        }
+
+        updateSiteForMode();
+
+        showElementMessage(
+          `${getSpellIcon(userData.spellType)} MODO MAGO ATIVADO`
+        );
+      }
+
+      localStorage.setItem(
+        "principeData",
+        JSON.stringify(userData)
+      );
+    }
+
+
+    /* =========================================
+       SUPABASE SAVE
+    ========================================= */
+
+    async function saveProfile() {
+
+      try {
+
+        /*
+          A tabela esperada é:
+          principe_profiles
+
+          Campos:
+          nickname
+          mascot
+          platform
+          genres
+          mode
+          spell
+          spell_type
+
+          Caso a tabela ainda não exista ou algum campo
+          esteja diferente, o site continua funcionando
+          normalmente com localStorage.
+        */
+
+        const { error } =
+          await supabaseClient
+            .from("principe_profiles")
+            .insert({
+              nickname: userData.nickname,
+              mascot: userData.mascot || null,
+              platform: userData.platform || null,
+              genres: userData.genres || [],
+              mode: userData.mode,
+              spell: userData.spell || null,
+              spell_type: userData.spellType || null
+            });
+
+        if (error) {
+          console.log(
+            "Supabase: perfil não salvo.",
+            error.message
+          );
+        } else {
+          console.log(
+            "Supabase: perfil salvo com sucesso."
+          );
+        }
+
+      } catch (error) {
+
+        console.log(
+          "Supabase indisponível. O site continua funcionando.",
+          error
+        );
+      }
+    }
+
+
+    /* =========================================
+       LOAD LOCAL PROFILE
+    ========================================= */
+
+    function loadSavedProfile() {
+
+      try {
+
+        const saved =
+          localStorage.getItem("principeData");
+
+        if (!saved) {
+          return false;
+        }
+
+        const data =
+          JSON.parse(saved);
+
+        if (!data || !data.nickname) {
+          return false;
+        }
+
+        userData = {
+          nickname: data.nickname || "",
+          mascot: data.mascot || "",
+          platform: data.platform || "",
+          genres: data.genres || [],
+          mode: data.mode || "prince",
+          spell: data.spell || "",
+          spellType: data.spellType || ""
+        };
+
+        if (userData.mode === "wizard") {
+
+          document.body.classList.add("magic-mode");
+
+          if (userData.spellType) {
+            applyElement(userData.spellType);
+          }
+        }
+
+        return true;
+
+      } catch (error) {
+
+        console.log(
+          "Não foi possível carregar o perfil.",
+          error
+        );
+
+        return false;
+      }
+    }
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================= */
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================
+       KEYBOARD
+    ========================================= */
+
+    document.addEventListener("keydown", event => {
+
+      if (event.key !== "Enter") {
+        return;
+      }
+
+      const nicknameScreen =
+        document.getElementById("nicknameScreen");
+
+      const wizardScreen =
+        document.getElementById("wizardNicknameScreen");
+
+      if (
+        nicknameScreen &&
+        !nicknameScreen.classList.contains("hidden")
+      ) {
+        confirmNickname();
+      }
+
+      if (
+        wizardScreen &&
+        !wizardScreen.classList.contains("hidden")
+      ) {
+        confirmWizardNickname();
+      }
+    });
+
+
+    /* =========================================
+       STARTUP
+    ========================================= */
+
+    window.addEventListener("load", () => {
+
+      setTimeout(() => {
+
+        const loading =
+          document.getElementById("loading");
+
+        loading.style.opacity = "0";
+
+        setTimeout(() => {
+          loading.remove();
+        }, 500);
+
+      }, 700);
+
+      const hasProfile =
+        loadSavedProfile();
+
+      if (hasProfile) {
+
+        document.querySelectorAll(".screen")
+          .forEach(screen => {
+            screen.classList.add("hidden");
+          });
+
+        document.body.classList.add("site-ready");
+
+        updateSiteForMode();
+
+        if (userData.mode === "wizard") {
+          createMagicParticles();
+        }
+
+      } else {
+
+        showScreen("welcomeScreen");
+      }
+    });
+
+  </script>
 
 </body>
 </html>
