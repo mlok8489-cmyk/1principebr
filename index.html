@@ -630,10 +630,6 @@ footer p {
   font-size: 12px;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
-
 @media (max-width: 800px) {
 
   header {
@@ -701,6 +697,28 @@ footer p {
 
 <div class="glow glow-one"></div>
 <div class="glow glow-two"></div>
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://qkaerwabeqozuekfsncc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_n_RA2bKBircIEP5bsWUULQ_AmmtG-RW";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+</script>
 
 <!-- =========================
      1. ATIVAR MODO PRÍNCIPE
@@ -912,8 +930,6 @@ footer p {
     <div id="genre-counter" class="counter">
       0 / 3
     </div>
-
-    <!-- LISTA DE GÊNEROS -->
 
     <div class="choice-grid genre-grid">
 
@@ -1169,13 +1185,9 @@ footer p {
 
     </div>
 
-    <!-- CONTADOR -->
-
     <div id="genre-counter-bottom" class="counter">
       0 / 3
     </div>
-
-    <!-- BOTÃO FORA DA ÁREA DE ROLAGEM -->
 
     <button
       id="genre-button"
@@ -1231,8 +1243,6 @@ footer p {
   </nav>
 
 </header>
-
-<!-- HERO -->
 
 <section class="hero" id="inicio">
 
@@ -1292,8 +1302,6 @@ footer p {
 
 </section>
 
-<!-- SOBRE -->
-
 <section class="section" id="sobre">
 
   <div class="eyebrow">
@@ -1311,8 +1319,6 @@ footer p {
   </p>
 
 </section>
-
-<!-- JOGOS -->
 
 <section class="section" id="jogos">
 
@@ -1394,8 +1400,6 @@ footer p {
 
 </section>
 
-<!-- CLIPES -->
-
 <section class="section" id="clipes">
 
   <div class="eyebrow">
@@ -1424,8 +1428,6 @@ footer p {
 
 </section>
 
-<!-- REDES -->
-
 <section class="section" id="redes">
 
   <div class="eyebrow">
@@ -1438,17 +1440,17 @@ footer p {
 
   <div class="social-grid">
 
-    <a href="https://www.twitch.tv/1principebr" target="_blank">
+    <a href="https://www.twitch.tv/1principebr" target="_blank" rel="noopener noreferrer">
       TWITCH
       <small>LIVE E GAMEPLAY</small>
     </a>
 
-    <a href="https://www.tiktok.com/@ikv_principe12" target="_blank">
+    <a href="https://www.tiktok.com/@ikv_principe12" target="_blank" rel="noopener noreferrer">
       TIKTOK
       <small>CLIPES E SHORTS</small>
     </a>
 
-    <a href="https://www.instagram.com/1principebr/" target="_blank">
+    <a href="https://www.instagram.com/1principebr/" target="_blank" rel="noopener noreferrer">
       INSTAGRAM
       <small>CONTEÚDO E NOVIDADES</small>
     </a>
@@ -1456,8 +1458,6 @@ footer p {
   </div>
 
 </section>
-
-<!-- LIVE -->
 
 <section class="section" id="live">
 
@@ -1479,6 +1479,7 @@ footer p {
       class="button"
       href="https://www.twitch.tv/1principebr"
       target="_blank"
+      rel="noopener noreferrer"
     >
       ENTRAR NA LIVE
     </a>
@@ -1486,8 +1487,6 @@ footer p {
   </div>
 
 </section>
-
-<!-- COMUNIDADE -->
 
 <section class="section" id="comunidade">
 
@@ -1564,9 +1563,9 @@ footer p {
 
 <script>
 
-/* =========================
+/* =====================================================
    DADOS DO USUÁRIO
-========================= */
+===================================================== */
 
 let userData = {
   nickname: "",
@@ -1575,41 +1574,124 @@ let userData = {
   genres: []
 };
 
-/* =========================
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+async function saveUserDataToSupabase() {
+
+  try {
+
+    /*
+     * Esta função envia as escolhas para o Supabase.
+     *
+     * Ela usa a tabela "principe_profiles".
+     *
+     * Caso essa tabela ainda não exista no seu projeto,
+     * o site continua funcionando normalmente usando
+     * localStorage.
+     */
+
+    const { data: sessionData } =
+      await supabaseClient.auth.getSession();
+
+    const session =
+      sessionData?.session;
+
+    if (!session?.user) {
+      console.log(
+        "Usuário não autenticado. Dados mantidos localmente."
+      );
+      return;
+    }
+
+    const { error } =
+      await supabaseClient
+        .from("principe_profiles")
+        .upsert({
+          user_id: session.user.id,
+          nickname: userData.nickname,
+          mascot: userData.mascot,
+          platform: userData.platform,
+          genres: userData.genres
+        }, {
+          onConflict: "user_id"
+        });
+
+    if (error) {
+
+      console.warn(
+        "Não foi possível salvar no Supabase:",
+        error.message
+      );
+
+      return;
+    }
+
+    console.log(
+      "Dados salvos no Supabase com sucesso."
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Erro ao conectar ao Supabase:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
    TROCAR TELAS
-========================= */
+===================================================== */
 
 function showScreen(id) {
 
   document.querySelectorAll(".entry-screen")
-    .forEach(screen => screen.classList.remove("active"));
+    .forEach(screen => {
+      screen.classList.remove("active");
+    });
 
-  document.getElementById(id).classList.add("active");
+  document.getElementById(id)
+    .classList.add("active");
 }
 
-/* =========================
+
+/* =====================================================
    PRIMEIRA TELA
-========================= */
+===================================================== */
 
 function goToNickname() {
 
   showScreen("nickname-screen");
 
   setTimeout(() => {
-    document.getElementById("nickname").focus();
+
+    document.getElementById("nickname")
+      .focus();
+
   }, 200);
 }
 
-/* =========================
+
+/* =====================================================
    NICKNAME
-========================= */
+===================================================== */
 
 function saveNicknameAndContinue() {
 
-  const input = document.getElementById("nickname");
-  const error = document.getElementById("nickname-error");
+  const input =
+    document.getElementById("nickname");
 
-  const nickname = input.value.trim();
+  const error =
+    document.getElementById("nickname-error");
+
+  const nickname =
+    input.value.trim();
 
   if (!nickname) {
 
@@ -1621,11 +1703,6 @@ function saveNicknameAndContinue() {
     return;
   }
 
-  /*
-    O NICKNAME PRECISA CONTER "PRINCIPE".
-    NÃO IMPORTA SE ESTÁ EM MAIÚSCULO OU MINÚSCULO.
-  */
-
   if (!nickname.toLowerCase().includes("principe")) {
 
     error.textContent =
@@ -1633,82 +1710,108 @@ function saveNicknameAndContinue() {
 
     error.classList.remove("correct");
 
-    input.style.borderColor = "var(--red)";
+    input.style.borderColor =
+      "var(--red)";
 
     return;
   }
 
-  userData.nickname = nickname;
+  userData.nickname =
+    nickname;
 
   error.textContent =
     "CORRETO ✓ MODO PRÍNCIPE LIBERADO.";
 
   error.classList.add("correct");
 
-  input.style.borderColor = "var(--green)";
+  input.style.borderColor =
+    "var(--green)";
 
   setTimeout(() => {
+
     showScreen("mascot-screen");
+
   }, 700);
 }
 
-/* =========================
+
+/* =====================================================
    MASCOTE
-========================= */
+===================================================== */
 
 function selectMascot(card, mascot) {
 
-  document.querySelectorAll("#mascot-screen .choice-card")
-    .forEach(item => item.classList.remove("selected"));
+  document.querySelectorAll(
+    "#mascot-screen .choice-card"
+  ).forEach(item => {
+    item.classList.remove("selected");
+  });
 
   card.classList.add("selected");
 
-  userData.mascot = mascot;
+  userData.mascot =
+    mascot;
 
   const button =
     document.getElementById("mascot-button");
 
-  button.disabled = false;
-  button.style.opacity = "1";
+  button.disabled =
+    false;
+
+  button.style.opacity =
+    "1";
 }
+
 
 function goToPlatform() {
 
-  if (!userData.mascot) return;
+  if (!userData.mascot)
+    return;
 
   showScreen("platform-screen");
 }
 
-/* =========================
+
+/* =====================================================
    PLATAFORMA
-========================= */
+===================================================== */
 
 function selectPlatform(card, platform) {
 
-  document.querySelectorAll("#platform-screen .choice-card")
-    .forEach(item => item.classList.remove("selected"));
+  document.querySelectorAll(
+    "#platform-screen .choice-card"
+  ).forEach(item => {
+    item.classList.remove("selected");
+  });
 
   card.classList.add("selected");
 
-  userData.platform = platform;
+  userData.platform =
+    platform;
 
   const button =
     document.getElementById("platform-button");
 
-  button.disabled = false;
-  button.style.opacity = "1";
+  button.disabled =
+    false;
+
+  button.style.opacity =
+    "1";
 }
+
 
 function goToGenres() {
 
-  if (!userData.platform) return;
+  if (!userData.platform)
+    return;
 
   showScreen("genre-screen");
 }
 
-/* =========================
+
+/* =====================================================
    GÊNEROS
-========================= */
+===================================================== */
 
 function selectGenre(card, genre) {
 
@@ -1717,9 +1820,14 @@ function selectGenre(card, genre) {
 
   if (index !== -1) {
 
-    userData.genres.splice(index, 1);
+    userData.genres.splice(
+      index,
+      1
+    );
 
-    card.classList.remove("selected");
+    card.classList.remove(
+      "selected"
+    );
 
   } else {
 
@@ -1727,24 +1835,35 @@ function selectGenre(card, genre) {
       return;
     }
 
-    userData.genres.push(genre);
+    userData.genres.push(
+      genre
+    );
 
-    card.classList.add("selected");
+    card.classList.add(
+      "selected"
+    );
   }
 
   updateGenreCounter();
 }
 
+
 function updateGenreCounter() {
 
   const counterTop =
-    document.getElementById("genre-counter");
+    document.getElementById(
+      "genre-counter"
+    );
 
   const counterBottom =
-    document.getElementById("genre-counter-bottom");
+    document.getElementById(
+      "genre-counter-bottom"
+    );
 
   const button =
-    document.getElementById("genre-button");
+    document.getElementById(
+      "genre-button"
+    );
 
   const amount =
     userData.genres.length;
@@ -1757,24 +1876,36 @@ function updateGenreCounter() {
 
   if (amount === 3) {
 
-    counterTop.classList.remove("warning");
-    counterBottom.classList.remove("warning");
+    counterTop.classList.remove(
+      "warning"
+    );
 
-    button.disabled = false;
-    button.style.opacity = "1";
+    counterBottom.classList.remove(
+      "warning"
+    );
+
+    button.disabled =
+      false;
+
+    button.style.opacity =
+      "1";
 
   } else {
 
-    button.disabled = true;
-    button.style.opacity = ".4";
+    button.disabled =
+      true;
+
+    button.style.opacity =
+      ".4";
   }
 }
 
-/* =========================
-   FINALIZAR ESCOLHAS
-========================= */
 
-function finishChoices() {
+/* =====================================================
+   FINALIZAR ESCOLHAS
+===================================================== */
+
+async function finishChoices() {
 
   if (userData.genres.length !== 3) {
     return;
@@ -1785,76 +1916,190 @@ function finishChoices() {
     JSON.stringify(userData)
   );
 
-  document.getElementById("activation-message").textContent =
+  /*
+   * Tenta salvar no Supabase.
+   * O site não trava caso a tabela ainda
+   * não esteja criada.
+   */
+
+  await saveUserDataToSupabase();
+
+  document.getElementById(
+    "activation-message"
+  ).textContent =
     "BEM-VINDO, " +
     userData.nickname.toUpperCase() +
     " 👑";
 
-  showScreen("activation-screen");
+  showScreen(
+    "activation-screen"
+  );
 
   setTimeout(() => {
 
-    document.querySelectorAll(".entry-screen")
-      .forEach(screen => screen.classList.remove("active"));
+    document.querySelectorAll(
+      ".entry-screen"
+    ).forEach(screen => {
+      screen.classList.remove("active");
+    });
 
-    document.getElementById("main-site").style.display =
+    document.getElementById(
+      "main-site"
+    ).style.display =
       "block";
 
     showUserBadge();
 
-    window.scrollTo(0, 0);
+    window.scrollTo(
+      0,
+      0
+    );
 
   }, 3000);
 }
 
-/* =========================
+
+/* =====================================================
    BADGE DO USUÁRIO
-========================= */
+===================================================== */
 
 function escapeHTML(text) {
 
-  const div = document.createElement("div");
+  const div =
+    document.createElement("div");
 
-  div.textContent = text;
+  div.textContent =
+    text;
 
   return div.innerHTML;
 }
 
+
 function showUserBadge() {
 
   const badge =
-    document.getElementById("user-badge");
+    document.getElementById(
+      "user-badge"
+    );
 
   const safeNickname =
-    escapeHTML(userData.nickname);
+    escapeHTML(
+      userData.nickname
+    );
 
   badge.innerHTML = `
     <div class="user-badge">
-      👑 <strong>${safeNickname}</strong><br>
+
+      👑 <strong>
+        ${safeNickname}
+      </strong>
+
+      <br>
+
       🐾 Mascote:
-      <strong>${escapeHTML(userData.mascot)}</strong><br>
+      <strong>
+        ${escapeHTML(userData.mascot)}
+      </strong>
+
+      <br>
+
       🎮 Plataforma:
-      <strong>${escapeHTML(userData.platform)}</strong><br>
+      <strong>
+        ${escapeHTML(userData.platform)}
+      </strong>
+
+      <br>
+
       🎯 Gêneros:
-      <strong>${userData.genres.map(escapeHTML).join(" • ")}</strong>
+      <strong>
+        ${userData.genres
+          .map(escapeHTML)
+          .join(" • ")}
+      </strong>
+
     </div>
   `;
 }
 
-/* =========================
-   ENTER NO NICKNAME
-========================= */
 
-document.getElementById("nickname").addEventListener(
+/* =====================================================
+   RECUPERAR DADOS LOCAIS
+===================================================== */
+
+function loadSavedData() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        "principeData"
+      );
+
+    if (!saved)
+      return;
+
+    const parsed =
+      JSON.parse(saved);
+
+    if (
+      parsed &&
+      typeof parsed === "object"
+    ) {
+
+      userData = {
+        nickname:
+          parsed.nickname || "",
+
+        mascot:
+          parsed.mascot || "",
+
+        platform:
+          parsed.platform || "",
+
+        genres:
+          Array.isArray(parsed.genres)
+            ? parsed.genres
+            : []
+      };
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      "Não foi possível carregar os dados locais.",
+      error
+    );
+
+  }
+}
+
+
+/* =====================================================
+   ENTER NO NICKNAME
+===================================================== */
+
+document.getElementById(
+  "nickname"
+).addEventListener(
   "keydown",
   function(event) {
 
     if (event.key === "Enter") {
+
       saveNicknameAndContinue();
+
     }
 
   }
 );
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+loadSavedData();
 
 </script>
 
