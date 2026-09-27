@@ -2125,6 +2125,194 @@ body.prince-evil{--magic:#8A2BE2;--magic-light:#C58AFF;--magic-rgb:138,43,226;}
   .live-box{padding:22px;}
 }
 
+
+/* ============================================================
+   GATEWAY / ENTRADAS INDIVIDUAIS
+   Interface de seleção com duas portas realmente distintas.
+   ============================================================ */
+.gateway-box{
+  width:min(1120px,100%);
+  padding:38px;
+}
+.gateway-heading{text-align:center;max-width:900px;margin:0 auto 24px;}
+.gateway-overline{
+  display:inline-flex;
+  padding:8px 12px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  color:#8F879A;
+  font-size:6px;
+  font-weight:900;
+  letter-spacing:1.7px;
+  margin-bottom:12px;
+}
+.gateway-heading h1{
+  margin-bottom:12px;
+  font-size:clamp(26px,4.8vw,50px);
+  letter-spacing:2.5px;
+}
+.gateway-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:26px;
+}
+.mode-door{
+  position:relative;
+  min-height:500px;
+  padding:24px;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:#08080d;
+  box-shadow:0 30px 80px rgba(0,0,0,.34);
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.mode-door::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.045),transparent 28%),
+    linear-gradient(180deg,transparent 50%,rgba(0,0,0,.35));
+}
+.mode-door::after{
+  content:"";
+  position:absolute;
+  width:240px;height:240px;
+  border-radius:50%;
+  right:-90px;top:-85px;
+  filter:blur(5px);
+  opacity:.22;
+  pointer-events:none;
+}
+.mode-door-prince{border-color:rgba(138,43,226,.28);background:linear-gradient(150deg,rgba(59,17,92,.72),rgba(8,7,12,.97) 58%);}
+.mode-door-prince::after{background:radial-gradient(circle,#8A2BE2,transparent 70%);}
+.mode-door-mage{border-color:rgba(112,233,255,.2);background:linear-gradient(150deg,rgba(7,33,47,.8),rgba(5,8,14,.98) 58%);}
+.mode-door-mage::after{background:radial-gradient(circle,#70E9FF,transparent 70%);}
+.mode-door:hover{transform:translateY(-5px);box-shadow:0 38px 95px rgba(0,0,0,.5);}
+.mode-door-prince:hover{border-color:rgba(138,43,226,.55);}
+.mode-door-mage:hover{border-color:rgba(112,233,255,.48);}
+.mode-door-top,.mode-door-tags,.gateway-footer-line{position:relative;z-index:2;}
+.mode-door-top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.mode-index{font-size:9px;font-weight:900;color:#766D82;letter-spacing:1.5px;}
+.mode-status{
+  padding:7px 9px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  font-size:6px;font-weight:900;letter-spacing:1px;color:#847C90;
+  background:rgba(255,255,255,.02);
+}
+.mode-status.ready-status{color:var(--green);border-color:rgba(101,255,154,.22);}
+.mode-door-icon{
+  width:118px;height:118px;
+  margin:28px 0 18px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.025);
+  box-shadow:inset 0 0 45px rgba(255,255,255,.025);
+  position:relative;z-index:2;
+}
+.mode-door-icon .icon{width:84px;height:84px;}
+.mode-door-kicker{position:relative;z-index:2;font-size:7px;font-weight:900;letter-spacing:1.6px;color:#81798B;margin-top:6px;}
+.mode-door h2{position:relative;z-index:2;margin-top:9px;font-size:21px;line-height:1.2;letter-spacing:1px;}
+.mode-door p{position:relative;z-index:2;color:#968EA3;font-size:9px;line-height:1.9;max-width:470px;margin-top:12px;}
+.mode-door-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;}
+.mode-door-tags span{padding:6px 8px;border:1px solid rgba(255,255,255,.07);border-radius:7px;font-size:5.5px;font-weight:900;letter-spacing:1px;color:#7F7789;background:rgba(255,255,255,.018);}
+.mode-door-button{
+  width:100%;min-height:54px;margin-top:28px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 15px 0 18px;
+  border-radius:12px;
+  color:white;font-size:8px;font-weight:900;letter-spacing:1.2px;
+  cursor:pointer;position:relative;z-index:2;
+  transition:transform .2s ease,filter .2s ease;
+}
+.mode-door-button span{font-size:7px;opacity:.65;}
+.mode-door-button:hover{transform:translateY(-2px);filter:brightness(1.08);}
+.prince-door-button{background:linear-gradient(135deg,#8A2BE2,#451082);border:1px solid rgba(193,138,255,.35);box-shadow:0 12px 35px rgba(78,19,140,.3);}
+.mage-door-button{background:linear-gradient(135deg,#168CFF,#0E4E8B);border:1px solid rgba(112,233,255,.3);box-shadow:0 12px 35px rgba(15,92,157,.24);}
+.gateway-footer-line{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 22px;margin-top:20px;padding-top:17px;border-top:1px solid rgba(255,255,255,.06);color:#5E576A;font-size:5.5px;font-weight:900;letter-spacing:1.5px;}
+
+/* ============================================================
+   REGISTRO LATERAL / HUD DE CONFIGURAÇÃO
+   ============================================================ */
+.setup-box{width:min(1120px,100%);}
+.setup-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:22px;align-items:stretch;}
+.setup-main{padding:8px 4px 4px;}
+.setup-kicker{font-size:6px;font-weight:900;letter-spacing:2px;color:var(--mode-secondary);margin:0 0 8px;text-align:center;}
+.setup-main .screen-icon{margin-top:0;}
+.input-hint{color:#625B6B;font-size:7px;line-height:1.6;margin-top:8px;}
+.input-hint strong{color:var(--mode-secondary);font-weight:900;}
+.registration-panel{
+  position:relative;
+  align-self:stretch;
+  min-height:100%;
+  padding:22px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  overflow:hidden;
+}
+.registration-panel::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--mode-secondary),transparent);
+  opacity:.7;
+}
+.prince-registration-panel{border-color:rgba(138,43,226,.18);}
+.mage-registration-panel{border-color:rgba(112,233,255,.16);}
+.registration-label{font-size:5.5px;font-weight:900;letter-spacing:1.6px;color:#716A79;}
+.registration-title{margin-top:6px;font-size:15px;font-weight:900;letter-spacing:.8px;}
+.registration-status{display:inline-flex;margin-top:10px;padding:6px 8px;border-radius:7px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);color:#7D7588;font-size:5.5px;font-weight:900;letter-spacing:1px;}
+.registration-status.active-status{color:var(--mode-secondary);border-color:rgba(var(--mode-secondary-rgb),.2);}
+.registration-profile{display:flex;align-items:center;gap:11px;margin-top:22px;padding:12px;border:1px solid rgba(255,255,255,.06);border-radius:13px;background:rgba(0,0,0,.16);}
+.registration-profile .icon{width:46px;height:46px;flex-basis:46px;}
+.registration-profile strong{display:block;font-size:8px;letter-spacing:.7px;}
+.registration-profile small{display:block;color:#686171;font-size:6px;margin-top:5px;line-height:1.5;}
+.registration-steps{margin-top:18px;display:flex;flex-direction:column;gap:8px;}
+.registration-step{display:flex;align-items:center;gap:10px;padding:9px 8px;border:1px solid transparent;border-radius:10px;opacity:.55;transition:.2s ease;}
+.registration-step span{width:27px;height:27px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,.03);color:#726A7E;font-size:6px;font-weight:900;}
+.registration-step strong{display:block;font-size:6px;letter-spacing:1px;color:#9B93A8;}
+.registration-step small{display:block;margin-top:3px;color:#5F5968;font-size:5.5px;}
+.registration-step.active,.registration-step.done{opacity:1;border-color:rgba(var(--mode-secondary-rgb),.12);background:rgba(var(--magic-rgb),.035);}
+.registration-step.active span,.registration-step.done span{background:rgba(var(--mode-secondary-rgb),.12);color:var(--mode-secondary);}
+.registration-step.active strong,.registration-step.done strong{color:var(--white);}
+.registration-lock{margin-top:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);font-size:5px;font-weight:900;letter-spacing:1.2px;color:#5E5768;}
+.alignment-code{font-size:5.5px;font-weight:900;letter-spacing:1.4px;color:#6E6679;margin-top:2px;}
+.alignment-action{margin-top:auto;padding-top:15px;color:var(--mode-secondary);font-size:5.5px;font-weight:900;letter-spacing:1.5px;}
+
+@media(max-width:850px){
+  .gateway-grid,.setup-layout{grid-template-columns:1fr;}
+  .registration-panel{min-height:auto;}
+  .mode-door{min-height:460px;}
+}
+@media(max-width:600px){
+  .gateway-box{padding:22px 16px;}
+  .mode-door{padding:19px;min-height:430px;}
+  .mode-door-icon{width:96px;height:96px;}
+  .mode-door-icon .icon{width:68px;height:68px;}
+  .setup-box{padding:22px 16px;}
+  .registration-panel{padding:17px;}
+}
+
+
+.activation-record{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:4px auto 4px;
+  padding:8px 11px;
+  border:1px solid rgba(var(--mode-secondary-rgb),.18);
+  border-radius:8px;
+  color:var(--mode-secondary);
+  background:rgba(var(--mode-secondary-rgb),.04);
+  font-size:5.5px;
+  font-weight:900;
+  letter-spacing:1.1px;
+}
+
 </style>
 </head>
 <body>
@@ -2147,16 +2335,51 @@ body.prince-evil{--magic:#8A2BE2;--magic-light:#C58AFF;--magic-rgb:138,43,226;}
      WELCOME
      ========================================================= -->
 <div id="welcomeScreen" class="screen hidden">
-  <div class="screen-box">
+  <div class="screen-box gateway-box">
     <div class="screen-topline">
       <span class="screen-tag"><span class="micro-dot"></span>1PRINCIPEBR</span>
-      <span class="screen-tag">DOIS UNIVERSOS</span>
+      <span class="screen-tag">SELECT SYSTEM</span>
     </div>
-    <div class="screen-icon" id="welcomeIcon"></div>
-    <h1 id="welcomeTitle">QUAL UNIVERSO É SEU?</h1>
-    <p class="screen-copy" id="welcomeCopy">DOIS UNIVERSOS. DUAS IDENTIDADES. DUAS CONFIGURAÇÕES. ESCOLHA SUA PORTA DE ENTRADA E CONSTRUA SEU PERFIL SEM MISTURAR NENHUM DADO.</p>
-    <button class="primary-btn" type="button" onclick="startPrinceMode()"><span class="icon prince-icon" data-icon="crown"></span><span>ATIVAR MODO PRÍNCIPE</span></button>
-    <button class="secondary-btn" type="button" onclick="startWizardMode()"><span class="icon mage-icon" data-icon="arcane"></span><span>DESPERTAR MODO MAGO</span></button>
+
+    <div class="gateway-heading">
+      <div class="gateway-overline">ESCOLHA SUA PORTA DE ENTRADA</div>
+      <h1>DOIS MODOS. DUAS IDENTIDADES.</h1>
+      <p class="screen-copy">Cada caminho possui entrada, registro, frases, estética e memória próprios. Entre no universo que você quer configurar sem misturar os dados do outro.</p>
+    </div>
+
+    <div class="gateway-grid">
+      <article class="mode-door mode-door-prince">
+        <div class="mode-door-top">
+          <span class="mode-index">01</span>
+          <span class="mode-status" id="princeEntryStatus">REGISTRO NOVO</span>
+        </div>
+        <div class="mode-door-icon"><span class="icon prince-icon" data-icon="crown"></span></div>
+        <div class="mode-door-kicker">REINO // COMPETIÇÃO</div>
+        <h2>ATIVAR MODO PRÍNCIPE</h2>
+        <p>Entre pelo reino. Escolha sua linhagem, seu guardião ou arsenal, sua plataforma e o seu Game DNA.</p>
+        <div class="mode-door-tags"><span>COROA</span><span>GAME DNA</span><span>REGISTRO PRÓPRIO</span></div>
+        <button class="mode-door-button prince-door-button" type="button" onclick="startPrinceMode()">ENTRAR NO REINO <span>01</span></button>
+      </article>
+
+      <article class="mode-door mode-door-mage">
+        <div class="mode-door-top">
+          <span class="mode-index">02</span>
+          <span class="mode-status" id="mageEntryStatus">REGISTRO NOVO</span>
+        </div>
+        <div class="mode-door-icon"><span class="icon mage-icon" data-icon="arcane"></span></div>
+        <div class="mode-door-kicker">ARCANO // PODER</div>
+        <h2>DESPERTAR MODO MAGO</h2>
+        <p>Abra seu círculo. Escolha alinhamento, nome arcano e até dois poderes para criar sua assinatura mágica.</p>
+        <div class="mode-door-tags"><span>CÍRCULO</span><span>PODERES</span><span>REGISTRO PRÓPRIO</span></div>
+        <button class="mode-door-button mage-door-button" type="button" onclick="startWizardMode()">ABRIR O CÍRCULO <span>02</span></button>
+      </article>
+    </div>
+
+    <div class="gateway-footer-line">
+      <span>MEMÓRIA LOCAL SEPARADA</span>
+      <span>PRÍNCIPE / MAGO</span>
+      <span>DADOS ISOLADOS</span>
+    </div>
   </div>
 </div>
 
@@ -2164,21 +2387,53 @@ body.prince-evil{--magic:#8A2BE2;--magic-light:#C58AFF;--magic-rgb:138,43,226;}
      PRINCE SETUP
      ========================================================= -->
 <div id="princeSetupScreen" class="screen hidden">
-  <div class="screen-box">
+  <div class="screen-box setup-box prince-entry-box">
     <div class="screen-topline">
-      <span class="screen-tag"><span class="micro-dot"></span>PRÍNCIPE</span>
-      <span class="screen-tag">CONFIGURAÇÃO INDIVIDUAL</span>
+      <span class="screen-tag"><span class="micro-dot"></span>PRÍNCIPE // REGISTRO</span>
+      <span class="screen-tag">IDENTIDADE 01</span>
     </div>
-    <div class="screen-icon" id="princeSetupIcon"></div>
-    <h1 id="princeSetupTitle">FORJE SEU NOME DE REINO</h1>
-    <p class="screen-copy" id="princeSetupCopy">Dê um nome à sua coroa. O perfil criado aqui pertence somente ao Modo Príncipe.</p>
-    <div class="input-group">
-      <label class="small-label" for="nicknameInput">NICKNAME DO PRÍNCIPE</label>
-      <input id="nicknameInput" class="nickname-input" type="text" maxlength="30" autocomplete="off" placeholder="Ex: 1principebr">
-      <div id="nicknameError" class="error-text"></div>
+
+    <div class="setup-layout">
+      <section class="setup-main">
+        <div class="screen-icon" id="princeSetupIcon"></div>
+        <div class="setup-kicker">REGISTRO DE REINO</div>
+        <h1 id="princeSetupTitle">ENTRE NO REINO</h1>
+        <p id="princeSetupCopy" class="screen-copy">Seu primeiro passo é registrar o nome que carregará a sua coroa. Este perfil existe somente no Modo Príncipe.</p>
+
+        <div class="input-group">
+          <label class="small-label" for="nicknameInput">NICKNAME DO PRÍNCIPE</label>
+          <input id="nicknameInput" class="nickname-input" type="text" maxlength="30" autocomplete="off" placeholder="Ex: 1principebr">
+          <div class="input-hint">Seu nickname precisa conter <strong>principe</strong>. Ele ficará ligado apenas ao registro do reino.</div>
+          <div id="nicknameError" class="error-text"></div>
+        </div>
+
+        <button class="primary-btn" type="button" onclick="confirmNickname()">REGISTRAR NOME E CONTINUAR</button>
+        <button class="secondary-btn" type="button" onclick="showScreen('welcomeScreen')">VOLTAR À SELEÇÃO</button>
+      </section>
+
+      <aside class="registration-panel prince-registration-panel">
+        <div class="registration-label">REGISTRO INDIVIDUAL</div>
+        <div class="registration-title">PERFIL DO REINO</div>
+        <div class="registration-status" id="princeRegistrationStatus">NOVO REGISTRO</div>
+
+        <div class="registration-profile">
+          <span class="icon prince-icon" data-icon="crown"></span>
+          <div>
+            <strong id="princeRegistrationName">1PRINCIPEBR</strong>
+            <small>nome exclusivo do Príncipe</small>
+          </div>
+        </div>
+
+        <div class="registration-steps">
+          <div class="registration-step active"><span>01</span><div><strong>NOME</strong><small>registrar identidade</small></div></div>
+          <div class="registration-step"><span>02</span><div><strong>LINHAGEM</strong><small>bem ou mal</small></div></div>
+          <div class="registration-step"><span>03</span><div><strong>ASSINATURA</strong><small>guardião ou arsenal</small></div></div>
+          <div class="registration-step"><span>04</span><div><strong>GAME DNA</strong><small>3 a 5 categorias</small></div></div>
+        </div>
+
+        <div class="registration-lock">MEMÓRIA SEPARADA • NUNCA COPIA O MAGO</div>
+      </aside>
     </div>
-    <button class="primary-btn" type="button" onclick="confirmNickname()">CONTINUAR PARA O REINO</button>
-    <button class="secondary-btn" type="button" onclick="showScreen('welcomeScreen')">VOLTAR AO INÍCIO</button>
   </div>
 </div>
 
@@ -2260,39 +2515,88 @@ body.prince-evil{--magic:#8A2BE2;--magic-light:#C58AFF;--magic-rgb:138,43,226;}
      MAGE SETUP
      ========================================================= -->
 <div id="wizardAlignmentScreen" class="screen hidden">
-  <div class="screen-box">
-    <div class="screen-topline"><span class="screen-tag"><span class="micro-dot"></span>MAGISTA</span><span class="screen-tag">CAMINHO ARCANO</span></div>
-    <div class="screen-icon" id="mageAlignmentIcon"></div>
-    <h1 id="mageAlignmentTitle">QUAL ARCANO VAI DESPERTAR?</h1>
-    <p class="screen-copy" id="mageAlignmentCopy">O círculo arcano possui uma identidade própria. Suas escolhas ficam separadas das decisões do Príncipe.</p>
-    <div class="alignment-grid">
-      <button class="alignment-card good-card" type="button" onclick="chooseWizardAlignment('good')">
-        <span class="icon mage-icon" data-icon="light"></span>
-        <h3>MAGO DO BEM</h3>
-        <p>Elementos, energia, luz, movimento e forças naturais.</p>
-      </button>
-      <button class="alignment-card evil-card" type="button" onclick="chooseWizardAlignment('evil')">
-        <span class="icon evil-icon" data-icon="abyss"></span>
-        <h3>MAGO DO MAL</h3>
-        <p>Demônio, abismo, maldições, caos e poderes proibidos.</p>
-      </button>
+  <div class="screen-box setup-box mage-entry-box">
+    <div class="screen-topline"><span class="screen-tag"><span class="micro-dot"></span>MAGISTA // REGISTRO</span><span class="screen-tag">IDENTIDADE 02</span></div>
+
+    <div class="setup-layout">
+      <section class="setup-main">
+        <div class="screen-icon" id="mageAlignmentIcon"></div>
+        <div class="setup-kicker">ABERTURA DO CÍRCULO</div>
+        <h1 id="mageAlignmentTitle">ABRA SEU CÍRCULO</h1>
+        <p id="mageAlignmentCopy" class="screen-copy">Aqui começa uma identidade separada. O Modo Mago possui seu próprio registro, nome, alinhamento e poderes.</p>
+        <div class="alignment-grid">
+          <button class="alignment-card good-card" type="button" onclick="chooseWizardAlignment('good')">
+            <span class="icon mage-icon" data-icon="light"></span>
+            <span class="alignment-code">ARCANO 01</span>
+            <h3>MAGO DO BEM</h3>
+            <p>Energia, natureza, luz e forças elementais para construir uma assinatura luminosa.</p>
+            <span class="alignment-action">ATIVAR CÍRCULO</span>
+          </button>
+          <button class="alignment-card evil-card" type="button" onclick="chooseWizardAlignment('evil')">
+            <span class="icon evil-icon" data-icon="abyss"></span>
+            <span class="alignment-code">ARCANO 02</span>
+            <h3>MAGO DO MAL</h3>
+            <p>Demônio, abismo, maldições, caos e poderes proibidos para uma assinatura sombria.</p>
+            <span class="alignment-action">ABRIR O ABISMO</span>
+          </button>
+        </div>
+      </section>
+
+      <aside class="registration-panel mage-registration-panel">
+        <div class="registration-label">REGISTRO INDIVIDUAL</div>
+        <div class="registration-title">PERFIL ARCANO</div>
+        <div class="registration-status" id="mageRegistrationStatus">NOVO REGISTRO</div>
+        <div class="registration-profile">
+          <span class="icon mage-icon" data-icon="arcane"></span>
+          <div><strong id="mageRegistrationName">MAGISTA</strong><small>somente Modo Mago</small></div>
+        </div>
+        <div class="registration-steps">
+          <div class="registration-step active"><span>01</span><div><strong>ALINHAMENTO</strong><small>bem ou mal</small></div></div>
+          <div class="registration-step"><span>02</span><div><strong>NOME ARCANO</strong><small>seu magologista</small></div></div>
+          <div class="registration-step"><span>03</span><div><strong>PODERES</strong><small>até 2 assinaturas</small></div></div>
+          <div class="registration-step"><span>04</span><div><strong>DESPERTAR</strong><small>círculo ativo</small></div></div>
+        </div>
+        <div class="registration-lock">DADOS ISOLADOS DO PRÍNCIPE</div>
+      </aside>
     </div>
   </div>
 </div>
 
 <div id="wizardNicknameScreen" class="screen hidden">
-  <div class="screen-box">
-    <div class="screen-topline"><span class="screen-tag"><span class="micro-dot"></span>MAGOLOGISTA</span><span class="screen-tag">IDENTIDADE</span></div>
-    <div class="screen-icon" id="mageNicknameIcon"></div>
-    <h1 id="mageNicknameTitle">FORJE SEU NOME ARCANO</h1>
-    <p class="screen-copy" id="mageNicknameCopy">Seu nome arcano existe dentro do Modo Mago. Ele não substitui nem altera o nickname do Príncipe.</p>
-    <div class="input-group">
-      <label class="small-label" for="wizardNicknameInput">NICKNAME DO MAGO</label>
-      <input id="wizardNicknameInput" class="nickname-input" type="text" maxlength="30" autocomplete="off" placeholder="Ex: Magologista">
-      <div id="wizardNicknameError" class="error-text"></div>
+  <div class="screen-box setup-box mage-entry-box">
+    <div class="screen-topline"><span class="screen-tag"><span class="micro-dot"></span>MAGISTA // IDENTIDADE</span><span class="screen-tag">REGISTRO 02</span></div>
+    <div class="setup-layout">
+      <section class="setup-main">
+        <div class="screen-icon" id="mageNicknameIcon"></div>
+        <div class="setup-kicker">NOME ARCANO</div>
+        <h1 id="mageNicknameTitle">BATIZE SEU MAGO</h1>
+        <p id="mageNicknameCopy" class="screen-copy">O nome que você registrar aqui vive somente dentro do seu círculo mágico e não altera o nickname do Príncipe.</p>
+        <div class="input-group">
+          <label class="small-label" for="wizardNicknameInput">NICKNAME DO MAGO</label>
+          <input id="wizardNicknameInput" class="nickname-input" type="text" maxlength="30" autocomplete="off" placeholder="Ex: Magologista">
+          <div class="input-hint">Este nome será usado somente pelo registro arcano.</div>
+          <div id="wizardNicknameError" class="error-text"></div>
+        </div>
+        <button class="primary-btn" type="button" onclick="confirmWizardNickname()">REGISTRAR NOME ARCANO</button>
+        <button class="secondary-btn" type="button" onclick="showScreen('wizardAlignmentScreen')">VOLTAR AO ALINHAMENTO</button>
+      </section>
+      <aside class="registration-panel mage-registration-panel">
+        <div class="registration-label">REGISTRO INDIVIDUAL</div>
+        <div class="registration-title">ASSINATURA ARCANA</div>
+        <div class="registration-status active-status">CÍRCULO EM FORMAÇÃO</div>
+        <div class="registration-profile">
+          <span class="icon mage-icon" data-icon="arcane"></span>
+          <div><strong id="mageNicknameRegistrationName">MAGISTA</strong><small>nome isolado do reino</small></div>
+        </div>
+        <div class="registration-steps">
+          <div class="registration-step done"><span>01</span><div><strong>ALINHAMENTO</strong><small>caminho escolhido</small></div></div>
+          <div class="registration-step active"><span>02</span><div><strong>NOME ARCANO</strong><small>registrar identidade</small></div></div>
+          <div class="registration-step"><span>03</span><div><strong>PODERES</strong><small>escolher até dois</small></div></div>
+          <div class="registration-step"><span>04</span><div><strong>DESPERTAR</strong><small>ativar assinatura</small></div></div>
+        </div>
+        <div class="registration-lock">NENHUM DADO DO PRÍNCIPE É COPIADO</div>
+      </aside>
     </div>
-    <button class="primary-btn" type="button" onclick="confirmWizardNickname()">DESPERTAR IDENTIDADE</button>
-    <button class="secondary-btn" type="button" onclick="showScreen('welcomeScreen')">VOLTAR AO INÍCIO</button>
   </div>
 </div>
 
@@ -2325,6 +2629,7 @@ body.prince-evil{--magic:#8A2BE2;--magic-light:#C58AFF;--magic-rgb:138,43,226;}
     <div class="activation-kicker" id="activationKicker">IDENTIDADE ATIVA</div>
     <h1 id="activationTitle">MODO ATIVADO</h1>
     <p id="activationText"></p>
+    <div class="activation-record" id="activationRecord">REGISTRO INDIVIDUAL SALVO</div>
     <button class="primary-btn" type="button" onclick="enterSite()">ENTRAR NO UNIVERSO</button>
   </div>
 </div>
@@ -2852,7 +3157,7 @@ const siteTexts = {
     switchToOther: "DESPERTAR MODO MAGO"
   },
   mage: {
-    eyebrowGood: cfg => cfg.spell ? `DESPERTANDO ${cfg.spell.toUpperCase()}` : "CÍRCULO ELEMENTAL ATIVO",
+    eyebrowGood: cfg => cfg.spell ? `DESPERTANDO ${cfg.spell.toUpperCase()}` : "DESPERTANDO ESSÊNCIA ELEMENTAL",
     eyebrowEvil: "DESPERTANDO DEMÔNIO + ABISMO",
     descriptionGood: cfg => `magologista ${cfg.nickname || "sem nome"}. O círculo elemental está pulsando com ${cfg.spell || "poderes elementais"}. Esta identidade pertence somente ao Modo Mago.`,
     descriptionEvil: cfg => `magologista ${cfg.nickname || "sem nome"}. MAGO DO MAL • DEMÔNIO + ABISMO. O abismo abriu espaço para ${cfg.spell || "DEMÔNIO + ABISMO"}.`,
@@ -2887,8 +3192,8 @@ const siteTexts = {
     liveKicker: "RITUAL AO VIVO",
     liveTitle: "LIVE",
     liveText: "Quando a transmissão começa, as partículas entram em movimento e o círculo fica ativo.",
-    liveBoxTitle: "PORTAL ABERTO",
-    liveBoxText: "Entre na Twitch e acompanhe o próximo ritual de gameplay.",
+    liveBoxTitle: "CÍRCULO ONLINE",
+    liveBoxText: "Abra a Twitch e acompanhe a próxima sessão sob a assinatura do seu círculo.",
     liveButton: "ABRIR PORTAL",
     communityKicker: "CÓDIGO ARCANO",
     communityTitle: "REGRAS DO CÍRCULO",
@@ -2913,18 +3218,18 @@ const siteTexts = {
    ============================================================ */
 function applyPrinceSetupCopy() {
   const copy = {
-    setupTitle: "FORJE SUA IDENTIDADE DE REINO",
-    setupCopy: "Dê nome à sua coroa. Este perfil pertence exclusivamente ao Modo Príncipe.",
-    alignmentTitle: "ESCOLHA A SUA COROA",
-    alignmentCopy: "O mesmo reino pode proteger ou dominar. Escolha a postura do seu Príncipe.",
-    mascotTitle: "ESCOLHA SEU GUARDIÃO",
-    mascotCopy: "Um animal assina o seu Príncipe do Bem. Escolha o símbolo que vai acompanhar sua coroa.",
-    weaponTitle: "MONTE SEU ARSENAL",
-    weaponCopy: "O Príncipe do Mal entra na arena com pressão. Escolha uma arma ou uma combinação permitida.",
-    platformTitle: "DEFINA O CAMPO DE BATALHA",
-    platformCopy: "Escolha onde sua gameplay acontece com mais frequência.",
-    genreTitle: "MONTE SEU GAME DNA",
-    genreCopy: "Escolha de 3 a 5 categorias. O sexto card trava sozinho para manter a seleção limpa."
+    setupTitle: "ENTRE NO REINO",
+    setupCopy: "Seu primeiro passo é registrar o nome que carregará a sua coroa. Este perfil existe somente no Modo Príncipe.",
+    alignmentTitle: "ESCOLHA SUA LINHAGEM",
+    alignmentCopy: "Você decide como essa coroa será lembrada: pela proteção do guardião ou pela presença de um arsenal.",
+    mascotTitle: "DÊ UM ROSTO AO REINO",
+    mascotCopy: "Escolha um único guardião para assinar seu Príncipe do Bem. Ele passa a fazer parte da identidade da sua coroa.",
+    weaponTitle: "ARME SUA COROA",
+    weaponCopy: "Monte a presença do Príncipe do Mal com uma arma ou uma combinação permitida para sua arena.",
+    platformTitle: "ESCOLHA SUA ARENA",
+    platformCopy: "Registre onde a sua gameplay acontece. Esta escolha pertence somente ao perfil do Príncipe.",
+    genreTitle: "DEFINA SEU GAME DNA",
+    genreCopy: "Escolha de 3 a 5 categorias. Seu repertório gamer fica registrado dentro do reino, sem tocar no perfil do Mago."
   };
   const map = [
     ["princeSetupTitle", copy.setupTitle], ["princeSetupCopy", copy.setupCopy],
@@ -2939,12 +3244,12 @@ function applyPrinceSetupCopy() {
 
 function applyMageSetupCopy() {
   const copy = {
-    alignmentTitle: "ESCOLHA SEU CAMINHO ARCANO",
-    alignmentCopy: "Aqui começa outra identidade. O Modo Mago não reutiliza nickname, mascote, armas ou dados do Príncipe.",
-    nicknameTitle: "NOMEIE SEU MAGO",
-    nicknameCopy: "Crie o nome que ficará ligado somente ao seu círculo mágico.",
-    spellTitle: "ESCOLHA SUA ESSÊNCIA",
-    spellCopy: "Escolha até dois poderes. Eles mudam a energia do site, os efeitos e a linguagem do seu círculo."
+    alignmentTitle: "ABRA SEU CÍRCULO",
+    alignmentCopy: "Aqui começa uma identidade separada. O Modo Mago possui seu próprio registro, nome, alinhamento e poderes.",
+    nicknameTitle: "BATIZE SEU MAGO",
+    nicknameCopy: "O nome registrado aqui vive somente dentro do seu círculo mágico e não altera o nickname do Príncipe.",
+    spellTitle: "DESPERTE SUA ASSINATURA",
+    spellCopy: "Escolha até dois poderes. Eles definem a energia, a atmosfera e a linguagem do seu círculo."
   };
   const map = [
     ["mageAlignmentTitle", copy.alignmentTitle], ["mageAlignmentCopy", copy.alignmentCopy],
@@ -2952,6 +3257,33 @@ function applyMageSetupCopy() {
     ["spellTitle", copy.spellTitle], ["spellCopy", copy.spellCopy]
   ];
   map.forEach(([id,value]) => { const node = document.getElementById(id); if(node) node.textContent = value; });
+}
+
+/* ============================================================
+   REGISTRO VISUAL DOS DOIS MODOS
+   ============================================================ */
+function updateEntryRegistry() {
+  const princeStatus = document.getElementById("princeEntryStatus");
+  const mageStatus = document.getElementById("mageEntryStatus");
+  const princeName = document.getElementById("princeRegistrationName");
+  const mageName = document.getElementById("mageRegistrationName");
+  const mageNickName = document.getElementById("mageNicknameRegistrationName");
+  const princeReg = document.getElementById("princeRegistrationStatus");
+  const mageReg = document.getElementById("mageRegistrationStatus");
+
+  if (princeStatus) {
+    princeStatus.textContent = princeConfig.configured ? "REGISTRO ATIVO" : (princeConfig.nickname ? "REGISTRO EM ANDAMENTO" : "REGISTRO NOVO");
+    princeStatus.classList.toggle("ready-status", !!princeConfig.configured);
+  }
+  if (mageStatus) {
+    mageStatus.textContent = mageConfig.configured ? "REGISTRO ATIVO" : (mageConfig.nickname || mageConfig.alignment ? "REGISTRO EM ANDAMENTO" : "REGISTRO NOVO");
+    mageStatus.classList.toggle("ready-status", !!mageConfig.configured);
+  }
+  if (princeName) princeName.textContent = princeConfig.nickname || "1PRINCIPEBR";
+  if (mageName) mageName.textContent = mageConfig.nickname || "MAGISTA";
+  if (mageNickName) mageNickName.textContent = mageConfig.nickname || "MAGISTA";
+  if (princeReg) princeReg.textContent = princeConfig.configured ? "REGISTRO ATIVO" : "REGISTRO EM FORMAÇÃO";
+  if (mageReg) mageReg.textContent = mageConfig.configured ? "CÍRCULO ATIVO" : "CÍRCULO EM FORMAÇÃO";
 }
 
 /* ============================================================
@@ -3098,6 +3430,7 @@ function loadSavedProfiles() {
    ============================================================ */
 function startPrinceMode() {
   currentMode = "prince";
+  updateEntryRegistry();
   applyPrinceSetupCopy();
   setPrinceVisuals();
   const saved = localStorage.getItem(PRINCE_STORAGE_KEY);
@@ -3105,6 +3438,7 @@ function startPrinceMode() {
     try { princeConfig = { ...princeConfig, ...JSON.parse(saved) }; }
     catch (error) { console.error(error); }
   }
+  updateEntryRegistry();
   if (princeConfig.configured) {
     preparePrinceSite();
     enterSite();
@@ -3133,6 +3467,7 @@ function confirmNickname() {
   princeConfig.nickname = nickname;
   princeConfig.configured = false;
   savePrinceLocal();
+  updateEntryRegistry();
   error.textContent = "";
   showScreen("princeAlignmentScreen");
 }
@@ -3145,6 +3480,7 @@ function choosePrinceAlignment(alignment) {
   princeConfig.genres = [];
   princeConfig.configured = false;
   savePrinceLocal();
+  updateEntryRegistry();
   setPrinceVisuals();
   if (alignment === "evil") {
     renderWeapons();
@@ -3309,6 +3645,9 @@ async function finishPrinceChoices() {
   document.getElementById("activationTitle").textContent = "MODO PRÍNCIPE: ATIVADO";
   const identity = princeConfig.alignment === "evil" ? `suas armas são ${princeConfig.weapons.join(" + ")}` : `seu mascote é ${princeConfig.mascot}`;
   document.getElementById("activationText").textContent = princeConfig.alignment === "evil" ? `Bem-vindo, ${princeConfig.nickname}. ${identity}. A coroa negra está pronta para o próximo confronto.` : `Bem-vindo, ${princeConfig.nickname}. ${identity}. Seu reino acaba de ganhar uma nova assinatura.`;
+  document.getElementById("activationRecord").textContent =
+    "REGISTRO INDIVIDUAL • PRÍNCIPE • SALVO";
+  updateEntryRegistry();
   showScreen("activationScreen");
 }
 
@@ -3317,6 +3656,7 @@ async function finishPrinceChoices() {
    ============================================================ */
 function startWizardMode() {
   currentMode = "mage";
+  updateEntryRegistry();
   applyMageSetupCopy();
   setMageVisuals();
   const saved = localStorage.getItem(MAGE_STORAGE_KEY);
@@ -3324,6 +3664,7 @@ function startWizardMode() {
     try { mageConfig = { ...mageConfig, ...JSON.parse(saved) }; }
     catch (error) { console.error(error); }
   }
+  updateEntryRegistry();
   if (mageConfig.configured) {
     prepareMageSite();
     enterSite();
@@ -3339,6 +3680,7 @@ function chooseWizardAlignment(alignment) {
   mageConfig.spellType = "";
   mageConfig.configured = false;
   saveMageLocal();
+  updateEntryRegistry();
   setMageVisuals();
   const input = document.getElementById("wizardNicknameInput");
   const error = document.getElementById("wizardNicknameError");
@@ -3354,6 +3696,7 @@ function confirmWizardNickname() {
   const nickname = input.value.trim();
   if (nickname.length < 3) { error.textContent = "Digite um nickname com pelo menos 3 caracteres."; return; }
   mageConfig.nickname = nickname;
+  updateEntryRegistry();
   mageConfig.spells = [];
   mageConfig.spell = "";
   mageConfig.spellType = "";
@@ -3449,7 +3792,9 @@ async function finishWizardChoices() {
   document.getElementById("activationIcon").innerHTML = iconMarkup(mageConfig.alignment === "evil" ? "abyss" : "arcane");
   document.getElementById("activationKicker").textContent = mageConfig.alignment === "evil" ? "ABISMO ABERTO" : "CÍRCULO DESPERTO";
   document.getElementById("activationTitle").textContent = mageConfig.alignment === "evil" ? "DESPERTANDO DEMÔNIO + ABISMO" : "PODER MÁGICO DESPERTADO";
-  document.getElementById("activationText").textContent = mageConfig.alignment === "evil" ? `magologista ${mageConfig.nickname}. MAGO DO MAL • DEMÔNIO + ABISMO. O abismo respondeu aos poderes ${mageConfig.spell}.` : `magologista ${mageConfig.nickname}. O círculo respondeu aos poderes ${mageConfig.spell}. Sua assinatura arcana está ativa.`;
+  document.getElementById("activationText").textContent = mageConfig.alignment === "evil" ? `magologista ${mageConfig.nickname}. MAGO DO MAL • DEMÔNIO + ABISMO. O abismo respondeu aos poderes ${mageConfig.spell}.` : `magologista ${mageConfig.nickname}. O círculo respondeu aos poderes ${mageConfig.spell}. Sua assinatura elemental está ativa.`;
+  document.getElementById("activationRecord").textContent =
+    "REGISTRO INDIVIDUAL • MAGO • CÍRCULO ARCANO";
   showScreen("activationScreen");
 }
 
@@ -3698,6 +4043,7 @@ window.addEventListener("load", () => {
   }, 700);
 
   const hasProfile = loadSavedProfiles();
+  updateEntryRegistry();
   if (hasProfile) {
     if (mageConfig.configured && !princeConfig.configured) currentMode = "mage";
     else currentMode = "prince";
