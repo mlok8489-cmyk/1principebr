@@ -148,10 +148,6 @@
       display: none !important;
     }
 
-    /* =========================
-       LOADING
-    ========================= */
-
     #loading {
       position: fixed;
       inset: 0;
@@ -187,10 +183,6 @@
         transform: translateY(-12px) rotate(3deg);
       }
     }
-
-    /* =========================
-       SCREENS
-    ========================= */
 
     .screen {
       position: fixed;
@@ -318,10 +310,6 @@
       background: rgba(var(--magic-rgb), .18);
     }
 
-    /* =========================
-       CHOICES
-    ========================= */
-
     .choice-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -402,10 +390,6 @@
       color: var(--magic-light);
       margin-top: 10px;
     }
-
-    /* =========================
-       MAIN SITE
-    ========================= */
 
     #mainSite {
       display: none;
@@ -796,10 +780,6 @@
       font-size: 9px;
     }
 
-    /* =========================
-       MAGIC EFFECTS
-    ========================= */
-
     #magicParticles {
       position: fixed;
       inset: 0;
@@ -858,10 +838,6 @@
     .element-message.show {
       transform: translateX(-50%) translateY(0);
     }
-
-    /* =========================
-       MOBILE
-    ========================= */
 
     @media (max-width: 850px) {
       .nav {
@@ -938,10 +914,6 @@
 
 <body>
 
-  <!-- =========================
-       LOADING
-  ========================= -->
-
   <div id="loading">
     <div class="loading-box">
       <div class="loading-crown">👑</div>
@@ -949,27 +921,22 @@
     </div>
   </div>
 
-  <!-- =========================
-       PARTICLES
-  ========================= -->
-
   <div id="magicParticles"></div>
   <div id="elementMessage" class="element-message"></div>
-
-  <!-- =========================
-       WELCOME
-  ========================= -->
 
   <div id="welcomeScreen" class="screen">
     <div class="screen-box">
       <div class="screen-icon">👑</div>
+
       <h1>ATIVAR MODO PRÍNCIPE</h1>
+
       <p>
         Bem-vindo ao universo do 1PRINCIPEBR.
         Escolha sua identidade e entre para a comunidade.
       </p>
 
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+
         <button class="primary-btn" onclick="startPrinceMode()">
           👑 MODO PRÍNCIPE
         </button>
@@ -977,18 +944,18 @@
         <button class="secondary-btn" onclick="startWizardMode()">
           🧙‍♂️ SEJA MAGO
         </button>
+
       </div>
     </div>
   </div>
 
-  <!-- =========================
-       NICKNAME PRÍNCIPE
-  ========================= -->
-
   <div id="nicknameScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">👑</div>
+
       <h1>QUAL É SEU NOME?</h1>
+
       <p>
         Escolha seu nickname de príncipe.
         Para ativar o perfil, o nome precisa conter "principe".
@@ -1009,17 +976,17 @@
       <button class="primary-btn" onclick="confirmNickname()">
         CONTINUAR 👑
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       MASCOTE
-  ========================= -->
-
   <div id="mascotScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">🐉</div>
+
       <h1>ESCOLHA SEU MASCOTE</h1>
+
       <p>
         Escolha o animal que representa sua identidade no Modo Príncipe.
       </p>
@@ -1029,17 +996,17 @@
       <button class="primary-btn" onclick="confirmMascot()">
         CONTINUAR 👑
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       PLATFORM
-  ========================= -->
-
   <div id="platformScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">🎮</div>
+
       <h1>SUA PLATAFORMA</h1>
+
       <p>
         Onde você joga?
       </p>
@@ -1049,17 +1016,17 @@
       <button class="primary-btn" onclick="confirmPlatform()">
         CONTINUAR 🎮
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       GENRES
-  ========================= -->
-
   <div id="genreScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">🎯</div>
+
       <h1>SEUS JOGOS</h1>
+
       <p>
         Escolha exatamente 3 gêneros que você mais gosta.
       </p>
@@ -1071,17 +1038,17 @@
       <button class="primary-btn" onclick="finishPrinceChoices()">
         ATIVAR MODO PRÍNCIPE 👑
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       WIZARD NICKNAME
-  ========================= -->
-
   <div id="wizardNicknameScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">🧙‍♂️</div>
+
       <h1>DESPERTAR PODER MÁGICO</h1>
+
       <p>
         Primeiro, escolha o nome que será usado pelo seu personagem mágico.
       </p>
@@ -1101,15 +1068,13 @@
       <button class="primary-btn" onclick="confirmWizardNickname()">
         DESPERTAR ✨
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       SPELLS
-  ========================= -->
-
   <div id="spellScreen" class="screen hidden">
     <div class="screen-box">
+
       <div class="screen-icon">🔮</div>
 
       <h1>ESCOLHA SEU FEITIÇO</h1>
@@ -1136,28 +1101,25 @@
       <button class="primary-btn" onclick="finishWizardChoices()">
         DESPERTAR MEU PODER 🔮
       </button>
+
     </div>
   </div>
 
-  <!-- =========================
-       ACTIVATION
-  ========================= -->
-
   <div id="activationScreen" class="screen hidden">
     <div class="screen-box">
+
       <div id="activationIcon" class="screen-icon">👑</div>
+
       <h1 id="activationTitle">MODO ATIVADO</h1>
+
       <p id="activationText"></p>
 
       <button class="primary-btn" onclick="enterSite()">
         ENTRAR NO SITE 🚀
       </button>
+
     </div>
   </div>
-
-  <!-- =========================
-       MAIN SITE
-  ========================= -->
 
   <main id="mainSite">
 
@@ -1177,15 +1139,18 @@
           <a href="#live">LIVE</a>
           <a href="#comunidade">COMUNIDADE</a>
 
-          <button id="modeSwitch" class="mode-switch" onclick="toggleMode()">
+          <button
+            id="modeSwitch"
+            class="mode-switch"
+            onclick="toggleMode()"
+          >
             🧙 SEJA MAGO
           </button>
+
         </nav>
 
       </div>
     </header>
-
-    <!-- HERO -->
 
     <section id="inicio" class="hero">
 
@@ -1205,6 +1170,7 @@
         </p>
 
         <div class="hero-buttons">
+
           <a
             class="primary-btn"
             href="https://www.twitch.tv/1principebr"
@@ -1217,15 +1183,27 @@
           <a class="secondary-btn" href="#jogos">
             🎮 VER JOGOS
           </a>
+
         </div>
 
         <div id="profileBadge" class="profile-badge">
-          <div id="badgeIcon" class="badge-icon">👑</div>
+
+          <div id="badgeIcon" class="badge-icon">
+            👑
+          </div>
 
           <div class="badge-text">
-            <strong id="badgeName">1PRINCIPEBR</strong>
-            <span id="badgeDetails">MODO PRÍNCIPE</span>
+
+            <strong id="badgeName">
+              1PRINCIPEBR
+            </strong>
+
+            <span id="badgeDetails">
+              MODO PRÍNCIPE
+            </span>
+
           </div>
+
         </div>
 
       </div>
@@ -1234,7 +1212,9 @@
 
         <div class="avatar-orb">
 
-          <div id="crown" class="crown">👑</div>
+          <div id="crown" class="crown">
+            👑
+          </div>
 
           <div id="avatarPlaceholder" class="avatar-placeholder">
             🧑🏿‍🎮
@@ -1245,8 +1225,6 @@
       </div>
 
     </section>
-
-    <!-- SOBRE -->
 
     <section id="sobre">
 
@@ -1262,8 +1240,6 @@
       </div>
 
     </section>
-
-    <!-- JOGOS -->
 
     <section id="jogos">
 
@@ -1318,8 +1294,6 @@
 
     </section>
 
-    <!-- CLIPES -->
-
     <section id="clipes">
 
       <div class="section-title">
@@ -1347,8 +1321,6 @@
       </div>
 
     </section>
-
-    <!-- REDES -->
 
     <section id="redes">
 
@@ -1396,8 +1368,6 @@
 
     </section>
 
-    <!-- LIVE -->
-
     <section id="live">
 
       <div class="section-title">
@@ -1432,8 +1402,6 @@
       </div>
 
     </section>
-
-    <!-- COMUNIDADE -->
 
     <section id="comunidade">
 
@@ -1489,7 +1457,8 @@
        SUPABASE
     ========================================= */
 
-    const SUPABASE_URL = "https://qkaerwabeqozuekfsncc.supabase.co";
+    const SUPABASE_URL =
+      "https://qkaerwabeqozuekfsncc.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_n_RA2bKBircIEP5bsWUULQ_AmmtG-RW";
@@ -1514,7 +1483,6 @@
       spell: "",
       spellType: ""
     };
-
 
     let currentMode = "prince";
 
@@ -1630,6 +1598,7 @@
     ========================================= */
 
     function showScreen(id) {
+
       document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.add("hidden");
       });
@@ -1872,7 +1841,8 @@
 
       document.body.className = "";
 
-      document.getElementById("activationIcon").textContent = "👑";
+      document.getElementById("activationIcon").textContent =
+        "👑";
 
       document.getElementById("activationTitle").textContent =
         "MODO PRÍNCIPE ATIVADO";
@@ -1907,9 +1877,11 @@
       showScreen("wizardNicknameScreen");
 
       setTimeout(() => {
+
         document
           .getElementById("wizardNicknameInput")
           .focus();
+
       }, 100);
     }
 
@@ -1991,15 +1963,22 @@
         card.onclick = () => {
 
           document
-            .querySelectorAll("#elementGrid .choice-card, #specialSpellGrid .choice-card")
+            .querySelectorAll(
+              "#elementGrid .choice-card, #specialSpellGrid .choice-card"
+            )
             .forEach(c => c.classList.remove("selected"));
 
           card.classList.add("selected");
 
-          userData.spell = spell.name;
-          userData.spellType = spell.type;
+          userData.spell =
+            spell.name;
 
-          applyElement(spell.type);
+          userData.spellType =
+            spell.type;
+
+          applyElement(
+            spell.type
+          );
 
           showElementMessage(
             `${spell.icon} PODER DESPERTADO: ${spell.name.toUpperCase()}`
@@ -2011,7 +1990,7 @@
     }
 
 
-    function finishWizardChoices() {
+    async function finishWizardChoices() {
 
       const error =
         document.getElementById("spellError");
@@ -2031,7 +2010,7 @@
         JSON.stringify(userData)
       );
 
-      saveProfile();
+      await saveProfile();
 
       document.getElementById("activationIcon").textContent =
         getSpellIcon(userData.spellType);
@@ -2068,7 +2047,9 @@
         "void-element"
       ];
 
-      document.body.classList.remove(...classes);
+      document.body.classList.remove(
+        ...classes
+      );
 
       document.body.classList.add(
         "magic-mode",
@@ -2103,15 +2084,20 @@
       const box =
         document.getElementById("elementMessage");
 
-      box.textContent = message;
+      box.textContent =
+        message;
 
       box.classList.add("show");
 
-      clearTimeout(window.elementMessageTimer);
+      clearTimeout(
+        window.elementMessageTimer
+      );
 
       window.elementMessageTimer =
         setTimeout(() => {
+
           box.classList.remove("show");
+
         }, 2200);
     }
 
@@ -2128,7 +2114,8 @@
         const particle =
           document.createElement("div");
 
-        particle.className = "particle";
+        particle.className =
+          "particle";
 
         particle.style.left =
           `${Math.random() * 100}%`;
@@ -2145,7 +2132,9 @@
         particle.style.height =
           particle.style.width;
 
-        container.appendChild(particle);
+        container.appendChild(
+          particle
+        );
       }
     }
 
@@ -2156,14 +2145,15 @@
 
     function enterSite() {
 
-      showScreen("");
-
-      document.querySelectorAll(".screen")
+      document
+        .querySelectorAll(".screen")
         .forEach(screen => {
           screen.classList.add("hidden");
         });
 
-      document.body.classList.add("site-ready");
+      document.body.classList.add(
+        "site-ready"
+      );
 
       updateSiteForMode();
 
@@ -2206,10 +2196,15 @@
 
       if (userData.mode === "wizard") {
 
-        document.body.classList.add("magic-mode");
+        document.body.classList.add(
+          "magic-mode"
+        );
 
         if (userData.spellType) {
-          applyElement(userData.spellType);
+
+          applyElement(
+            userData.spellType
+          );
         }
 
         eyebrow.textContent =
@@ -2219,7 +2214,9 @@
           `O poder de ${userData.spell} foi despertado. O 1PRINCIPEBR agora possui uma identidade mágica própria, com efeitos e energia baseados no seu feitiço.`;
 
         badgeIcon.textContent =
-          getSpellIcon(userData.spellType);
+          getSpellIcon(
+            userData.spellType
+          );
 
         badgeName.textContent =
           userData.nickname;
@@ -2250,7 +2247,8 @@
           "👑";
 
         badgeName.textContent =
-          userData.nickname || "1PRINCIPEBR";
+          userData.nickname ||
+          "1PRINCIPEBR";
 
         badgeDetails.textContent =
           `👑 PRÍNCIPE • ${userData.mascot || "MASCOTE"}`;
@@ -2271,9 +2269,11 @@
 
       if (userData.mode === "wizard") {
 
-        userData.mode = "prince";
+        userData.mode =
+          "prince";
 
-        document.body.className = "";
+        document.body.className =
+          "";
 
         updateSiteForMode();
 
@@ -2283,14 +2283,17 @@
 
       } else {
 
-        userData.mode = "wizard";
+        userData.mode =
+          "wizard";
 
         document.body.className =
           "magic-mode";
 
         if (!userData.spell) {
 
-          showScreen("wizardNicknameScreen");
+          showScreen(
+            "wizardNicknameScreen"
+          );
 
           return;
         }
@@ -2317,54 +2320,97 @@
 
       try {
 
-        /*
-          A tabela esperada é:
-          principe_profiles
+        /* =====================================
+           👑 PRÍNCIPE
+           Tabela: principe_users
 
-          Campos:
-          nickname
-          mascot
-          platform
-          genres
-          mode
-          spell
-          spell_type
+           Campos:
+           nickname
+           mascot
+           platform
+           genres
+        ===================================== */
 
-          Caso a tabela ainda não exista ou algum campo
-          esteja diferente, o site continua funcionando
-          normalmente com localStorage.
-        */
+        if (userData.mode === "prince") {
 
-        const { error } =
-          await supabaseClient
-            .from("principe_profiles")
+          const {
+            error
+          } = await supabaseClient
+            .from("principe_users")
             .insert({
               nickname: userData.nickname,
               mascot: userData.mascot || null,
               platform: userData.platform || null,
-              genres: userData.genres || [],
-              mode: userData.mode,
+              genres: userData.genres || []
+            });
+
+          if (error) {
+
+            console.error(
+              "Supabase: erro ao salvar Príncipe:",
+              error
+            );
+
+            return false;
+          }
+
+          console.log(
+            "Supabase: Príncipe salvo com sucesso."
+          );
+
+          return true;
+        }
+
+
+        /* =====================================
+           🧙 MAGO
+           Tabela: mago_users
+
+           Campos:
+           nickname
+           spell
+           spell_type
+        ===================================== */
+
+        if (userData.mode === "wizard") {
+
+          const {
+            error
+          } = await supabaseClient
+            .from("mago_users")
+            .insert({
+              nickname: userData.nickname,
               spell: userData.spell || null,
               spell_type: userData.spellType || null
             });
 
-        if (error) {
+          if (error) {
+
+            console.error(
+              "Supabase: erro ao salvar Mago:",
+              error
+            );
+
+            return false;
+          }
+
           console.log(
-            "Supabase: perfil não salvo.",
-            error.message
+            "Supabase: Mago salvo com sucesso."
           );
-        } else {
-          console.log(
-            "Supabase: perfil salvo com sucesso."
-          );
+
+          return true;
         }
+
+        return false;
 
       } catch (error) {
 
-        console.log(
+        console.error(
           "Supabase indisponível. O site continua funcionando.",
           error
         );
+
+        return false;
       }
     }
 
@@ -2378,7 +2424,9 @@
       try {
 
         const saved =
-          localStorage.getItem("principeData");
+          localStorage.getItem(
+            "principeData"
+          );
 
         if (!saved) {
           return false;
@@ -2392,21 +2440,47 @@
         }
 
         userData = {
-          nickname: data.nickname || "",
-          mascot: data.mascot || "",
-          platform: data.platform || "",
-          genres: data.genres || [],
-          mode: data.mode || "prince",
-          spell: data.spell || "",
-          spellType: data.spellType || ""
+
+          nickname:
+            data.nickname || "",
+
+          mascot:
+            data.mascot || "",
+
+          platform:
+            data.platform || "",
+
+          genres:
+            data.genres || [],
+
+          mode:
+            data.mode || "prince",
+
+          spell:
+            data.spell || "",
+
+          spellType:
+            data.spellType || ""
         };
 
-        if (userData.mode === "wizard") {
+        currentMode =
+          userData.mode;
 
-          document.body.classList.add("magic-mode");
+        if (
+          userData.mode === "wizard"
+        ) {
 
-          if (userData.spellType) {
-            applyElement(userData.spellType);
+          document.body.classList.add(
+            "magic-mode"
+          );
+
+          if (
+            userData.spellType
+          ) {
+
+            applyElement(
+              userData.spellType
+            );
           }
         }
 
@@ -2431,11 +2505,26 @@
     function escapeHTML(value) {
 
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
     }
 
 
@@ -2443,76 +2532,125 @@
        KEYBOARD
     ========================================= */
 
-    document.addEventListener("keydown", event => {
+    document.addEventListener(
+      "keydown",
+      event => {
 
-      if (event.key !== "Enter") {
-        return;
+        if (
+          event.key !== "Enter"
+        ) {
+          return;
+        }
+
+        const nicknameScreen =
+          document.getElementById(
+            "nicknameScreen"
+          );
+
+        const wizardScreen =
+          document.getElementById(
+            "wizardNicknameScreen"
+          );
+
+        if (
+          nicknameScreen &&
+          !nicknameScreen.classList.contains(
+            "hidden"
+          )
+        ) {
+
+          confirmNickname();
+        }
+
+        if (
+          wizardScreen &&
+          !wizardScreen.classList.contains(
+            "hidden"
+          )
+        ) {
+
+          confirmWizardNickname();
+        }
       }
-
-      const nicknameScreen =
-        document.getElementById("nicknameScreen");
-
-      const wizardScreen =
-        document.getElementById("wizardNicknameScreen");
-
-      if (
-        nicknameScreen &&
-        !nicknameScreen.classList.contains("hidden")
-      ) {
-        confirmNickname();
-      }
-
-      if (
-        wizardScreen &&
-        !wizardScreen.classList.contains("hidden")
-      ) {
-        confirmWizardNickname();
-      }
-    });
+    );
 
 
     /* =========================================
        STARTUP
     ========================================= */
 
-    window.addEventListener("load", () => {
+    window.addEventListener(
+      "load",
+      () => {
 
-      setTimeout(() => {
+        setTimeout(
+          () => {
 
-        const loading =
-          document.getElementById("loading");
+            const loading =
+              document.getElementById(
+                "loading"
+              );
 
-        loading.style.opacity = "0";
+            if (loading) {
 
-        setTimeout(() => {
-          loading.remove();
-        }, 500);
+              loading.style.opacity =
+                "0";
 
-      }, 700);
+              setTimeout(
+                () => {
 
-      const hasProfile =
-        loadSavedProfile();
+                  if (loading) {
+                    loading.remove();
+                  }
 
-      if (hasProfile) {
+                },
+                500
+              );
+            }
 
-        document.querySelectorAll(".screen")
-          .forEach(screen => {
-            screen.classList.add("hidden");
-          });
+          },
+          700
+        );
 
-        document.body.classList.add("site-ready");
 
-        updateSiteForMode();
+        const hasProfile =
+          loadSavedProfile();
 
-        if (userData.mode === "wizard") {
-          createMagicParticles();
+
+        if (hasProfile) {
+
+          document
+            .querySelectorAll(".screen")
+            .forEach(screen => {
+
+              screen.classList.add(
+                "hidden"
+              );
+
+            });
+
+          document.body.classList.add(
+            "site-ready"
+          );
+
+          updateSiteForMode();
+
+          if (
+            userData.mode ===
+            "wizard"
+          ) {
+
+            createMagicParticles();
+          }
+
+        } else {
+
+          showScreen(
+            "welcomeScreen"
+          );
         }
-
-      } else {
-
-        showScreen("welcomeScreen");
       }
-    });
+    );
 
   </script>
 
