@@ -533,6 +533,69 @@ body.element-abyss{
 
 .ui-icon.mage-icon{
     color:var(--magic-light);
+
+    filter:
+        drop-shadow(
+            0 0 15px
+            rgba(var(--magic-rgb),.30)
+        );
+}
+
+/* =========================================================
+   STAFF OF POWER
+   ========================================================= */
+
+.ui-icon.staff-mage{
+    color:var(--magic-light);
+
+    filter:
+        drop-shadow(
+            0 0 14px
+            rgba(var(--magic-rgb),.45)
+        );
+}
+
+.ui-icon.staff-mage .ui-icon-frame::before{
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 50% 28%,
+            var(--magic-light) 0,
+            rgba(var(--magic-rgb),.72) 5%,
+            transparent 20%
+        );
+
+    filter:
+        blur(7px);
+
+    opacity:.92;
+}
+
+.ui-icon.staff-mage svg{
+    filter:
+        drop-shadow(
+            0 0 7px
+            var(--magic-light)
+        );
+}
+
+.ui-icon.staff-mage .staff-orb{
+    fill:
+        var(--magic-light);
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            var(--magic-light)
+        );
 }
 
 /* =========================================================
@@ -1439,6 +1502,9 @@ body.element-abyss{
     color:
         var(--muted);
 
+    background:
+        rgba(255,255,255,.018);
+
     font-size:6px;
 
     font-weight:900;
@@ -1477,6 +1543,11 @@ body.element-abyss{
 
     background:
         rgba(0,0,0,.14);
+}
+
+.registration-profile > div:first-child{
+    display:grid;
+    place-items:center;
 }
 
 .registration-profile .ui-icon{
@@ -2380,7 +2451,7 @@ header{
     flex:0 0 36px;
 }
 
-.logo span:last-child{
+#brandLogoText{
     background:
         linear-gradient(
             135deg,
@@ -2610,10 +2681,6 @@ nav a:hover{
             0 0 34px
             rgba(var(--magic-rgb),.22)
         );
-}
-
-.hero h1 span{
-    display:block;
 }
 
 .hero-description{
@@ -2885,6 +2952,11 @@ nav a:hover{
 .avatar-core .ui-icon{
     width:132px;
     height:132px;
+}
+
+.avatar-core .ui-icon.staff-mage{
+    width:145px;
+    height:145px;
 }
 
 @keyframes orbitA{
@@ -3840,6 +3912,11 @@ footer strong{
         height:98px;
     }
 
+    .avatar-core .ui-icon.staff-mage{
+        width:108px;
+        height:108px;
+    }
+
     .section{
         padding:
             76px
@@ -3961,8 +4038,6 @@ footer strong{
 
         <div class="gateway-grid">
 
-            <!-- PRÍNCIPE -->
-
             <article
                 class="mode-card prince-door">
 
@@ -4038,8 +4113,6 @@ footer strong{
                 </button>
 
             </article>
-
-            <!-- MAGO -->
 
             <article
                 class="mode-card mage-door">
@@ -4124,7 +4197,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE NICKNAME
+     PRINCIPE NICKNAME
      ========================================================= -->
 
 <div
@@ -4377,7 +4450,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE LINHAGEM
+     PRINCIPE LINHAGEM
      ========================================================= -->
 
 <div
@@ -4482,7 +4555,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE MASCOTE
+     PRINCIPE MASCOTE
      ========================================================= -->
 
 <div
@@ -4546,7 +4619,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE ARMAS
+     PRINCIPE ARMAS
      ========================================================= -->
 
 <div
@@ -4623,7 +4696,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE PLATAFORMA
+     PRINCIPE PLATAFORMA
      ========================================================= -->
 
 <div
@@ -4687,7 +4760,7 @@ footer strong{
 </div>
 
 <!-- =========================================================
-     PRÍNCIPE GAME DNA
+     PRINCIPE GAME DNA
      ========================================================= -->
 
 <div
@@ -4781,8 +4854,7 @@ footer strong{
 
         </div>
 
-        <div
-            class="setup-layout">
+        <div class="setup-layout">
 
             <section class="setup-main">
 
@@ -5430,7 +5502,7 @@ footer strong{
             id="headerLogoIcon">
         </span>
 
-        <span>
+        <span id="brandLogoText">
             1PRINCIPEBR
         </span>
 
@@ -5501,9 +5573,8 @@ footer strong{
         </div>
 
         <h1>
-            1
-            <span>
-                PRINCIPEBR
+            <span id="heroBrand">
+                1PRINCIPEBR
             </span>
         </h1>
 
@@ -6249,7 +6320,7 @@ footer strong{
 
 <footer>
 
-    <strong>
+    <strong id="footerBrand">
         1PRINCIPEBR
     </strong>
 
@@ -6369,6 +6440,13 @@ const iconSvgs = {
         `<circle cx="12" cy="12" r="8.8"></circle>
          <circle cx="12" cy="12" r="4.4"></circle>
          <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5"></path>`,
+
+    staff:
+        `<path d="M7.2 20.2 16.5 6.4"></path>
+         <path d="M6.1 21.6 8.3 19.4"></path>
+         <path d="M14.9 5.2c0-1.8 1.3-3.3 3.1-3.3s3.1 1.5 3.1 3.3-1.3 3.3-3.1 3.3-3.1-1.5-3.1-3.3Z" fill="currentColor" fill-opacity=".18"></path>
+         <circle class="staff-orb" cx="18" cy="5.2" r="1.55" fill="currentColor"></circle>
+         <path d="M14.2 9.8 17 12.6"></path>`,
 
     weapon:
         `<path d="m5 19 11.8-12 2.8 2.8-12 11H5V19Z" fill="currentColor" fill-opacity=".13"></path>
@@ -6586,7 +6664,7 @@ const iconSvgs = {
 
     openWorld:
         `<circle cx="12" cy="12" r="8.8"></circle>
-         <path d="M3.2 12h17.6M12 3.2c2.4 2.7 2.4 14.9 0 17.6M12 3.2c-2.4 2.7-2.4 14.9 0 17.6"></path>`,
+         <path d="M3.2 12h17.6M12 3.2c2.4 2.7 2.4 14.9 0 17.6M12 3.2c-2.4 2.7-2.4 14.9 0-17.6"></path>`,
 
     strategy:
         `<path d="M4 5h16v14H4z" fill="currentColor" fill-opacity=".05"></path>
@@ -6637,15 +6715,25 @@ const iconSvgs = {
 };
 
 /* =========================================================
-   ICON CLASS
+   ICON KINDS
    ========================================================= */
 
 const iconKind = {
 
     crown:"prince-icon",
+
+    wizard:"mage-icon",
+
+    arcane:"mage-icon",
+
+    staff:"mage-icon staff-mage",
+
     weapon:"evil-icon",
+
     sword:"evil-icon",
+
     shield:"evil-icon",
+
     bow:"evil-icon",
 
     dragon:"prince-icon",
@@ -6682,9 +6770,16 @@ const iconKind = {
     multiplayer:"prince-icon",
     party:"prince-icon",
 
-    wizard:"mage-icon",
-    arcane:"mage-icon",
     play:"mage-icon",
+
+    crosshair:"prince-icon",
+
+    bolt:"mage-icon",
+
+    twitch:"mage-icon",
+    tiktok:"mage-icon",
+    instagram:"mage-icon",
+
     fire:"mage-icon",
     water:"mage-icon",
     air:"mage-icon",
@@ -6705,19 +6800,12 @@ const iconKind = {
     demon:"evil-icon",
     soul:"evil-icon",
     nightmare:"evil-icon",
-    abyss:"evil-icon",
-
-    twitch:"mage-icon",
-    tiktok:"mage-icon",
-    instagram:"mage-icon",
-
-    crosshair:"prince-icon",
-    bolt:"mage-icon"
+    abyss:"evil-icon"
 
 };
 
 /* =========================================================
-   SAFE ICON MARKUP
+   ICON MARKUP
    ========================================================= */
 
 function iconMarkup(
@@ -6757,30 +6845,7 @@ function iconMarkup(
 }
 
 /* =========================================================
-   ICON FRAME CSS FALLBACK
-   ========================================================= */
-
-const styleForIconFrame = document.createElement("style");
-
-styleForIconFrame.textContent = `
-.ui-icon-frame{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-}
-.ui-icon-frame::before{
-    content:"";
-    position:absolute;
-    inset:0;
-}
-`;
-
-document.head.appendChild(
-    styleForIconFrame
-);
-
-/* =========================================================
-   SAFE DOM HELPERS
+   DOM HELPERS
    ========================================================= */
 
 function getNode(
@@ -7859,14 +7924,14 @@ function updateEntryRegistry(){
 
     setIcon(
         "mageRegistrationIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageNicknameRegistrationIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
 }
@@ -8854,20 +8919,20 @@ function startWizardMode(){
 
     setIcon(
         "mageAlignmentIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageGoodAlignIcon",
-        "light",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageEvilAlignIcon",
-        "abyss",
-        "evil-icon"
+        "staff",
+        "evil-icon staff-mage"
     );
 
     if(
@@ -8917,12 +8982,10 @@ function chooseWizardAlignment(
 
     setIcon(
         "mageNicknameIcon",
+        "staff",
         alignment === "evil"
-            ? "abyss"
-            : "arcane",
-        alignment === "evil"
-            ? "evil-icon"
-            : "mage-icon"
+            ? "evil-icon staff-mage"
+            : "mage-icon staff-mage"
     );
 
     const input =
@@ -9077,8 +9140,8 @@ function updateMageSetupCopy(){
 
         setIcon(
             "spellScreenIcon",
-            "abyss",
-            "evil-icon"
+            "staff",
+            "evil-icon staff-mage"
         );
 
     }else{
@@ -9105,8 +9168,8 @@ function updateMageSetupCopy(){
 
         setIcon(
             "spellScreenIcon",
-            "arcane",
-            "mage-icon"
+            "staff",
+            "mage-icon staff-mage"
         );
 
     }
@@ -9375,6 +9438,8 @@ function toggleSpell(
 
     updateSelectionCount();
 
+    refreshMageStaff();
+
 }
 
 /* =========================================================
@@ -9445,6 +9510,54 @@ function updateSelectionCount(){
 }
 
 /* =========================================================
+   REFRESH MAGE STAFF
+   ========================================================= */
+
+function refreshMageStaff(){
+
+    const first =
+        mageConfig.spells[0];
+
+    const type =
+        first &&
+        elementColors[first]
+            ? "staff"
+            : "staff";
+
+    const extra =
+        mageConfig.alignment ===
+            "evil"
+            ? "evil-icon staff-mage"
+            : "mage-icon staff-mage";
+
+    setIcon(
+        "avatarIcon",
+        type,
+        extra
+    );
+
+    if(
+        currentMode ===
+        "mage"
+    ){
+
+        setIcon(
+            "headerLogoIcon",
+            "staff",
+            "mage-icon staff-mage"
+        );
+
+        setIcon(
+            "profileBadgeIcon",
+            "staff",
+            extra
+        );
+
+    }
+
+}
+
+/* =========================================================
    FINISH MAGE
    ========================================================= */
 
@@ -9487,16 +9600,15 @@ async function finishWizardChoices(){
 
     setMageVisuals();
 
+    refreshMageStaff();
+
     setIcon(
         "activationIcon",
+        "staff",
         mageConfig.alignment ===
             "evil"
-            ? "abyss"
-            : "arcane",
-        mageConfig.alignment ===
-            "evil"
-            ? "evil-icon"
-            : "mage-icon"
+            ? "evil-icon staff-mage"
+            : "mage-icon staff-mage"
     );
 
     setText(
@@ -9656,6 +9768,7 @@ const siteTexts = {
     prince:{
 
         good:{
+
             eyebrow:
                 "ATIVANDO MODO PRÍNCIPE",
 
@@ -9700,9 +9813,11 @@ const siteTexts = {
                     "Seu repertório gamer fica organizado em uma identidade construída por você."
                 ]
             ]
+
         },
 
         evil:{
+
             eyebrow:
                 "ATIVANDO MODO PRÍNCIPE",
 
@@ -9747,6 +9862,7 @@ const siteTexts = {
                     "Seu repertório gamer continua no centro da experiência."
                 ]
             ]
+
         }
 
     },
@@ -9754,6 +9870,7 @@ const siteTexts = {
     mage:{
 
         good:{
+
             eyebrow:
                 cfg =>
                     cfg.spell
@@ -9786,9 +9903,9 @@ const siteTexts = {
 
             cards:[
                 [
-                    "light",
-                    "NÚCLEO ELEMENTAL",
-                    "A energia escolhida assume o centro visual do círculo."
+                    "staff",
+                    "CAJADO ARCANO",
+                    "O cajado recebe a cor do poder ativo e funciona como núcleo visual do magologista."
                 ],
                 [
                     "air",
@@ -9801,9 +9918,11 @@ const siteTexts = {
                     "A atmosfera muda sem alterar o registro do Príncipe."
                 ]
             ]
+
         },
 
         evil:{
+
             eyebrow:
                 "DESPERTANDO DEMÔNIO + ABISMO",
 
@@ -9832,9 +9951,9 @@ const siteTexts = {
 
             cards:[
                 [
-                    "abyss",
-                    "ABISMO",
-                    "O vazio se torna o núcleo visual do universo sombrio."
+                    "staff",
+                    "CAJADO DO ABISMO",
+                    "O cajado assume a energia da força escolhida e concentra o visual sombrio do magologista."
                 ],
                 [
                     "demon",
@@ -9842,11 +9961,12 @@ const siteTexts = {
                     "A presença demoníaca entra na identidade do magologista."
                 ],
                 [
-                    "curse",
-                    "PODER PROIBIDO",
-                    "Maldições e forças sombrias ficam isoladas do reino."
+                    "abyss",
+                    "ABISMO",
+                    "O vazio se torna o núcleo visual do universo sombrio."
                 ]
             ]
+
         }
 
     }
@@ -9883,6 +10003,35 @@ function updateSiteForMode(){
                 ? "evil"
                 : "good"
         ];
+
+    /* =====================================================
+       BRANDING
+       ===================================================== */
+
+    setText(
+        "brandLogoText",
+        isMage
+            ? "1MAGOBR"
+            : "1PRINCIPEBR"
+    );
+
+    setText(
+        "heroBrand",
+        isMage
+            ? "1MAGOBR"
+            : "1PRINCIPEBR"
+    );
+
+    setText(
+        "footerBrand",
+        isMage
+            ? "1MAGOBR"
+            : "1PRINCIPEBR"
+    );
+
+    /* =====================================================
+       HERO
+       ===================================================== */
 
     setText(
         "heroEyebrow",
@@ -9956,37 +10105,34 @@ function updateSiteForMode(){
             )
     );
 
-    if(
-        isMage
-    ){
+    /* =====================================================
+       MAGE HERO STAFF
+       ===================================================== */
+
+    if(isMage){
 
         setIcon(
             "headerLogoIcon",
-            "arcane",
-            "mage-icon"
+            "staff",
+            isEvil
+                ? "evil-icon staff-mage"
+                : "mage-icon staff-mage"
         );
 
         setIcon(
             "profileBadgeIcon",
+            "staff",
             isEvil
-                ? "abyss"
-                : "arcane",
-            isEvil
-                ? "evil-icon"
-                : "mage-icon"
+                ? "evil-icon staff-mage"
+                : "mage-icon staff-mage"
         );
 
         setIcon(
             "avatarIcon",
+            "staff",
             isEvil
-                ? "abyss"
-                : (
-                    mageConfig.spells[0] ||
-                    "arcane"
-                ),
-            isEvil
-                ? "evil-icon"
-                : "mage-icon"
+                ? "evil-icon staff-mage"
+                : "mage-icon staff-mage"
         );
 
         setIcon(
@@ -10038,6 +10184,10 @@ function updateSiteForMode(){
 
     }
 
+    /* =====================================================
+       ABOUT
+       ===================================================== */
+
     setText(
         "aboutKicker",
         data.aboutKicker
@@ -10086,6 +10236,10 @@ function updateSiteForMode(){
         }
     );
 
+    /* =====================================================
+       GAMES
+       ===================================================== */
+
     setText(
         "gamesKicker",
         isMage
@@ -10094,11 +10248,7 @@ function updateSiteForMode(){
                     ? "ARENA DO ABISMO"
                     : "ARENA ARCANA"
             )
-            : (
-                isEvil
-                    ? "ARENA DO REINO"
-                    : "ARENA DO REINO"
-            )
+            : "ARENA DO REINO"
     );
 
     setText(
@@ -10119,6 +10269,10 @@ function updateSiteForMode(){
             : "Fortnite, Minecraft, GTA, FPS, luta, simuladores e outros universos podem viver dentro do mesmo reino."
     );
 
+    /* =====================================================
+       CLIPS
+       ===================================================== */
+
     setText(
         "clipsKicker",
         isMage
@@ -10133,12 +10287,9 @@ function updateSiteForMode(){
             : "Momentos rápidos, jogadas limpas e partidas que merecem virar parte da história do perfil."
     );
 
-    setText(
-        "socialKicker",
-        isMage
-            ? "PORTAIS DIGITAIS"
-            : "PORTAIS DIGITAIS"
-    );
+    /* =====================================================
+       SOCIAL
+       ===================================================== */
 
     setText(
         "socialText",
@@ -10146,6 +10297,10 @@ function updateSiteForMode(){
             ? "Twitch, TikTok e Instagram continuam conectados ao universo do seu magologista."
             : "A identidade da coroa acompanha você nas principais redes."
     );
+
+    /* =====================================================
+       LIVE
+       ===================================================== */
 
     setText(
         "liveKicker",
@@ -10181,6 +10336,10 @@ function updateSiteForMode(){
             ? "ABRIR PORTAL"
             : "ENTRAR NA LIVE"
     );
+
+    /* =====================================================
+       COMMUNITY
+       ===================================================== */
 
     setText(
         "communityKicker",
@@ -10427,6 +10586,8 @@ function enterSite(){
     ){
 
         prepareMageSite();
+
+        refreshMageStaff();
 
     }else{
 
@@ -10694,8 +10855,8 @@ function paintStaticIcons(){
 
     setIcon(
         "gatewayMageIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
@@ -10748,32 +10909,32 @@ function paintStaticIcons(){
 
     setIcon(
         "mageAlignmentIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageGoodAlignIcon",
-        "light",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageEvilAlignIcon",
-        "abyss",
-        "evil-icon"
+        "staff",
+        "evil-icon staff-mage"
     );
 
     setIcon(
         "mageNicknameIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "spellScreenIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
@@ -10784,14 +10945,14 @@ function paintStaticIcons(){
 
     setIcon(
         "mageRegistrationIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
         "mageNicknameRegistrationIcon",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
@@ -10831,8 +10992,8 @@ function paintStaticIcons(){
 
     setIcon(
         "aboutIcon3",
-        "arcane",
-        "mage-icon"
+        "staff",
+        "mage-icon staff-mage"
     );
 
     setIcon(
@@ -10876,14 +11037,12 @@ window.addEventListener(
     () => {
 
         /*
-            IMPORTANTE:
-            Todas as atualizações de innerHTML
-            passam por funções que verificam
-            se o elemento existe.
+            Não existe nenhuma referência a
+            "welcomeIcon".
 
-            Isso impede o erro:
-
-            Cannot set properties of null
+            Todas as alterações de HTML passam
+            por setIcon / setHTML e verificam
+            se o elemento existe antes de alterar.
         */
 
         paintStaticIcons();
@@ -10940,6 +11099,8 @@ window.addEventListener(
             );
 
             prepareMageSite();
+
+            refreshMageStaff();
 
             hideAllScreens();
 
