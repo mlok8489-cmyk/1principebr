@@ -130,6 +130,7 @@
       from {
         transform: translateY(0);
       }
+
       to {
         transform: translateY(70px);
       }
@@ -179,6 +180,7 @@
       0%, 100% {
         transform: translateY(0) rotate(-3deg);
       }
+
       50% {
         transform: translateY(-12px) rotate(3deg);
       }
@@ -218,6 +220,7 @@
         opacity: 0;
         transform: scale(.94) translateY(15px);
       }
+
       to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -287,6 +290,7 @@
       font-weight: 800;
       letter-spacing: 1px;
       transition: .25s;
+      display: inline-block;
     }
 
     .primary-btn {
@@ -588,6 +592,7 @@
       0%, 100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(-12px);
       }
@@ -804,12 +809,15 @@
         transform: translateY(110vh) rotate(0deg);
         opacity: 0;
       }
+
       15% {
         opacity: .7;
       }
+
       85% {
         opacity: .7;
       }
+
       to {
         transform: translateY(-15vh) rotate(360deg);
         opacity: 0;
@@ -926,6 +934,7 @@
 
   <div id="welcomeScreen" class="screen">
     <div class="screen-box">
+
       <div class="screen-icon">👑</div>
 
       <h1>ATIVAR MODO PRÍNCIPE</h1>
@@ -946,10 +955,12 @@
         </button>
 
       </div>
+
     </div>
   </div>
 
   <div id="nicknameScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">👑</div>
@@ -961,7 +972,12 @@
         Para ativar o perfil, o nome precisa conter "principe".
       </p>
 
-      <label class="small-label">SEU NICKNAME</label>
+      <label
+        class="small-label"
+        for="nicknameInput"
+      >
+        SEU NICKNAME
+      </label>
 
       <input
         id="nicknameInput"
@@ -969,6 +985,7 @@
         type="text"
         maxlength="30"
         placeholder="Ex: 1principebr"
+        autocomplete="nickname"
       >
 
       <div id="nicknameError" class="error"></div>
@@ -978,9 +995,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="mascotScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">🐉</div>
@@ -998,9 +1017,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="platformScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">🎮</div>
@@ -1018,9 +1039,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="genreScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">🎯</div>
@@ -1040,9 +1063,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="wizardNicknameScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">🧙‍♂️</div>
@@ -1053,7 +1078,12 @@
         Primeiro, escolha o nome que será usado pelo seu personagem mágico.
       </p>
 
-      <label class="small-label">SEU NICKNAME</label>
+      <label
+        class="small-label"
+        for="wizardNicknameInput"
+      >
+        SEU NICKNAME
+      </label>
 
       <input
         id="wizardNicknameInput"
@@ -1061,6 +1091,7 @@
         type="text"
         maxlength="30"
         placeholder="Ex: MagoPrincipe"
+        autocomplete="nickname"
       >
 
       <div id="wizardNicknameError" class="error"></div>
@@ -1070,9 +1101,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="spellScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div class="screen-icon">🔮</div>
@@ -1103,9 +1136,11 @@
       </button>
 
     </div>
+
   </div>
 
   <div id="activationScreen" class="screen hidden">
+
     <div class="screen-box">
 
       <div id="activationIcon" class="screen-icon">👑</div>
@@ -1119,11 +1154,13 @@
       </button>
 
     </div>
+
   </div>
 
   <main id="mainSite">
 
     <header>
+
       <div class="nav">
 
         <a href="#inicio" class="logo">
@@ -1131,6 +1168,7 @@
         </a>
 
         <nav>
+
           <a href="#inicio">INÍCIO</a>
           <a href="#sobre">SOBRE</a>
           <a href="#jogos">JOGOS</a>
@@ -1150,6 +1188,7 @@
         </nav>
 
       </div>
+
     </header>
 
     <section id="inicio" class="hero">
@@ -1463,11 +1502,25 @@
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_n_RA2bKBircIEP5bsWUULQ_AmmtG-RW";
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
+    let supabaseClient = null;
+
+    try {
+      if (
+        window.supabase &&
+        typeof window.supabase.createClient === "function"
+      ) {
+        supabaseClient =
+          window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+          );
+      }
+    } catch (error) {
+      console.error(
+        "Não foi possível iniciar o Supabase:",
+        error
       );
+    }
 
 
     /* =========================================
@@ -1599,15 +1652,48 @@
 
     function showScreen(id) {
 
-      document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.add("hidden");
-      });
+      document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+          screen.classList.add("hidden");
+        });
 
-      const target = document.getElementById(id);
+      const target =
+        document.getElementById(id);
 
       if (target) {
         target.classList.remove("hidden");
       }
+    }
+
+
+    /* =========================================
+       BODY MODE CONTROL
+       IMPORTANTE:
+       NÃO usamos body.className = ""
+       quando o site já está aberto.
+       Isso preserva "site-ready".
+    ========================================= */
+
+    const elementClasses = [
+      "magic-mode",
+      "fire-element",
+      "water-element",
+      "air-element",
+      "earth-element",
+      "lightning-element",
+      "shadow-element",
+      "light-element",
+      "ice-element",
+      "gravity-element",
+      "void-element"
+    ];
+
+    function clearElementClasses() {
+
+      document.body.classList.remove(
+        ...elementClasses
+      );
     }
 
 
@@ -1619,7 +1705,7 @@
 
       currentMode = "prince";
 
-      document.body.className = "";
+      clearElementClasses();
 
       userData = {
         nickname: "",
@@ -1634,7 +1720,16 @@
       showScreen("nicknameScreen");
 
       setTimeout(() => {
-        document.getElementById("nicknameInput").focus();
+
+        const input =
+          document.getElementById(
+            "nicknameInput"
+          );
+
+        if (input) {
+          input.focus();
+        }
+
       }, 100);
     }
 
@@ -1642,15 +1737,23 @@
     function confirmNickname() {
 
       const input =
-        document.getElementById("nicknameInput");
+        document.getElementById(
+          "nicknameInput"
+        );
 
       const error =
-        document.getElementById("nicknameError");
+        document.getElementById(
+          "nicknameError"
+        );
 
       const nickname =
         input.value.trim();
 
-      if (!nickname.toLowerCase().includes("principe")) {
+      if (
+        !nickname
+          .toLowerCase()
+          .includes("principe")
+      ) {
 
         error.textContent =
           'Seu nickname precisa conter "principe".';
@@ -1668,27 +1771,35 @@
 
       error.textContent = "";
 
-      userData.nickname = nickname;
+      userData.nickname =
+        nickname;
 
       renderMascots();
 
-      showScreen("mascotScreen");
+      showScreen(
+        "mascotScreen"
+      );
     }
 
 
     function renderMascots() {
 
       const grid =
-        document.getElementById("mascotGrid");
+        document.getElementById(
+          "mascotGrid"
+        );
 
       grid.innerHTML = "";
 
       mascots.forEach(item => {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
-        card.className = "choice-card";
+        card.className =
+          "choice-card";
 
         card.innerHTML = `
           <span class="choice-icon">${item[0]}</span>
@@ -1698,12 +1809,21 @@
         card.onclick = () => {
 
           document
-            .querySelectorAll("#mascotGrid .choice-card")
-            .forEach(c => c.classList.remove("selected"));
+            .querySelectorAll(
+              "#mascotGrid .choice-card"
+            )
+            .forEach(c =>
+              c.classList.remove(
+                "selected"
+              )
+            );
 
-          card.classList.add("selected");
+          card.classList.add(
+            "selected"
+          );
 
-          userData.mascot = item[1];
+          userData.mascot =
+            item[1];
         };
 
         grid.appendChild(card);
@@ -1719,23 +1839,30 @@
 
       renderPlatforms();
 
-      showScreen("platformScreen");
+      showScreen(
+        "platformScreen"
+      );
     }
 
 
     function renderPlatforms() {
 
       const grid =
-        document.getElementById("platformGrid");
+        document.getElementById(
+          "platformGrid"
+        );
 
       grid.innerHTML = "";
 
       platforms.forEach(item => {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
-        card.className = "choice-card";
+        card.className =
+          "choice-card";
 
         card.innerHTML = `
           <span class="choice-icon">${item[0]}</span>
@@ -1745,12 +1872,21 @@
         card.onclick = () => {
 
           document
-            .querySelectorAll("#platformGrid .choice-card")
-            .forEach(c => c.classList.remove("selected"));
+            .querySelectorAll(
+              "#platformGrid .choice-card"
+            )
+            .forEach(c =>
+              c.classList.remove(
+                "selected"
+              )
+            );
 
-          card.classList.add("selected");
+          card.classList.add(
+            "selected"
+          );
 
-          userData.platform = item[1];
+          userData.platform =
+            item[1];
         };
 
         grid.appendChild(card);
@@ -1766,23 +1902,30 @@
 
       renderGenres();
 
-      showScreen("genreScreen");
+      showScreen(
+        "genreScreen"
+      );
     }
 
 
     function renderGenres() {
 
       const grid =
-        document.getElementById("genreGrid");
+        document.getElementById(
+          "genreGrid"
+        );
 
       grid.innerHTML = "";
 
       genres.forEach(item => {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
-        card.className = "choice-card";
+        card.className =
+          "choice-card";
 
         card.innerHTML = `
           <span class="choice-icon">${item[0]}</span>
@@ -1792,23 +1935,36 @@
         card.onclick = () => {
 
           const index =
-            userData.genres.indexOf(item[1]);
+            userData.genres.indexOf(
+              item[1]
+            );
 
           if (index >= 0) {
 
-            userData.genres.splice(index, 1);
+            userData.genres.splice(
+              index,
+              1
+            );
 
-            card.classList.remove("selected");
+            card.classList.remove(
+              "selected"
+            );
 
           } else {
 
-            if (userData.genres.length >= 3) {
+            if (
+              userData.genres.length >= 3
+            ) {
               return;
             }
 
-            userData.genres.push(item[1]);
+            userData.genres.push(
+              item[1]
+            );
 
-            card.classList.add("selected");
+            card.classList.add(
+              "selected"
+            );
           }
         };
 
@@ -1820,9 +1976,13 @@
     async function finishPrinceChoices() {
 
       const error =
-        document.getElementById("genreError");
+        document.getElementById(
+          "genreError"
+        );
 
-      if (userData.genres.length !== 3) {
+      if (
+        userData.genres.length !== 3
+      ) {
 
         error.textContent =
           "Escolha exatamente 3 gêneros.";
@@ -1839,18 +1999,25 @@
 
       await saveProfile();
 
-      document.body.className = "";
+      clearElementClasses();
 
-      document.getElementById("activationIcon").textContent =
-        "👑";
+      document.getElementById(
+        "activationIcon"
+      ).textContent = "👑";
 
-      document.getElementById("activationTitle").textContent =
+      document.getElementById(
+        "activationTitle"
+      ).textContent =
         "MODO PRÍNCIPE ATIVADO";
 
-      document.getElementById("activationText").textContent =
+      document.getElementById(
+        "activationText"
+      ).textContent =
         `Bem-vindo, ${userData.nickname}! Seu mascote é ${userData.mascot} e seu poder começa agora.`;
 
-      showScreen("activationScreen");
+      showScreen(
+        "activationScreen"
+      );
     }
 
 
@@ -1862,7 +2029,11 @@
 
       currentMode = "wizard";
 
-      document.body.className = "magic-mode";
+      clearElementClasses();
+
+      document.body.classList.add(
+        "magic-mode"
+      );
 
       userData = {
         nickname: "",
@@ -1874,13 +2045,20 @@
         spellType: ""
       };
 
-      showScreen("wizardNicknameScreen");
+      showScreen(
+        "wizardNicknameScreen"
+      );
 
       setTimeout(() => {
 
-        document
-          .getElementById("wizardNicknameInput")
-          .focus();
+        const input =
+          document.getElementById(
+            "wizardNicknameInput"
+          );
+
+        if (input) {
+          input.focus();
+        }
 
       }, 100);
     }
@@ -1889,15 +2067,21 @@
     function confirmWizardNickname() {
 
       const input =
-        document.getElementById("wizardNicknameInput");
+        document.getElementById(
+          "wizardNicknameInput"
+        );
 
       const error =
-        document.getElementById("wizardNicknameError");
+        document.getElementById(
+          "wizardNicknameError"
+        );
 
       const nickname =
         input.value.trim();
 
-      if (nickname.length < 3) {
+      if (
+        nickname.length < 3
+      ) {
 
         error.textContent =
           "Digite um nickname com pelo menos 3 caracteres.";
@@ -1907,11 +2091,14 @@
 
       error.textContent = "";
 
-      userData.nickname = nickname;
+      userData.nickname =
+        nickname;
 
       renderSpells();
 
-      showScreen("spellScreen");
+      showScreen(
+        "spellScreen"
+      );
     }
 
 
@@ -1929,7 +2116,10 @@
     }
 
 
-    function renderSpellGroup(id, spells) {
+    function renderSpellGroup(
+      id,
+      spells
+    ) {
 
       const grid =
         document.getElementById(id);
@@ -1939,7 +2129,9 @@
       spells.forEach(spell => {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         card.className =
           "choice-card spell-card";
@@ -1956,7 +2148,9 @@
           </div>
 
           <span class="element-badge">
-            ${spells === elementalSpells ? "ELEMENTO" : "PODER ESPECIAL"}
+            ${spells === elementalSpells
+              ? "ELEMENTO"
+              : "PODER ESPECIAL"}
           </span>
         `;
 
@@ -1966,9 +2160,15 @@
             .querySelectorAll(
               "#elementGrid .choice-card, #specialSpellGrid .choice-card"
             )
-            .forEach(c => c.classList.remove("selected"));
+            .forEach(c =>
+              c.classList.remove(
+                "selected"
+              )
+            );
 
-          card.classList.add("selected");
+          card.classList.add(
+            "selected"
+          );
 
           userData.spell =
             spell.name;
@@ -1993,7 +2193,9 @@
     async function finishWizardChoices() {
 
       const error =
-        document.getElementById("spellError");
+        document.getElementById(
+          "spellError"
+        );
 
       if (!userData.spell) {
 
@@ -2012,16 +2214,26 @@
 
       await saveProfile();
 
-      document.getElementById("activationIcon").textContent =
-        getSpellIcon(userData.spellType);
+      document.getElementById(
+        "activationIcon"
+      ).textContent =
+        getSpellIcon(
+          userData.spellType
+        );
 
-      document.getElementById("activationTitle").textContent =
+      document.getElementById(
+        "activationTitle"
+      ).textContent =
         "PODER DESPERTADO";
 
-      document.getElementById("activationText").textContent =
+      document.getElementById(
+        "activationText"
+      ).textContent =
         `Bem-vindo, ${userData.nickname}. O poder de ${userData.spell} agora faz parte da sua identidade.`;
 
-      showScreen("activationScreen");
+      showScreen(
+        "activationScreen"
+      );
 
       createMagicParticles();
     }
@@ -2033,28 +2245,18 @@
 
     function applyElement(type) {
 
-      const classes = [
-        "magic-mode",
-        "fire-element",
-        "water-element",
-        "air-element",
-        "earth-element",
-        "lightning-element",
-        "shadow-element",
-        "light-element",
-        "ice-element",
-        "gravity-element",
-        "void-element"
-      ];
-
-      document.body.classList.remove(
-        ...classes
-      );
+      clearElementClasses();
 
       document.body.classList.add(
-        "magic-mode",
-        `${type}-element`
+        "magic-mode"
       );
+
+      if (type) {
+
+        document.body.classList.add(
+          `${type}-element`
+        );
+      }
 
       createMagicParticles();
     }
@@ -2075,19 +2277,28 @@
         void: "🕳️"
       };
 
-      return icons[type] || "🔮";
+      return (
+        icons[type] ||
+        "🔮"
+      );
     }
 
 
-    function showElementMessage(message) {
+    function showElementMessage(
+      message
+    ) {
 
       const box =
-        document.getElementById("elementMessage");
+        document.getElementById(
+          "elementMessage"
+        );
 
       box.textContent =
         message;
 
-      box.classList.add("show");
+      box.classList.add(
+        "show"
+      );
 
       clearTimeout(
         window.elementMessageTimer
@@ -2096,7 +2307,9 @@
       window.elementMessageTimer =
         setTimeout(() => {
 
-          box.classList.remove("show");
+          box.classList.remove(
+            "show"
+          );
 
         }, 2200);
     }
@@ -2105,14 +2318,26 @@
     function createMagicParticles() {
 
       const container =
-        document.getElementById("magicParticles");
+        document.getElementById(
+          "magicParticles"
+        );
+
+      if (!container) {
+        return;
+      }
 
       container.innerHTML = "";
 
-      for (let i = 0; i < 25; i++) {
+      for (
+        let i = 0;
+        i < 25;
+        i++
+      ) {
 
         const particle =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         particle.className =
           "particle";
@@ -2148,7 +2373,9 @@
       document
         .querySelectorAll(".screen")
         .forEach(screen => {
-          screen.classList.add("hidden");
+          screen.classList.add(
+            "hidden"
+          );
         });
 
       document.body.classList.add(
@@ -2171,36 +2398,74 @@
     function updateSiteForMode() {
 
       const eyebrow =
-        document.getElementById("heroEyebrow");
+        document.getElementById(
+          "heroEyebrow"
+        );
 
       const description =
-        document.getElementById("heroDescription");
+        document.getElementById(
+          "heroDescription"
+        );
 
       const badgeIcon =
-        document.getElementById("badgeIcon");
+        document.getElementById(
+          "badgeIcon"
+        );
 
       const badgeName =
-        document.getElementById("badgeName");
+        document.getElementById(
+          "badgeName"
+        );
 
       const badgeDetails =
-        document.getElementById("badgeDetails");
+        document.getElementById(
+          "badgeDetails"
+        );
 
       const avatar =
-        document.getElementById("avatarPlaceholder");
+        document.getElementById(
+          "avatarPlaceholder"
+        );
 
       const modeSwitch =
-        document.getElementById("modeSwitch");
+        document.getElementById(
+          "modeSwitch"
+        );
 
       const about =
-        document.getElementById("aboutBox");
+        document.getElementById(
+          "aboutBox"
+        );
 
-      if (userData.mode === "wizard") {
+      if (
+        !eyebrow ||
+        !description ||
+        !badgeIcon ||
+        !badgeName ||
+        !badgeDetails ||
+        !avatar ||
+        !modeSwitch ||
+        !about
+      ) {
+        return;
+      }
+
+
+      /* =====================================
+         🧙 MAGO
+      ===================================== */
+
+      if (
+        userData.mode === "wizard"
+      ) {
 
         document.body.classList.add(
           "magic-mode"
         );
 
-        if (userData.spellType) {
+        if (
+          userData.spellType
+        ) {
 
           applyElement(
             userData.spellType
@@ -2208,7 +2473,9 @@
         }
 
         eyebrow.textContent =
-          `DESPERTANDO ${userData.spell.toUpperCase()}`;
+          `DESPERTANDO ${(
+            userData.spell || ""
+          ).toUpperCase()}`;
 
         description.textContent =
           `O poder de ${userData.spell} foi despertado. O 1PRINCIPEBR agora possui uma identidade mágica própria, com efeitos e energia baseados no seu feitiço.`;
@@ -2219,10 +2486,13 @@
           );
 
         badgeName.textContent =
-          userData.nickname;
+          userData.nickname ||
+          "1PRINCIPEBR";
 
         badgeDetails.textContent =
-          `🧙 MAGO • ${userData.spell.toUpperCase()}`;
+          `🧙 MAGO • ${(
+            userData.spell || ""
+          ).toUpperCase()}`;
 
         avatar.textContent =
           "🧙🏿‍♂️";
@@ -2233,9 +2503,18 @@
         about.textContent =
           `O Modo Mago transforma o 1PRINCIPEBR em uma experiência mágica. Seu feitiço escolhido é ${userData.spell}, e essa escolha influencia as cores, brilhos e efeitos visuais do site.`;
 
-      } else {
+      }
 
-        document.body.className = "";
+
+      /* =====================================
+         👑 PRÍNCIPE
+         CORREÇÃO PRINCIPAL:
+         preserva "site-ready"
+      ===================================== */
+
+      else {
+
+        clearElementClasses();
 
         eyebrow.textContent =
           "ATIVANDO MODO PRÍNCIPE";
@@ -2265,15 +2544,23 @@
     }
 
 
+    /* =========================================
+       TOGGLE MODE
+    ========================================= */
+
     function toggleMode() {
 
-      if (userData.mode === "wizard") {
+      if (
+        userData.mode === "wizard"
+      ) {
 
         userData.mode =
           "prince";
 
-        document.body.className =
-          "";
+        currentMode =
+          "prince";
+
+        clearElementClasses();
 
         updateSiteForMode();
 
@@ -2286,10 +2573,14 @@
         userData.mode =
           "wizard";
 
-        document.body.className =
-          "magic-mode";
+        currentMode =
+          "wizard";
 
         if (!userData.spell) {
+
+          document.body.classList.add(
+            "magic-mode"
+          );
 
           showScreen(
             "wizardNicknameScreen"
@@ -2320,6 +2611,16 @@
 
       try {
 
+        if (!supabaseClient) {
+
+          console.warn(
+            "Supabase não está disponível. O site continuará funcionando."
+          );
+
+          return false;
+        }
+
+
         /* =====================================
            👑 PRÍNCIPE
            Tabela: principe_users
@@ -2331,18 +2632,33 @@
            genres
         ===================================== */
 
-        if (userData.mode === "prince") {
+        if (
+          userData.mode === "prince"
+        ) {
 
           const {
             error
-          } = await supabaseClient
-            .from("principe_users")
-            .insert({
-              nickname: userData.nickname,
-              mascot: userData.mascot || null,
-              platform: userData.platform || null,
-              genres: userData.genres || []
-            });
+          } =
+            await supabaseClient
+              .from(
+                "principe_users"
+              )
+              .insert({
+                nickname:
+                  userData.nickname,
+
+                mascot:
+                  userData.mascot ||
+                  null,
+
+                platform:
+                  userData.platform ||
+                  null,
+
+                genres:
+                  userData.genres ||
+                  []
+              });
 
           if (error) {
 
@@ -2372,17 +2688,29 @@
            spell_type
         ===================================== */
 
-        if (userData.mode === "wizard") {
+        if (
+          userData.mode === "wizard"
+        ) {
 
           const {
             error
-          } = await supabaseClient
-            .from("mago_users")
-            .insert({
-              nickname: userData.nickname,
-              spell: userData.spell || null,
-              spell_type: userData.spellType || null
-            });
+          } =
+            await supabaseClient
+              .from(
+                "mago_users"
+              )
+              .insert({
+                nickname:
+                  userData.nickname,
+
+                spell:
+                  userData.spell ||
+                  null,
+
+                spell_type:
+                  userData.spellType ||
+                  null
+              });
 
           if (error) {
 
@@ -2435,40 +2763,56 @@
         const data =
           JSON.parse(saved);
 
-        if (!data || !data.nickname) {
+        if (
+          !data ||
+          !data.nickname
+        ) {
           return false;
         }
 
         userData = {
 
           nickname:
-            data.nickname || "",
+            data.nickname ||
+            "",
 
           mascot:
-            data.mascot || "",
+            data.mascot ||
+            "",
 
           platform:
-            data.platform || "",
+            data.platform ||
+            "",
 
           genres:
-            data.genres || [],
+            Array.isArray(
+              data.genres
+            )
+              ? data.genres
+              : [],
 
           mode:
-            data.mode || "prince",
+            data.mode ||
+            "prince",
 
           spell:
-            data.spell || "",
+            data.spell ||
+            "",
 
           spellType:
-            data.spellType || ""
+            data.spellType ||
+            ""
         };
 
         currentMode =
           userData.mode;
 
         if (
-          userData.mode === "wizard"
+          userData.mode ===
+          "wizard"
         ) {
+
+          clearElementClasses();
 
           document.body.classList.add(
             "magic-mode"
@@ -2482,6 +2826,10 @@
               userData.spellType
             );
           }
+
+        } else {
+
+          clearElementClasses();
         }
 
         return true;
@@ -2502,7 +2850,9 @@
        ESCAPE HTML
     ========================================= */
 
-    function escapeHTML(value) {
+    function escapeHTML(
+      value
+    ) {
 
       return String(value)
         .replace(
@@ -2651,7 +3001,6 @@
         }
       }
     );
-
   </script>
 
 </body>
