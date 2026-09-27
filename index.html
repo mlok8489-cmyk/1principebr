@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>1PRINCIPEBR | Modo Príncipe</title>
+  <title>1PRINCIPEBR | Universo</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +27,10 @@
       --magic: var(--purple);
       --magic-light: var(--purple-light);
       --magic-rgb: 138, 43, 226;
+
+      --magic-2: var(--purple);
+      --magic-2-light: var(--purple-light);
+      --magic-2-rgb: 138, 43, 226;
     }
 
     * {
@@ -39,12 +43,13 @@
     body {
       font-family: "Orbitron", sans-serif;
       background:
-        radial-gradient(circle at 50% -10%, rgba(var(--magic-rgb), .18), transparent 35%),
+        radial-gradient(circle at 20% -10%, rgba(var(--magic-rgb), .16), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(var(--magic-2-rgb), .12), transparent 28%),
         var(--black);
       color: var(--white);
       min-height: 100vh;
       overflow-x: hidden;
-      transition: background .5s ease, color .4s ease;
+      transition: background .6s ease, color .4s ease;
     }
 
     body.magic-mode {
@@ -53,64 +58,193 @@
       --magic-rgb: 22, 140, 255;
     }
 
-    body.fire-element {
+    /* =========================================
+       BEM
+    ========================================= */
+
+    body.element-fire {
       --magic: #ff4b16;
       --magic-light: #ff9b50;
       --magic-rgb: 255, 75, 22;
     }
 
-    body.water-element {
+    body.element-water {
       --magic: #00bfff;
       --magic-light: #71e7ff;
       --magic-rgb: 0, 191, 255;
     }
 
-    body.air-element {
+    body.element-air {
       --magic: #b8eaff;
       --magic-light: #ffffff;
       --magic-rgb: 184, 234, 255;
     }
 
-    body.earth-element {
+    body.element-earth {
       --magic: #8f9d4c;
       --magic-light: #c6d878;
       --magic-rgb: 143, 157, 76;
     }
 
-    body.lightning-element {
+    body.element-lightning {
       --magic: #ffe600;
       --magic-light: #fff58a;
       --magic-rgb: 255, 230, 0;
     }
 
-    body.shadow-element {
+    body.element-shadow {
       --magic: #721cff;
       --magic-light: #b77aff;
       --magic-rgb: 114, 28, 255;
     }
 
-    body.light-element {
+    body.element-light {
       --magic: #fff2a1;
       --magic-light: #ffffff;
       --magic-rgb: 255, 242, 161;
     }
 
-    body.ice-element {
+    body.element-ice {
       --magic: #70dfff;
       --magic-light: #d5f8ff;
       --magic-rgb: 112, 223, 255;
     }
 
-    body.gravity-element {
+    body.element-gravity {
       --magic: #9c5cff;
       --magic-light: #d09dff;
       --magic-rgb: 156, 92, 255;
     }
 
-    body.void-element {
+    body.element-void {
       --magic: #263dff;
       --magic-light: #7381ff;
       --magic-rgb: 38, 61, 255;
+    }
+
+    /* =========================================
+       MAL - NOVOS ELEMENTOS
+    ========================================= */
+
+    body.element-blood {
+      --magic: #b4002f;
+      --magic-light: #ff416d;
+      --magic-rgb: 180, 0, 47;
+    }
+
+    body.element-poison {
+      --magic: #6bff20;
+      --magic-light: #b4ff7c;
+      --magic-rgb: 107, 255, 32;
+    }
+
+    body.element-hellfire {
+      --magic: #ff1800;
+      --magic-light: #ff8a36;
+      --magic-rgb: 255, 24, 0;
+    }
+
+    body.element-corruption {
+      --magic: #8d00ff;
+      --magic-light: #d06cff;
+      --magic-rgb: 141, 0, 255;
+    }
+
+    body.element-chaos {
+      --magic: #ff00a8;
+      --magic-light: #ff79d5;
+      --magic-rgb: 255, 0, 168;
+    }
+
+    body.element-curse {
+      --magic: #4c236b;
+      --magic-light: #b96cff;
+      --magic-rgb: 76, 35, 107;
+    }
+
+    body.element-demon {
+      --magic: #ff3b12;
+      --magic-light: #ff9d6a;
+      --magic-rgb: 255, 59, 18;
+    }
+
+    body.element-soul {
+      --magic: #00e0c6;
+      --magic-light: #72fff0;
+      --magic-rgb: 0, 224, 198;
+    }
+
+    body.element-nightmare {
+      --magic: #202020;
+      --magic-light: #a8a8a8;
+      --magic-rgb: 32, 32, 32;
+    }
+
+    body.element-abyss {
+      --magic: #081b5c;
+      --magic-light: #3e75ff;
+      --magic-rgb: 8, 27, 92;
+    }
+
+    /* =========================================
+       DUAL ELEMENT
+    ========================================= */
+
+    body.dual-element {
+      background:
+        linear-gradient(
+          110deg,
+          rgba(var(--magic-rgb), .12) 0%,
+          transparent 38%,
+          transparent 62%,
+          rgba(var(--magic-2-rgb), .12) 100%
+        ),
+        radial-gradient(
+          circle at 20% -10%,
+          rgba(var(--magic-rgb), .18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(var(--magic-2-rgb), .18),
+          transparent 35%
+        ),
+        var(--black);
+    }
+
+    body.dual-element::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(var(--magic-rgb), .025) 0 49.8%,
+          rgba(var(--magic-2-rgb), .025) 50.2% 100%
+        );
+    }
+
+    .dual-accent {
+      background:
+        linear-gradient(
+          90deg,
+          var(--magic) 0 50%,
+          var(--magic-2) 50% 100%
+        ) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
+    .dual-border {
+      border-image:
+        linear-gradient(
+          90deg,
+          var(--magic),
+          var(--magic-2)
+        ) 1;
     }
 
     body::before {
@@ -119,7 +253,11 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        radial-gradient(circle, rgba(var(--magic-rgb), .28) 1px, transparent 1px);
+        radial-gradient(
+          circle,
+          rgba(var(--magic-rgb), .28) 1px,
+          transparent 1px
+        );
       background-size: 70px 70px;
       opacity: .12;
       animation: stars 18s linear infinite;
@@ -149,6 +287,925 @@
       display: none !important;
     }
 
+    /* =========================================
+       CSS ICON SYSTEM
+    ========================================= */
+
+    .css-icon {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--magic-light);
+      filter: drop-shadow(
+        0 0 12px rgba(var(--magic-rgb), .45)
+      );
+      flex-shrink: 0;
+    }
+
+    .css-icon::before,
+    .css-icon::after {
+      content: "";
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    /* COROA */
+
+    .icon-crown {
+      width: 58px;
+      height: 48px;
+    }
+
+    .icon-crown::before {
+      width: 50px;
+      height: 32px;
+      left: 4px;
+      top: 11px;
+      border-bottom: 5px solid currentColor;
+      clip-path: polygon(
+        0 0,
+        20% 42%,
+        38% 5%,
+        50% 45%,
+        67% 5%,
+        82% 42%,
+        100% 0,
+        88% 90%,
+        12% 90%
+      );
+      background: currentColor;
+      filter: drop-shadow(0 0 7px currentColor);
+    }
+
+    .icon-crown::after {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+      top: 3px;
+      left: 24px;
+      box-shadow:
+        -18px 9px 0 -1px currentColor,
+        18px 9px 0 -1px currentColor;
+    }
+
+    /* MAGO */
+
+    .icon-wizard {
+      width: 58px;
+      height: 58px;
+    }
+
+    .icon-wizard::before {
+      width: 42px;
+      height: 31px;
+      left: 8px;
+      top: 23px;
+      border: 3px solid currentColor;
+      border-radius: 50% 50% 45% 45%;
+    }
+
+    .icon-wizard::after {
+      width: 47px;
+      height: 28px;
+      left: 6px;
+      top: 4px;
+      border: 4px solid currentColor;
+      border-bottom: 0;
+      border-radius: 70% 15% 0 0;
+      transform: rotate(-12deg);
+    }
+
+    /* VARINHA */
+
+    .icon-wand::before {
+      width: 5px;
+      height: 43px;
+      background: currentColor;
+      transform: rotate(38deg);
+      border-radius: 4px;
+    }
+
+    .icon-wand::after {
+      width: 18px;
+      height: 18px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      box-shadow:
+        0 -14px 0 -6px currentColor,
+        14px 0 0 -6px currentColor,
+        0 14px 0 -6px currentColor,
+        -14px 0 0 -6px currentColor;
+    }
+
+    /* ANIMAIS */
+
+    .icon-dragon::before {
+      width: 39px;
+      height: 32px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      transform: rotate(-8deg);
+    }
+
+    .icon-dragon::after {
+      width: 14px;
+      height: 14px;
+      border-left: 4px solid currentColor;
+      border-top: 4px solid currentColor;
+      transform: rotate(45deg);
+      top: 7px;
+      right: 2px;
+    }
+
+    .icon-wolf::before {
+      width: 42px;
+      height: 42px;
+      border: 4px solid currentColor;
+      clip-path: polygon(
+        0 15%,
+        25% 30%,
+        50% 5%,
+        75% 30%,
+        100% 15%,
+        88% 72%,
+        50% 100%,
+        12% 72%
+      );
+    }
+
+    .icon-wolf::after {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 17px 0 currentColor;
+      top: 25px;
+      left: 15px;
+    }
+
+    .icon-fox::before {
+      width: 42px;
+      height: 35px;
+      border: 4px solid currentColor;
+      clip-path: polygon(
+        0 0,
+        30% 20%,
+        50% 8%,
+        70% 20%,
+        100% 0,
+        88% 75%,
+        50% 100%,
+        12% 75%
+      );
+    }
+
+    .icon-fox::after {
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 17px 0 currentColor;
+      top: 24px;
+      left: 15px;
+    }
+
+    .icon-tiger::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 48% 48% 42% 42%;
+    }
+
+    .icon-tiger::after {
+      width: 5px;
+      height: 21px;
+      background: currentColor;
+      transform: rotate(32deg);
+      box-shadow:
+        13px -2px 0 currentColor,
+        26px 0 0 currentColor;
+      left: 14px;
+      top: 10px;
+    }
+
+    .icon-eagle::before {
+      width: 48px;
+      height: 25px;
+      border: 4px solid currentColor;
+      border-top: 0;
+      border-radius: 0 0 50% 50%;
+    }
+
+    .icon-eagle::after {
+      width: 15px;
+      height: 15px;
+      border-top: 4px solid currentColor;
+      border-right: 4px solid currentColor;
+      transform: rotate(45deg);
+      right: 1px;
+      top: 14px;
+    }
+
+    .icon-panda::before {
+      width: 44px;
+      height: 44px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-panda::after {
+      width: 11px;
+      height: 15px;
+      background: currentColor;
+      border-radius: 50%;
+      transform: rotate(35deg);
+      left: 12px;
+      top: 14px;
+      box-shadow: 18px 0 currentColor;
+    }
+
+    .icon-snake::before {
+      width: 45px;
+      height: 24px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      transform: rotate(-15deg);
+    }
+
+    .icon-snake::after {
+      width: 16px;
+      height: 8px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      right: -1px;
+      top: 11px;
+    }
+
+    .icon-phoenix::before {
+      width: 46px;
+      height: 44px;
+      background: currentColor;
+      clip-path: polygon(
+        50% 0,
+        68% 32%,
+        100% 20%,
+        77% 52%,
+        96% 78%,
+        55% 64%,
+        50% 100%,
+        45% 64%,
+        4% 78%,
+        23% 52%,
+        0 20%,
+        32% 32%
+      );
+    }
+
+    /* ARMAS */
+
+    .icon-sword::before {
+      width: 7px;
+      height: 47px;
+      background: currentColor;
+      transform: rotate(42deg);
+      border-radius: 3px;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .icon-sword::after {
+      width: 25px;
+      height: 6px;
+      background: currentColor;
+      transform: rotate(42deg);
+      top: 34px;
+      left: 13px;
+      border-radius: 3px;
+    }
+
+    .icon-shield::before {
+      width: 39px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 8px 8px 18px 18px;
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 65%,
+        50% 100%,
+        0 65%
+      );
+    }
+
+    .icon-shield::after {
+      width: 18px;
+      height: 18px;
+      border: 3px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-bow::before {
+      width: 38px;
+      height: 48px;
+      border: 4px solid currentColor;
+      border-left: 0;
+      border-radius: 50%;
+      transform: rotate(-8deg);
+    }
+
+    .icon-bow::after {
+      width: 43px;
+      height: 3px;
+      background: currentColor;
+      transform: rotate(-8deg);
+    }
+
+    /* PLATAFORMAS */
+
+    .icon-pc::before {
+      width: 44px;
+      height: 29px;
+      border: 4px solid currentColor;
+      border-radius: 5px;
+    }
+
+    .icon-pc::after {
+      width: 30px;
+      height: 4px;
+      background: currentColor;
+      bottom: 7px;
+      box-shadow: 8px 6px 0 -1px currentColor;
+    }
+
+    .icon-console::before {
+      width: 45px;
+      height: 28px;
+      border: 4px solid currentColor;
+      border-radius: 10px;
+      transform: rotate(-5deg);
+    }
+
+    .icon-console::after {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow:
+        18px -4px 0 -1px currentColor,
+        22px 5px 0 -2px currentColor;
+    }
+
+    .icon-xbox::before {
+      width: 38px;
+      height: 38px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-xbox::after {
+      width: 26px;
+      height: 4px;
+      background: currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-mobile::before {
+      width: 26px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 6px;
+    }
+
+    .icon-mobile::after {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      bottom: 7px;
+    }
+
+    /* GÊNEROS */
+
+    .icon-shoot::before {
+      width: 42px;
+      height: 13px;
+      border: 4px solid currentColor;
+      border-radius: 3px;
+      transform: rotate(-8deg);
+    }
+
+    .icon-shoot::after {
+      width: 16px;
+      height: 13px;
+      border-left: 4px solid currentColor;
+      border-bottom: 4px solid currentColor;
+      transform: rotate(-25deg);
+      left: 5px;
+      top: 25px;
+    }
+
+    .icon-action::before,
+    .icon-action::after {
+      width: 45px;
+      height: 7px;
+      background: currentColor;
+      border-radius: 5px;
+    }
+
+    .icon-action::before {
+      transform: rotate(45deg);
+    }
+
+    .icon-action::after {
+      transform: rotate(-45deg);
+    }
+
+    .icon-build::before {
+      width: 42px;
+      height: 38px;
+      border: 4px solid currentColor;
+      clip-path: polygon(
+        0 100%,
+        50% 0,
+        100% 100%
+      );
+    }
+
+    .icon-fight::before {
+      width: 42px;
+      height: 35px;
+      border: 4px solid currentColor;
+      border-radius: 45%;
+      transform: rotate(-15deg);
+    }
+
+    .icon-race::before {
+      width: 45px;
+      height: 25px;
+      border: 4px solid currentColor;
+      border-radius: 50% 50% 20% 20%;
+    }
+
+    .icon-sports::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-sports::after {
+      width: 20px;
+      height: 20px;
+      border: 3px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-horror::before {
+      width: 38px;
+      height: 44px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-horror::after {
+      width: 7px;
+      height: 7px;
+      background: currentColor;
+      border-radius: 50%;
+      left: 13px;
+      top: 19px;
+      box-shadow: 14px 0 currentColor;
+    }
+
+    .icon-world::before {
+      width: 44px;
+      height: 44px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-world::after {
+      width: 26px;
+      height: 42px;
+      border-left: 3px solid currentColor;
+      border-right: 3px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-adventure::before {
+      width: 42px;
+      height: 42px;
+      border: 4px solid currentColor;
+      transform: rotate(45deg);
+      border-radius: 5px;
+    }
+
+    .icon-rpg::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-rpg::after {
+      width: 22px;
+      height: 22px;
+      border: 3px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-simulator::before {
+      width: 43px;
+      height: 35px;
+      border: 4px solid currentColor;
+      border-radius: 6px;
+    }
+
+    .icon-simulator::after {
+      width: 22px;
+      height: 4px;
+      background: currentColor;
+      box-shadow:
+        0 9px 0 currentColor,
+        0 18px 0 currentColor;
+      left: 10px;
+      top: 10px;
+    }
+
+    .icon-strategy::before {
+      width: 42px;
+      height: 42px;
+      border: 4px solid currentColor;
+      transform: rotate(45deg);
+      border-radius: 4px;
+    }
+
+    /* ELEMENTOS BONS */
+
+    .icon-fire::before {
+      width: 34px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 60% 30% 60% 35%;
+      transform: rotate(45deg);
+    }
+
+    .icon-fire::after {
+      width: 13px;
+      height: 21px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      bottom: 5px;
+    }
+
+    .icon-water::before {
+      width: 38px;
+      height: 48px;
+      border: 4px solid currentColor;
+      border-radius: 55% 45% 60% 40%;
+      transform: rotate(45deg);
+    }
+
+    .icon-air::before {
+      width: 45px;
+      height: 25px;
+      border-top: 4px solid currentColor;
+      border-radius: 50%;
+      transform: rotate(-15deg);
+      box-shadow:
+        0 12px 0 -1px currentColor,
+        8px 24px 0 -3px currentColor;
+    }
+
+    .icon-earth::before {
+      width: 43px;
+      height: 40px;
+      border: 4px solid currentColor;
+      clip-path: polygon(
+        50% 0,
+        100% 30%,
+        85% 100%,
+        15% 100%,
+        0 30%
+      );
+    }
+
+    .icon-lightning::before {
+      width: 27px;
+      height: 48px;
+      background: currentColor;
+      clip-path: polygon(
+        60% 0,
+        5% 52%,
+        43% 52%,
+        25% 100%,
+        95% 38%,
+        57% 38%
+      );
+    }
+
+    .icon-shadow::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow: inset 12px -5px 0 rgba(var(--magic-rgb), .35);
+    }
+
+    .icon-light::before {
+      width: 28px;
+      height: 28px;
+      border: 4px solid currentColor;
+      transform: rotate(45deg);
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .icon-ice::before {
+      width: 42px;
+      height: 42px;
+      border: 4px solid currentColor;
+      transform: rotate(45deg);
+      clip-path: polygon(
+        50% 0,
+        61% 37%,
+        100% 25%,
+        69% 50%,
+        100% 75%,
+        61% 63%,
+        50% 100%,
+        39% 63%,
+        0 75%,
+        31% 50%,
+        0 25%,
+        39% 37%
+      );
+    }
+
+    .icon-gravity::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-gravity::after {
+      width: 17px;
+      height: 17px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 18px currentColor;
+    }
+
+    .icon-void::before {
+      width: 45px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 18px currentColor,
+        0 0 15px currentColor;
+    }
+
+    .icon-void::after {
+      width: 15px;
+      height: 15px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    /* ELEMENTOS MALIGNOS */
+
+    .icon-blood::before {
+      width: 34px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 60% 40% 65% 35%;
+      transform: rotate(45deg);
+    }
+
+    .icon-blood::after {
+      width: 7px;
+      height: 7px;
+      background: currentColor;
+      border-radius: 50%;
+      bottom: 3px;
+    }
+
+    .icon-poison::before {
+      width: 42px;
+      height: 35px;
+      border: 4px solid currentColor;
+      border-radius: 8px 8px 15px 15px;
+    }
+
+    .icon-poison::after {
+      width: 28px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 5px;
+      top: 8px;
+    }
+
+    .icon-hellfire::before {
+      width: 38px;
+      height: 47px;
+      background: currentColor;
+      clip-path: polygon(
+        50% 0,
+        70% 30%,
+        100% 22%,
+        75% 55%,
+        85% 100%,
+        50% 72%,
+        15% 100%,
+        25% 55%,
+        0 22%,
+        30% 30%
+      );
+    }
+
+    .icon-corruption::before {
+      width: 44px;
+      height: 44px;
+      border: 5px solid currentColor;
+      transform: rotate(45deg);
+      box-shadow: inset 0 0 15px currentColor;
+    }
+
+    .icon-chaos::before {
+      width: 45px;
+      height: 45px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      border-left-color: transparent;
+      transform: rotate(30deg);
+    }
+
+    .icon-chaos::after {
+      width: 18px;
+      height: 18px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-curse::before {
+      width: 44px;
+      height: 44px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow: inset 0 0 15px currentColor;
+    }
+
+    .icon-curse::after {
+      width: 7px;
+      height: 30px;
+      background: currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-demon::before {
+      width: 43px;
+      height: 39px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      clip-path: polygon(
+        0 20%,
+        20% 30%,
+        30% 0,
+        50% 20%,
+        70% 0,
+        80% 30%,
+        100% 20%,
+        88% 80%,
+        50% 100%,
+        12% 80%
+      );
+    }
+
+    .icon-soul::before {
+      width: 39px;
+      height: 46px;
+      border: 4px solid currentColor;
+      border-radius: 50% 50% 40% 40%;
+      transform: rotate(8deg);
+    }
+
+    .icon-soul::after {
+      width: 10px;
+      height: 20px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      top: 11px;
+    }
+
+    .icon-nightmare::before {
+      width: 45px;
+      height: 42px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow: inset 0 0 15px currentColor;
+    }
+
+    .icon-nightmare::after {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      left: 14px;
+      top: 18px;
+      box-shadow: 14px 0 currentColor;
+    }
+
+    .icon-abyss::before {
+      width: 46px;
+      height: 46px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 20px currentColor,
+        0 0 20px currentColor;
+    }
+
+    .icon-abyss::after {
+      width: 19px;
+      height: 19px;
+      background: #000;
+      border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    /* SOCIAL */
+
+    .icon-twitch::before {
+      width: 42px;
+      height: 34px;
+      border: 4px solid currentColor;
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 78%,
+        76% 78%,
+        61% 100%,
+        61% 78%,
+        0 78%
+      );
+    }
+
+    .icon-tiktok::before {
+      width: 12px;
+      height: 38px;
+      background: currentColor;
+      border-radius: 6px;
+      transform: rotate(8deg);
+    }
+
+    .icon-tiktok::after {
+      width: 24px;
+      height: 18px;
+      border: 5px solid currentColor;
+      border-radius: 50%;
+      left: 8px;
+      bottom: 3px;
+    }
+
+    .icon-instagram::before {
+      width: 43px;
+      height: 43px;
+      border: 4px solid currentColor;
+      border-radius: 13px;
+    }
+
+    .icon-instagram::after {
+      width: 15px;
+      height: 15px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+      box-shadow: 11px -11px 0 -5px currentColor;
+    }
+
+    .icon-play::before {
+      width: 44px;
+      height: 44px;
+      border: 4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-play::after {
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-left: 14px solid currentColor;
+      margin-left: 5px;
+    }
+
+    /* =========================================
+       LOADING
+    ========================================= */
+
     #loading {
       position: fixed;
       inset: 0;
@@ -165,7 +1222,8 @@
     }
 
     .loading-crown {
-      font-size: 55px;
+      display: flex;
+      justify-content: center;
       animation: crownFloat 1.5s ease-in-out infinite;
     }
 
@@ -186,12 +1244,20 @@
       }
     }
 
+    /* =========================================
+       SCREENS
+    ========================================= */
+
     .screen {
       position: fixed;
       inset: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at center, rgba(var(--magic-rgb), .14), transparent 45%),
+        radial-gradient(
+          circle at center,
+          rgba(var(--magic-rgb), .14),
+          transparent 45%
+        ),
         var(--black);
       z-index: 5000;
       display: flex;
@@ -202,7 +1268,7 @@
     }
 
     .screen-box {
-      width: min(650px, 100%);
+      width: min(700px, 100%);
       text-align: center;
       padding: 45px 30px;
       border: 1px solid rgba(var(--magic-rgb), .35);
@@ -228,8 +1294,9 @@
     }
 
     .screen-icon {
-      font-size: 70px;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
     }
 
     .screen-box h1 {
@@ -290,18 +1357,27 @@
       font-weight: 800;
       letter-spacing: 1px;
       transition: .25s;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, var(--magic), var(--magic-light));
+      background: linear-gradient(
+        135deg,
+        var(--magic),
+        var(--magic-light)
+      );
       color: #050507;
-      box-shadow: 0 0 25px rgba(var(--magic-rgb), .25);
+      box-shadow:
+        0 0 25px rgba(var(--magic-rgb), .25);
     }
 
     .primary-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 0 35px rgba(var(--magic-rgb), .5);
+      box-shadow:
+        0 0 35px rgba(var(--magic-rgb), .5);
     }
 
     .secondary-btn {
@@ -322,36 +1398,105 @@
     }
 
     .choice-card {
+      position: relative;
       border: 1px solid rgba(var(--magic-rgb), .2);
       background: rgba(var(--magic-rgb), .04);
       border-radius: 15px;
       padding: 18px 8px;
       cursor: pointer;
       transition: .25s;
-      min-height: 105px;
+      min-height: 115px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .choice-card:hover {
       transform: translateY(-4px);
       border-color: var(--magic);
-      box-shadow: 0 0 22px rgba(var(--magic-rgb), .2);
+      box-shadow:
+        0 0 22px rgba(var(--magic-rgb), .2);
     }
 
     .choice-card.selected {
       border-color: var(--magic);
       background: rgba(var(--magic-rgb), .14);
-      box-shadow: 0 0 25px rgba(var(--magic-rgb), .25);
+      box-shadow:
+        0 0 25px rgba(var(--magic-rgb), .25);
+    }
+
+    .choice-card.selected::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(var(--magic-rgb), .35);
+      border-radius: 11px;
+      pointer-events: none;
     }
 
     .choice-icon {
-      display: block;
-      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 9px;
+      height: 54px;
     }
 
     .choice-name {
       font-size: 10px;
       font-weight: 800;
+    }
+
+    .choice-description {
+      color: var(--muted);
+      font-size: 8px;
+      line-height: 1.5;
+      margin-top: 6px;
+      max-width: 130px;
+    }
+
+    .choice-limit {
+      color: var(--magic-light);
+      font-size: 9px;
+      margin-top: 15px;
+      min-height: 15px;
+    }
+
+    .alignment-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .alignment-card {
+      min-height: 170px;
+      padding: 25px 15px;
+    }
+
+    .alignment-card.good:hover {
+      border-color: #65ff9a;
+    }
+
+    .alignment-card.evil:hover {
+      border-color: #ff3158;
+    }
+
+    .alignment-card.good .choice-name {
+      color: #65ff9a;
+    }
+
+    .alignment-card.evil .choice-name {
+      color: #ff416d;
+    }
+
+    .weapon-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .weapon-note {
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 5px;
     }
 
     .element-section-title {
@@ -360,6 +1505,14 @@
       color: var(--magic-light);
       letter-spacing: 2px;
       margin: 20px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .element-section-title .css-icon {
+      width: 24px;
+      height: 24px;
     }
 
     .spell-grid {
@@ -370,12 +1523,9 @@
       position: relative;
       overflow: hidden;
       text-align: left;
-      min-height: 145px;
+      min-height: 150px;
       padding: 20px;
-    }
-
-    .spell-card .choice-icon {
-      font-size: 38px;
+      align-items: flex-start;
     }
 
     .spell-description {
@@ -395,6 +1545,12 @@
       margin-top: 10px;
     }
 
+    .selection-count {
+      font-size: 9px;
+      color: var(--magic-light);
+      margin: 5px 0 10px;
+    }
+
     #mainSite {
       display: none;
     }
@@ -402,6 +1558,10 @@
     body.site-ready #mainSite {
       display: block;
     }
+
+    /* =========================================
+       MAIN SITE
+    ========================================= */
 
     header {
       position: sticky;
@@ -517,7 +1677,9 @@
     }
 
     .badge-icon {
-      font-size: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .badge-text strong {
@@ -548,7 +1710,11 @@
       justify-content: center;
       position: relative;
       background:
-        radial-gradient(circle, rgba(var(--magic-rgb), .2), transparent 60%);
+        radial-gradient(
+          circle,
+          rgba(var(--magic-rgb), .2),
+          transparent 60%
+        );
       border: 1px solid rgba(var(--magic-rgb), .35);
       box-shadow:
         0 0 60px rgba(var(--magic-rgb), .2),
@@ -574,16 +1740,53 @@
     }
 
     .avatar-placeholder {
-      font-size: 110px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
       position: relative;
       z-index: 2;
-      filter: drop-shadow(0 0 25px rgba(var(--magic-rgb), .5));
+      border: 4px solid var(--magic-light);
+      background:
+        radial-gradient(
+          circle at 50% 38%,
+          var(--magic-light) 0 17%,
+          transparent 18%
+        ),
+        radial-gradient(
+          circle at 50% 55%,
+          rgba(var(--magic-rgb), .5),
+          transparent 60%
+        ),
+        #08070c;
+      box-shadow:
+        0 0 30px rgba(var(--magic-rgb), .45);
+    }
+
+    .avatar-placeholder::before {
+      content: "";
+      position: absolute;
+      width: 48px;
+      height: 55px;
+      border: 4px solid var(--magic-light);
+      border-radius: 50% 50% 42% 42%;
+      left: 37px;
+      top: 23px;
+    }
+
+    .avatar-placeholder::after {
+      content: "";
+      position: absolute;
+      width: 72px;
+      height: 42px;
+      border: 4px solid var(--magic-light);
+      border-radius: 50% 50% 15% 15%;
+      left: 25px;
+      bottom: 9px;
     }
 
     .crown {
       position: absolute;
       top: 28px;
-      font-size: 50px;
       z-index: 4;
       transform: rotate(-8deg);
     }
@@ -668,7 +1871,10 @@
       position: absolute;
       inset: auto 0 0;
       padding: 35px 15px 15px;
-      background: linear-gradient(transparent, rgba(0,0,0,.95));
+      background: linear-gradient(
+        transparent,
+        rgba(0,0,0,.95)
+      );
       font-size: 13px;
       font-weight: 800;
     }
@@ -684,15 +1890,21 @@
       border: 1px solid rgba(var(--magic-rgb), .18);
       border-radius: 17px;
       background:
-        radial-gradient(circle, rgba(var(--magic-rgb), .12), transparent 60%),
+        radial-gradient(
+          circle,
+          rgba(var(--magic-rgb), .12),
+          transparent 60%
+        ),
         #0b0a10;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       color: var(--muted);
       font-size: 10px;
       text-align: center;
       padding: 20px;
+      gap: 12px;
     }
 
     .social-grid {
@@ -712,11 +1924,11 @@
     .social:hover {
       transform: translateY(-5px);
       border-color: var(--magic);
-      box-shadow: 0 0 30px rgba(var(--magic-rgb), .15);
+      box-shadow:
+        0 0 30px rgba(var(--magic-rgb), .15);
     }
 
     .social-icon {
-      font-size: 30px;
       margin-bottom: 15px;
     }
 
@@ -737,7 +1949,11 @@
       padding: 45px 30px;
       text-align: center;
       background:
-        radial-gradient(circle at center, rgba(var(--magic-rgb), .12), transparent 55%),
+        radial-gradient(
+          circle at center,
+          rgba(var(--magic-rgb), .12),
+          transparent 55%
+        ),
         #0a090e;
     }
 
@@ -841,10 +2057,18 @@
       box-shadow: 0 0 30px rgba(var(--magic-rgb), .2);
       transition: .5s;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .element-message.show {
       transform: translateX(-50%) translateY(0);
+    }
+
+    .message-icon {
+      width: 28px;
+      height: 28px;
     }
 
     @media (max-width: 850px) {
@@ -882,10 +2106,6 @@
         height: 240px;
       }
 
-      .avatar-placeholder {
-        font-size: 85px;
-      }
-
       .games-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -902,6 +2122,14 @@
       }
 
       .spell-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .weapon-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .alignment-grid {
         grid-template-columns: 1fr;
       }
 
@@ -924,7 +2152,9 @@
 
   <div id="loading">
     <div class="loading-box">
-      <div class="loading-crown">👑</div>
+      <div class="loading-crown">
+        <span class="css-icon icon-crown"></span>
+      </div>
       <div class="loading-title">1PRINCIPEBR</div>
     </div>
   </div>
@@ -932,26 +2162,35 @@
   <div id="magicParticles"></div>
   <div id="elementMessage" class="element-message"></div>
 
+  <!-- =========================================
+       WELCOME
+  ========================================= -->
+
   <div id="welcomeScreen" class="screen">
     <div class="screen-box">
 
-      <div class="screen-icon">👑</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-crown"></span>
+      </div>
 
-      <h1>ATIVAR MODO PRÍNCIPE</h1>
+      <h1>ESCOLHA SEU CAMINHO</h1>
 
       <p>
         Bem-vindo ao universo do 1PRINCIPEBR.
-        Escolha sua identidade e entre para a comunidade.
+        Primeiro escolha sua identidade.
+        Depois você poderá despertar seu verdadeiro poder.
       </p>
 
-      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
 
         <button class="primary-btn" onclick="startPrinceMode()">
-          👑 MODO PRÍNCIPE
+          <span class="css-icon icon-crown"></span>
+          PRÍNCIPE
         </button>
 
         <button class="secondary-btn" onclick="startWizardMode()">
-          🧙‍♂️ SEJA MAGO
+          <span class="css-icon icon-wizard"></span>
+          MAGO
         </button>
 
       </div>
@@ -959,11 +2198,78 @@
     </div>
   </div>
 
+  <!-- =========================================
+       PRINCE ALIGNMENT
+  ========================================= -->
+
+  <div id="princeAlignmentScreen" class="screen hidden">
+
+    <div class="screen-box">
+
+      <div class="screen-icon">
+        <span class="css-icon icon-crown"></span>
+      </div>
+
+      <h1>QUE PRÍNCIPE VOCÊ É?</h1>
+
+      <p>
+        Escolha o caminho que representa sua identidade.
+        Essa escolha define sua jornada, mas não altera a cor do Modo Príncipe.
+      </p>
+
+      <div class="choice-grid alignment-grid">
+
+        <div class="choice-card alignment-card good"
+             onclick="choosePrinceAlignment('good')">
+
+          <span class="choice-icon">
+            <span class="css-icon icon-crown"></span>
+          </span>
+
+          <span class="choice-name">
+            PRÍNCIPE DO BEM
+          </span>
+
+          <span class="choice-description">
+            Honra, proteção e liderança.
+          </span>
+
+        </div>
+
+        <div class="choice-card alignment-card evil"
+             onclick="choosePrinceAlignment('evil')">
+
+          <span class="choice-icon">
+            <span class="css-icon icon-sword"></span>
+          </span>
+
+          <span class="choice-name">
+            PRÍNCIPE DO MAL
+          </span>
+
+          <span class="choice-description">
+            Poder, domínio e combate.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================
+       PRINCE NICKNAME
+  ========================================= -->
+
   <div id="nicknameScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">👑</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-crown"></span>
+      </div>
 
       <h1>QUAL É SEU NOME?</h1>
 
@@ -972,10 +2278,7 @@
         Para ativar o perfil, o nome precisa conter "principe".
       </p>
 
-      <label
-        class="small-label"
-        for="nicknameInput"
-      >
+      <label class="small-label" for="nicknameInput">
         SEU NICKNAME
       </label>
 
@@ -991,40 +2294,89 @@
       <div id="nicknameError" class="error"></div>
 
       <button class="primary-btn" onclick="confirmNickname()">
-        CONTINUAR 👑
+        CONTINUAR
       </button>
 
     </div>
 
   </div>
+
+  <!-- =========================================
+       GOOD MASCOT
+  ========================================= -->
 
   <div id="mascotScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">🐉</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-dragon"></span>
+      </div>
 
       <h1>ESCOLHA SEU MASCOTE</h1>
 
       <p>
-        Escolha o animal que representa sua identidade no Modo Príncipe.
+        Escolha apenas 1 animal para representar sua identidade de príncipe.
       </p>
 
       <div id="mascotGrid" class="choice-grid"></div>
 
+      <div id="mascotError" class="error"></div>
+
       <button class="primary-btn" onclick="confirmMascot()">
-        CONTINUAR 👑
+        CONTINUAR
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================================
+       EVIL WEAPON
+  ========================================= -->
+
+  <div id="weaponScreen" class="screen hidden">
+
+    <div class="screen-box">
+
+      <div class="screen-icon">
+        <span class="css-icon icon-sword"></span>
+      </div>
+
+      <h1>ESCOLHA SUAS ARMAS</h1>
+
+      <p>
+        Você pode escolher 1 arma.
+        A única combinação permitida é espada + escudo ou arco + escudo.
+      </p>
+
+      <div class="weapon-note">
+        MÁXIMO: 2 ARMAS
+      </div>
+
+      <div id="weaponGrid" class="choice-grid weapon-grid"></div>
+
+      <div id="weaponError" class="error"></div>
+
+      <button class="primary-btn" onclick="confirmWeapons()">
+        CONTINUAR
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================
+       PLATFORM
+  ========================================= -->
+
   <div id="platformScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">🎮</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-console"></span>
+      </div>
 
       <h1>SUA PLATAFORMA</h1>
 
@@ -1035,18 +2387,24 @@
       <div id="platformGrid" class="choice-grid"></div>
 
       <button class="primary-btn" onclick="confirmPlatform()">
-        CONTINUAR 🎮
+        CONTINUAR
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================================
+       GENRES
+  ========================================= -->
+
   <div id="genreScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">🎯</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-strategy"></span>
+      </div>
 
       <h1>SEUS JOGOS</h1>
 
@@ -1059,18 +2417,85 @@
       <div id="genreError" class="error"></div>
 
       <button class="primary-btn" onclick="finishPrinceChoices()">
-        ATIVAR MODO PRÍNCIPE 👑
+        ATIVAR MODO PRÍNCIPE
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================================
+       WIZARD ALIGNMENT
+  ========================================= -->
+
+  <div id="wizardAlignmentScreen" class="screen hidden">
+
+    <div class="screen-box">
+
+      <div class="screen-icon">
+        <span class="css-icon icon-wizard"></span>
+      </div>
+
+      <h1>QUAL CAMINHO MÁGICO?</h1>
+
+      <p>
+        O Mago do Bem mantém os poderes clássicos.
+        O Mago do Mal desperta forças completamente diferentes.
+      </p>
+
+      <div class="choice-grid alignment-grid">
+
+        <div class="choice-card alignment-card good"
+             onclick="chooseWizardAlignment('good')">
+
+          <span class="choice-icon">
+            <span class="css-icon icon-light"></span>
+          </span>
+
+          <span class="choice-name">
+            MAGO DO BEM
+          </span>
+
+          <span class="choice-description">
+            Energia, natureza, luz e forças elementais.
+          </span>
+
+        </div>
+
+        <div class="choice-card alignment-card evil"
+             onclick="chooseWizardAlignment('evil')">
+
+          <span class="choice-icon">
+            <span class="css-icon icon-abyss"></span>
+          </span>
+
+          <span class="choice-name">
+            MAGO DO MAL
+          </span>
+
+          <span class="choice-description">
+            Maldições, caos, abismo e poderes proibidos.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================
+       WIZARD NICKNAME
+  ========================================= -->
+
   <div id="wizardNicknameScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">🧙‍♂️</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-wizard"></span>
+      </div>
 
       <h1>DESPERTAR PODER MÁGICO</h1>
 
@@ -1078,10 +2503,7 @@
         Primeiro, escolha o nome que será usado pelo seu personagem mágico.
       </p>
 
-      <label
-        class="small-label"
-        for="wizardNicknameInput"
-      >
+      <label class="small-label" for="wizardNicknameInput">
         SEU NICKNAME
       </label>
 
@@ -1097,34 +2519,46 @@
       <div id="wizardNicknameError" class="error"></div>
 
       <button class="primary-btn" onclick="confirmWizardNickname()">
-        DESPERTAR ✨
+        DESPERTAR
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================================
+       SPELLS
+  ========================================= -->
+
   <div id="spellScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div class="screen-icon">🔮</div>
+      <div class="screen-icon">
+        <span class="css-icon icon-wand"></span>
+      </div>
 
-      <h1>ESCOLHA SEU FEITIÇO</h1>
+      <h1>ESCOLHA SEUS PODERES</h1>
 
       <p>
-        Seu feitiço irá definir a identidade mágica do seu site.
-        Escolha com sabedoria.
+        Agora você pode escolher até 2 elementos.
+        Com dois poderes, as cores do site serão divididas entre eles.
       </p>
 
-      <div class="element-section-title">
-        ⚡ OS 5 ELEMENTOS
+      <div id="selectionCount" class="selection-count">
+        0 / 2 PODERES ESCOLHIDOS
+      </div>
+
+      <div id="elementSectionTitle" class="element-section-title">
+        <span class="css-icon icon-light"></span>
+        ELEMENTOS
       </div>
 
       <div id="elementGrid" class="choice-grid spell-grid"></div>
 
-      <div class="element-section-title">
-        ✨ OS 5 PODERES DIFERENCIADOS
+      <div id="specialSectionTitle" class="element-section-title">
+        <span class="css-icon icon-wand"></span>
+        PODERES DIFERENCIADOS
       </div>
 
       <div id="specialSpellGrid" class="choice-grid spell-grid"></div>
@@ -1132,30 +2566,40 @@
       <div id="spellError" class="error"></div>
 
       <button class="primary-btn" onclick="finishWizardChoices()">
-        DESPERTAR MEU PODER 🔮
+        DESPERTAR MEU PODER
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================================
+       ACTIVATION
+  ========================================= -->
+
   <div id="activationScreen" class="screen hidden">
 
     <div class="screen-box">
 
-      <div id="activationIcon" class="screen-icon">👑</div>
+      <div id="activationIcon" class="screen-icon">
+        <span class="css-icon icon-crown"></span>
+      </div>
 
       <h1 id="activationTitle">MODO ATIVADO</h1>
 
       <p id="activationText"></p>
 
       <button class="primary-btn" onclick="enterSite()">
-        ENTRAR NO SITE 🚀
+        ENTRAR NO SITE
       </button>
 
     </div>
 
   </div>
+
+  <!-- =========================================
+       MAIN SITE
+  ========================================= -->
 
   <main id="mainSite">
 
@@ -1182,7 +2626,7 @@
             class="mode-switch"
             onclick="toggleMode()"
           >
-            🧙 SEJA MAGO
+            SEJA MAGO
           </button>
 
         </nav>
@@ -1205,7 +2649,7 @@
 
         <p id="heroDescription" class="hero-description">
           Um espaço para games, lives, clipes, comunidade e muita gameplay.
-          Entre no Modo Príncipe e acompanhe essa jornada.
+          Entre no universo do 1PRINCIPEBR.
         </p>
 
         <div class="hero-buttons">
@@ -1216,11 +2660,11 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            🔴 ASSISTIR LIVE
+            ASSISTIR LIVE
           </a>
 
           <a class="secondary-btn" href="#jogos">
-            🎮 VER JOGOS
+            VER JOGOS
           </a>
 
         </div>
@@ -1228,7 +2672,7 @@
         <div id="profileBadge" class="profile-badge">
 
           <div id="badgeIcon" class="badge-icon">
-            👑
+            <span class="css-icon icon-crown"></span>
           </div>
 
           <div class="badge-text">
@@ -1252,12 +2696,10 @@
         <div class="avatar-orb">
 
           <div id="crown" class="crown">
-            👑
+            <span class="css-icon icon-crown"></span>
           </div>
 
-          <div id="avatarPlaceholder" class="avatar-placeholder">
-            🧑🏿‍🎮
-          </div>
+          <div id="avatarPlaceholder" class="avatar-placeholder"></div>
 
         </div>
 
@@ -1343,17 +2785,17 @@
       <div class="clips-grid">
 
         <div class="clip">
-          🎬<br>
+          <span class="css-icon icon-play"></span>
           SEU PRÓXIMO CLIP APARECERÁ AQUI
         </div>
 
         <div class="clip">
-          ⚡<br>
+          <span class="css-icon icon-lightning"></span>
           MOMENTO INSANO
         </div>
 
         <div class="clip">
-          👑<br>
+          <span class="css-icon icon-crown"></span>
           MODO PRÍNCIPE
         </div>
 
@@ -1376,7 +2818,9 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div class="social-icon">🎥</div>
+          <div class="social-icon">
+            <span class="css-icon icon-twitch"></span>
+          </div>
           <strong>TWITCH</strong>
           <span>Lives e gameplay ao vivo</span>
         </a>
@@ -1387,7 +2831,9 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div class="social-icon">🎵</div>
+          <div class="social-icon">
+            <span class="css-icon icon-tiktok"></span>
+          </div>
           <strong>TIKTOK</strong>
           <span>Clipes e vídeos curtos</span>
         </a>
@@ -1398,7 +2844,9 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div class="social-icon">📸</div>
+          <div class="social-icon">
+            <span class="css-icon icon-instagram"></span>
+          </div>
           <strong>INSTAGRAM</strong>
           <span>Conteúdos e novidades</span>
         </a>
@@ -1422,7 +2870,7 @@
         </div>
 
         <h2 style="margin-bottom:15px;">
-          VENHA PARA A LIVE 👑
+          VENHA PARA A LIVE
         </h2>
 
         <p style="color:var(--muted);font-size:11px;line-height:1.8;margin-bottom:25px;">
@@ -1486,7 +2934,7 @@
     </section>
 
     <footer>
-      © 2026 1PRINCIPEBR • MODO PRÍNCIPE 👑 • MODO MAGO 🧙‍♂️
+      © 2026 1PRINCIPEBR • UNIVERSO DO PRÍNCIPE • UNIVERSO DO MAGO
     </footer>
 
   </main>
@@ -1522,7 +2970,6 @@
       );
     }
 
-
     /* =========================================
        USER DATA
     ========================================= */
@@ -1533,118 +2980,298 @@
       platform: "",
       genres: [],
       mode: "prince",
+      alignment: "good",
+      weapons: [],
+      spells: [],
       spell: "",
       spellType: ""
     };
 
     let currentMode = "prince";
 
+    /* =========================================
+       CSS ICON MAPPING
+    ========================================= */
+
+    const iconClasses = {
+
+      crown: "icon-crown",
+      wizard: "icon-wizard",
+      wand: "icon-wand",
+
+      dragon: "icon-dragon",
+      wolf: "icon-wolf",
+      fox: "icon-fox",
+      tiger: "icon-tiger",
+      eagle: "icon-eagle",
+      panda: "icon-panda",
+      snake: "icon-snake",
+      phoenix: "icon-phoenix",
+
+      sword: "icon-sword",
+      shield: "icon-shield",
+      bow: "icon-bow",
+
+      pc: "icon-pc",
+      ps5: "icon-console",
+      ps4: "icon-console",
+      xbox: "icon-xbox",
+      nintendo: "icon-console",
+      mobile: "icon-mobile",
+
+      shoot: "icon-shoot",
+      action: "icon-action",
+      build: "icon-build",
+      fight: "icon-fight",
+      race: "icon-race",
+      sports: "icon-sports",
+      horror: "icon-horror",
+      world: "icon-world",
+      adventure: "icon-adventure",
+      rpg: "icon-rpg",
+      simulator: "icon-simulator",
+      strategy: "icon-strategy",
+
+      fire: "icon-fire",
+      water: "icon-water",
+      air: "icon-air",
+      earth: "icon-earth",
+      lightning: "icon-lightning",
+      shadow: "icon-shadow",
+      light: "icon-light",
+      ice: "icon-ice",
+      gravity: "icon-gravity",
+      void: "icon-void",
+
+      blood: "icon-blood",
+      poison: "icon-poison",
+      hellfire: "icon-hellfire",
+      corruption: "icon-corruption",
+      chaos: "icon-chaos",
+      curse: "icon-curse",
+      demon: "icon-demon",
+      soul: "icon-soul",
+      nightmare: "icon-nightmare",
+      abyss: "icon-abyss",
+
+      twitch: "icon-twitch",
+      tiktok: "icon-tiktok",
+      instagram: "icon-instagram",
+      play: "icon-play"
+    };
+
+    function createIcon(type) {
+
+      const iconClass =
+        iconClasses[type] ||
+        iconClasses.crown;
+
+      return `
+        <span
+          class="css-icon ${iconClass}"
+          aria-hidden="true"
+        ></span>
+      `;
+    }
 
     /* =========================================
        CHOICES
     ========================================= */
 
     const mascots = [
-      ["🐉", "Dragão"],
-      ["🐺", "Lobo"],
-      ["🦊", "Raposa"],
-      ["🐯", "Tigre"],
-      ["🦅", "Águia"],
-      ["🐼", "Panda"],
-      ["🐍", "Serpente"],
-      ["🔥", "Fênix"]
+      ["dragon", "Dragão"],
+      ["wolf", "Lobo"],
+      ["fox", "Raposa"],
+      ["tiger", "Tigre"],
+      ["eagle", "Águia"],
+      ["panda", "Panda"],
+      ["snake", "Serpente"],
+      ["phoenix", "Fênix"]
+    ];
+
+    const weapons = [
+      ["sword", "Espada"],
+      ["shield", "Escudo"],
+      ["bow", "Arco"]
     ];
 
     const platforms = [
-      ["💻", "PC"],
-      ["🎮", "PS5"],
-      ["🎮", "PS4"],
-      ["🟢", "Xbox"],
-      ["🔴", "Nintendo"],
-      ["📱", "Mobile"]
+      ["pc", "PC"],
+      ["ps5", "PS5"],
+      ["ps4", "PS4"],
+      ["xbox", "Xbox"],
+      ["nintendo", "Nintendo"],
+      ["mobile", "Mobile"]
     ];
 
     const genres = [
-      ["🔫", "Tiro"],
-      ["⚔️", "Ação"],
-      ["🏗️", "Construção"],
-      ["🥊", "Luta"],
-      ["🏎️", "Corrida"],
-      ["⚽", "Esportes"],
-      ["🧟", "Terror"],
-      ["🌎", "Mundo Aberto"],
-      ["🎭", "Aventura"],
-      ["🧙", "RPG"],
-      ["🏪", "Simulador"],
-      ["🧩", "Estratégia"]
+      ["shoot", "Tiro"],
+      ["action", "Ação"],
+      ["build", "Construção"],
+      ["fight", "Luta"],
+      ["race", "Corrida"],
+      ["sports", "Esportes"],
+      ["horror", "Terror"],
+      ["world", "Mundo Aberto"],
+      ["adventure", "Aventura"],
+      ["rpg", "RPG"],
+      ["simulator", "Simulador"],
+      ["strategy", "Estratégia"]
     ];
 
-    const elementalSpells = [
+    /* =========================================
+       MAGO DO BEM
+    ========================================= */
+
+    const goodSpells = [
       {
-        icon: "🔥",
+        icon: "fire",
         name: "Fogo",
         type: "fire",
-        description: "Controle as chamas e transforme energia em poder."
+        description:
+          "Controle as chamas e transforme energia em poder."
       },
       {
-        icon: "💧",
+        icon: "water",
         name: "Água",
         type: "water",
-        description: "Domine as correntes e adapte-se a qualquer situação."
+        description:
+          "Domine as correntes e adapte-se a qualquer situação."
       },
       {
-        icon: "🌪️",
+        icon: "air",
         name: "Ar",
         type: "air",
-        description: "Movimente-se como o vento e nunca fique parado."
+        description:
+          "Movimente-se como o vento e nunca fique parado."
       },
       {
-        icon: "🪨",
+        icon: "earth",
         name: "Terra",
         type: "earth",
-        description: "Uma força resistente, firme e difícil de derrubar."
+        description:
+          "Uma força resistente, firme e difícil de derrubar."
       },
       {
-        icon: "⚡",
+        icon: "lightning",
         name: "Raio",
         type: "lightning",
-        description: "Velocidade e energia elétrica em sua forma máxima."
-      }
-    ];
-
-    const specialSpells = [
+        description:
+          "Velocidade e energia elétrica em sua forma máxima."
+      },
       {
-        icon: "🌑",
+        icon: "shadow",
         name: "Sombra",
         type: "shadow",
-        description: "Caminhe pelas trevas e esconda seu verdadeiro poder."
+        description:
+          "Controle as sombras sem abandonar seu caminho."
       },
       {
-        icon: "🌟",
+        icon: "light",
         name: "Luz",
         type: "light",
-        description: "Uma energia luminosa capaz de iluminar todo o caminho."
+        description:
+          "Uma energia luminosa capaz de iluminar todo o caminho."
       },
       {
-        icon: "❄️",
+        icon: "ice",
         name: "Gelo",
         type: "ice",
-        description: "Congele o campo e transforme o ambiente ao seu redor."
+        description:
+          "Congele o campo e transforme o ambiente ao seu redor."
       },
       {
-        icon: "🌀",
+        icon: "gravity",
         name: "Gravidade",
         type: "gravity",
-        description: "Altere as forças do espaço e faça tudo orbitar seu poder."
+        description:
+          "Altere as forças do espaço e faça tudo orbitar seu poder."
       },
       {
-        icon: "🕳️",
+        icon: "void",
         name: "Vazio",
         type: "void",
-        description: "Um poder misterioso que desafia as regras da realidade."
+        description:
+          "Um poder misterioso que desafia as regras da realidade."
       }
     ];
 
+    /* =========================================
+       MAGO DO MAL
+    ========================================= */
+
+    const evilSpells = [
+      {
+        icon: "blood",
+        name: "Sangue",
+        type: "blood",
+        description:
+          "Uma energia proibida alimentada pela força vital."
+      },
+      {
+        icon: "poison",
+        name: "Veneno",
+        type: "poison",
+        description:
+          "Uma essência corrosiva que domina lentamente tudo ao redor."
+      },
+      {
+        icon: "hellfire",
+        name: "Chama Infernal",
+        type: "hellfire",
+        description:
+          "Fogo sombrio vindo das profundezas de um reino proibido."
+      },
+      {
+        icon: "corruption",
+        name: "Corrupção",
+        type: "corruption",
+        description:
+          "Uma energia que distorce tudo aquilo que toca."
+      },
+      {
+        icon: "chaos",
+        name: "Caos",
+        type: "chaos",
+        description:
+          "Uma força instável onde nenhuma regra permanece."
+      },
+      {
+        icon: "curse",
+        name: "Maldição",
+        type: "curse",
+        description:
+          "Poder ancestral capaz de marcar sua identidade."
+      },
+      {
+        icon: "demon",
+        name: "Demônio",
+        type: "demon",
+        description:
+          "Desperte uma força demoníaca dentro do seu personagem."
+      },
+      {
+        icon: "soul",
+        name: "Alma",
+        type: "soul",
+        description:
+          "Manipule energia espiritual e transforme essência em poder."
+      },
+      {
+        icon: "nightmare",
+        name: "Pesadelo",
+        type: "nightmare",
+        description:
+          "Uma presença obscura que transforma medo em energia."
+      },
+      {
+        icon: "abyss",
+        name: "Abismo",
+        type: "abyss",
+        description:
+          "Um poder profundo que parece não possuir fim."
+      }
+    ];
 
     /* =========================================
        SCREEN CONTROL
@@ -1666,27 +3293,36 @@
       }
     }
 
-
     /* =========================================
-       BODY MODE CONTROL
-       IMPORTANTE:
-       NÃO usamos body.className = ""
-       quando o site já está aberto.
-       Isso preserva "site-ready".
+       BODY ELEMENT CONTROL
     ========================================= */
 
     const elementClasses = [
       "magic-mode",
-      "fire-element",
-      "water-element",
-      "air-element",
-      "earth-element",
-      "lightning-element",
-      "shadow-element",
-      "light-element",
-      "ice-element",
-      "gravity-element",
-      "void-element"
+
+      "element-fire",
+      "element-water",
+      "element-air",
+      "element-earth",
+      "element-lightning",
+      "element-shadow",
+      "element-light",
+      "element-ice",
+      "element-gravity",
+      "element-void",
+
+      "element-blood",
+      "element-poison",
+      "element-hellfire",
+      "element-corruption",
+      "element-chaos",
+      "element-curse",
+      "element-demon",
+      "element-soul",
+      "element-nightmare",
+      "element-abyss",
+
+      "dual-element"
     ];
 
     function clearElementClasses() {
@@ -1694,11 +3330,149 @@
       document.body.classList.remove(
         ...elementClasses
       );
+
+      document.body.style.removeProperty(
+        "--magic-2"
+      );
+
+      document.body.style.removeProperty(
+        "--magic-2-light"
+      );
+
+      document.body.style.removeProperty(
+        "--magic-2-rgb"
+      );
     }
 
+    /* =========================================
+       ELEMENT COLOR MAP
+    ========================================= */
+
+    const elementColors = {
+
+      fire: {
+        main: "#ff4b16",
+        light: "#ff9b50",
+        rgb: "255, 75, 22"
+      },
+
+      water: {
+        main: "#00bfff",
+        light: "#71e7ff",
+        rgb: "0, 191, 255"
+      },
+
+      air: {
+        main: "#b8eaff",
+        light: "#ffffff",
+        rgb: "184, 234, 255"
+      },
+
+      earth: {
+        main: "#8f9d4c",
+        light: "#c6d878",
+        rgb: "143, 157, 76"
+      },
+
+      lightning: {
+        main: "#ffe600",
+        light: "#fff58a",
+        rgb: "255, 230, 0"
+      },
+
+      shadow: {
+        main: "#721cff",
+        light: "#b77aff",
+        rgb: "114, 28, 255"
+      },
+
+      light: {
+        main: "#fff2a1",
+        light: "#ffffff",
+        rgb: "255, 242, 161"
+      },
+
+      ice: {
+        main: "#70dfff",
+        light: "#d5f8ff",
+        rgb: "112, 223, 255"
+      },
+
+      gravity: {
+        main: "#9c5cff",
+        light: "#d09dff",
+        rgb: "156, 92, 255"
+      },
+
+      void: {
+        main: "#263dff",
+        light: "#7381ff",
+        rgb: "38, 61, 255"
+      },
+
+      blood: {
+        main: "#b4002f",
+        light: "#ff416d",
+        rgb: "180, 0, 47"
+      },
+
+      poison: {
+        main: "#6bff20",
+        light: "#b4ff7c",
+        rgb: "107, 255, 32"
+      },
+
+      hellfire: {
+        main: "#ff1800",
+        light: "#ff8a36",
+        rgb: "255, 24, 0"
+      },
+
+      corruption: {
+        main: "#8d00ff",
+        light: "#d06cff",
+        rgb: "141, 0, 255"
+      },
+
+      chaos: {
+        main: "#ff00a8",
+        light: "#ff79d5",
+        rgb: "255, 0, 168"
+      },
+
+      curse: {
+        main: "#4c236b",
+        light: "#b96cff",
+        rgb: "76, 35, 107"
+      },
+
+      demon: {
+        main: "#ff3b12",
+        light: "#ff9d6a",
+        rgb: "255, 59, 18"
+      },
+
+      soul: {
+        main: "#00e0c6",
+        light: "#72fff0",
+        rgb: "0, 224, 198"
+      },
+
+      nightmare: {
+        main: "#202020",
+        light: "#a8a8a8",
+        rgb: "32, 32, 32"
+      },
+
+      abyss: {
+        main: "#081b5c",
+        light: "#3e75ff",
+        rgb: "8, 27, 92"
+      }
+    };
 
     /* =========================================
-       PRINCE MODE
+       PRINCE
     ========================================= */
 
     function startPrinceMode() {
@@ -1713,26 +3487,64 @@
         platform: "",
         genres: [],
         mode: "prince",
+        alignment: "",
+        weapons: [],
+        spells: [],
         spell: "",
         spellType: ""
       };
 
-      showScreen("nicknameScreen");
-
-      setTimeout(() => {
-
-        const input =
-          document.getElementById(
-            "nicknameInput"
-          );
-
-        if (input) {
-          input.focus();
-        }
-
-      }, 100);
+      showScreen(
+        "princeAlignmentScreen"
+      );
     }
 
+    function choosePrinceAlignment(
+      alignment
+    ) {
+
+      userData.alignment =
+        alignment;
+
+      if (alignment === "good") {
+
+        showScreen(
+          "nicknameScreen"
+        );
+
+        setTimeout(() => {
+
+          const input =
+            document.getElementById(
+              "nicknameInput"
+            );
+
+          if (input) {
+            input.focus();
+          }
+
+        }, 100);
+
+      } else {
+
+        showScreen(
+          "nicknameScreen"
+        );
+
+        setTimeout(() => {
+
+          const input =
+            document.getElementById(
+              "nicknameInput"
+            );
+
+          if (input) {
+            input.focus();
+          }
+
+        }, 100);
+      }
+    }
 
     function confirmNickname() {
 
@@ -1774,13 +3586,30 @@
       userData.nickname =
         nickname;
 
-      renderMascots();
+      if (
+        userData.alignment ===
+        "evil"
+      ) {
 
-      showScreen(
-        "mascotScreen"
-      );
+        renderWeapons();
+
+        showScreen(
+          "weaponScreen"
+        );
+
+      } else {
+
+        renderMascots();
+
+        showScreen(
+          "mascotScreen"
+        );
+      }
     }
 
+    /* =========================================
+       MASCOTS
+    ========================================= */
 
     function renderMascots() {
 
@@ -1790,6 +3619,8 @@
         );
 
       grid.innerHTML = "";
+
+      userData.mascot = "";
 
       mascots.forEach(item => {
 
@@ -1802,8 +3633,13 @@
           "choice-card";
 
         card.innerHTML = `
-          <span class="choice-icon">${item[0]}</span>
-          <span class="choice-name">${item[1]}</span>
+          <span class="choice-icon">
+            ${createIcon(item[0])}
+          </span>
+
+          <span class="choice-name">
+            ${item[1]}
+          </span>
         `;
 
         card.onclick = () => {
@@ -1824,16 +3660,25 @@
 
           userData.mascot =
             item[1];
+
+          document.getElementById(
+            "mascotError"
+          ).textContent = "";
         };
 
         grid.appendChild(card);
       });
     }
 
-
     function confirmMascot() {
 
       if (!userData.mascot) {
+
+        document.getElementById(
+          "mascotError"
+        ).textContent =
+          "Escolha 1 mascote.";
+
         return;
       }
 
@@ -1844,6 +3689,158 @@
       );
     }
 
+    /* =========================================
+       WEAPONS
+    ========================================= */
+
+    function renderWeapons() {
+
+      const grid =
+        document.getElementById(
+          "weaponGrid"
+        );
+
+      grid.innerHTML = "";
+
+      userData.weapons = [];
+
+      weapons.forEach(item => {
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "choice-card";
+
+        card.innerHTML = `
+          <span class="choice-icon">
+            ${createIcon(item[0])}
+          </span>
+
+          <span class="choice-name">
+            ${item[1]}
+          </span>
+        `;
+
+        card.onclick = () => {
+
+          const weapon =
+            item[1];
+
+          const index =
+            userData.weapons.indexOf(
+              weapon
+            );
+
+          if (index >= 0) {
+
+            userData.weapons.splice(
+              index,
+              1
+            );
+
+            card.classList.remove(
+              "selected"
+            );
+
+            return;
+          }
+
+          if (
+            userData.weapons.length >= 2
+          ) {
+            return;
+          }
+
+          /*
+             REGRAS:
+
+             1 arma = permitido.
+
+             2 armas somente:
+             Espada + Escudo
+             Arco + Escudo
+          */
+
+          if (
+            userData.weapons.length === 1
+          ) {
+
+            const first =
+              userData.weapons[0];
+
+            const validPair =
+              (
+                first === "Espada" &&
+                weapon === "Escudo"
+              ) ||
+              (
+                first === "Escudo" &&
+                weapon === "Espada"
+              ) ||
+              (
+                first === "Arco" &&
+                weapon === "Escudo"
+              ) ||
+              (
+                first === "Escudo" &&
+                weapon === "Arco"
+              );
+
+            if (!validPair) {
+
+              document.getElementById(
+                "weaponError"
+              ).textContent =
+                "As únicas combinações permitidas são Espada + Escudo ou Arco + Escudo.";
+
+              return;
+            }
+          }
+
+          userData.weapons.push(
+            weapon
+          );
+
+          card.classList.add(
+            "selected"
+          );
+
+          document.getElementById(
+            "weaponError"
+          ).textContent = "";
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+    function confirmWeapons() {
+
+      if (
+        userData.weapons.length === 0
+      ) {
+
+        document.getElementById(
+          "weaponError"
+        ).textContent =
+          "Escolha pelo menos 1 arma.";
+
+        return;
+      }
+
+      renderPlatforms();
+
+      showScreen(
+        "platformScreen"
+      );
+    }
+
+    /* =========================================
+       PLATFORM
+    ========================================= */
 
     function renderPlatforms() {
 
@@ -1853,6 +3850,8 @@
         );
 
       grid.innerHTML = "";
+
+      userData.platform = "";
 
       platforms.forEach(item => {
 
@@ -1865,8 +3864,13 @@
           "choice-card";
 
         card.innerHTML = `
-          <span class="choice-icon">${item[0]}</span>
-          <span class="choice-name">${item[1]}</span>
+          <span class="choice-icon">
+            ${createIcon(item[0])}
+          </span>
+
+          <span class="choice-name">
+            ${item[1]}
+          </span>
         `;
 
         card.onclick = () => {
@@ -1893,7 +3897,6 @@
       });
     }
 
-
     function confirmPlatform() {
 
       if (!userData.platform) {
@@ -1907,6 +3910,9 @@
       );
     }
 
+    /* =========================================
+       GENRES
+    ========================================= */
 
     function renderGenres() {
 
@@ -1916,6 +3922,8 @@
         );
 
       grid.innerHTML = "";
+
+      userData.genres = [];
 
       genres.forEach(item => {
 
@@ -1928,8 +3936,13 @@
           "choice-card";
 
         card.innerHTML = `
-          <span class="choice-icon">${item[0]}</span>
-          <span class="choice-name">${item[1]}</span>
+          <span class="choice-icon">
+            ${createIcon(item[0])}
+          </span>
+
+          <span class="choice-name">
+            ${item[1]}
+          </span>
         `;
 
         card.onclick = () => {
@@ -1972,7 +3985,6 @@
       });
     }
 
-
     async function finishPrinceChoices() {
 
       const error =
@@ -2003,26 +4015,33 @@
 
       document.getElementById(
         "activationIcon"
-      ).textContent = "👑";
+      ).innerHTML =
+        createIcon("crown");
 
       document.getElementById(
         "activationTitle"
       ).textContent =
-        "MODO PRÍNCIPE ATIVADO";
+        userData.alignment === "evil"
+          ? "PRÍNCIPE DO MAL ATIVADO"
+          : "PRÍNCIPE DO BEM ATIVADO";
+
+      const identity =
+        userData.alignment === "evil"
+          ? `suas armas são ${userData.weapons.join(" + ")}`
+          : `seu mascote é ${userData.mascot}`;
 
       document.getElementById(
         "activationText"
       ).textContent =
-        `Bem-vindo, ${userData.nickname}! Seu mascote é ${userData.mascot} e seu poder começa agora.`;
+        `Bem-vindo, ${userData.nickname}! ${identity}. Sua jornada começa agora.`;
 
       showScreen(
         "activationScreen"
       );
     }
 
-
     /* =========================================
-       WIZARD MODE
+       WIZARD
     ========================================= */
 
     function startWizardMode() {
@@ -2041,9 +4060,28 @@
         platform: "",
         genres: [],
         mode: "wizard",
+        alignment: "",
+        weapons: [],
+        spells: [],
         spell: "",
         spellType: ""
       };
+
+      showScreen(
+        "wizardAlignmentScreen"
+      );
+    }
+
+    function chooseWizardAlignment(
+      alignment
+    ) {
+
+      userData.alignment =
+        alignment;
+
+      document.body.classList.add(
+        "magic-mode"
+      );
 
       showScreen(
         "wizardNicknameScreen"
@@ -2062,7 +4100,6 @@
 
       }, 100);
     }
-
 
     function confirmWizardNickname() {
 
@@ -2094,6 +4131,8 @@
       userData.nickname =
         nickname;
 
+      userData.spells = [];
+
       renderSpells();
 
       showScreen(
@@ -2101,30 +4140,107 @@
       );
     }
 
+    /* =========================================
+       SPELL DATA
+    ========================================= */
+
+    function getCurrentSpells() {
+
+      if (
+        userData.alignment ===
+        "evil"
+      ) {
+        return evilSpells;
+      }
+
+      return goodSpells;
+    }
 
     function renderSpells() {
 
+      const spells =
+        getCurrentSpells();
+
+      const elementGrid =
+        document.getElementById(
+          "elementGrid"
+        );
+
+      const specialGrid =
+        document.getElementById(
+          "specialSpellGrid"
+        );
+
+      elementGrid.innerHTML = "";
+      specialGrid.innerHTML = "";
+
+      const firstHalf =
+        spells.slice(0, 5);
+
+      const secondHalf =
+        spells.slice(5);
+
       renderSpellGroup(
         "elementGrid",
-        elementalSpells
+        firstHalf,
+        "ELEMENTO"
       );
 
       renderSpellGroup(
         "specialSpellGrid",
-        specialSpells
+        secondHalf,
+        "PODER ESPECIAL"
       );
-    }
 
+      const title =
+        document.getElementById(
+          "elementSectionTitle"
+        );
+
+      const specialTitle =
+        document.getElementById(
+          "specialSectionTitle"
+        );
+
+      if (
+        userData.alignment ===
+        "evil"
+      ) {
+
+        title.innerHTML = `
+          ${createIcon("abyss")}
+          FORÇAS SOMBRIAS
+        `;
+
+        specialTitle.innerHTML = `
+          ${createIcon("curse")}
+          PODERES PROIBIDOS
+        `;
+
+      } else {
+
+        title.innerHTML = `
+          ${createIcon("light")}
+          ELEMENTOS
+        `;
+
+        specialTitle.innerHTML = `
+          ${createIcon("wand")}
+          PODERES DIFERENCIADOS
+        `;
+      }
+
+      updateSelectionCount();
+    }
 
     function renderSpellGroup(
       id,
-      spells
+      spells,
+      badge
     ) {
 
       const grid =
         document.getElementById(id);
-
-      grid.innerHTML = "";
 
       spells.forEach(spell => {
 
@@ -2137,7 +4253,9 @@
           "choice-card spell-card";
 
         card.innerHTML = `
-          <span class="choice-icon">${spell.icon}</span>
+          <span class="choice-icon">
+            ${createIcon(spell.icon)}
+          </span>
 
           <span class="choice-name">
             ${spell.name}
@@ -2148,40 +4266,62 @@
           </div>
 
           <span class="element-badge">
-            ${spells === elementalSpells
-              ? "ELEMENTO"
-              : "PODER ESPECIAL"}
+            ${badge}
           </span>
         `;
 
         card.onclick = () => {
 
-          document
-            .querySelectorAll(
-              "#elementGrid .choice-card, #specialSpellGrid .choice-card"
-            )
-            .forEach(c =>
-              c.classList.remove(
-                "selected"
-              )
+          const index =
+            userData.spells.indexOf(
+              spell.type
             );
+
+          if (index >= 0) {
+
+            userData.spells.splice(
+              index,
+              1
+            );
+
+            card.classList.remove(
+              "selected"
+            );
+
+            updateSpellData();
+
+            applySelectedElements();
+
+            return;
+          }
+
+          if (
+            userData.spells.length >= 2
+          ) {
+
+            showElementMessage(
+              "LIMITE: 2 PODERES",
+              "wand"
+            );
+
+            return;
+          }
+
+          userData.spells.push(
+            spell.type
+          );
 
           card.classList.add(
             "selected"
           );
 
-          userData.spell =
-            spell.name;
+          updateSpellData();
 
-          userData.spellType =
-            spell.type;
-
-          applyElement(
-            spell.type
-          );
+          applySelectedElements();
 
           showElementMessage(
-            `${spell.icon} PODER DESPERTADO: ${spell.name.toUpperCase()}`
+            `PODER DESPERTADO: ${spell.name.toUpperCase()}`,
+            spell.type
           );
         };
 
@@ -2189,6 +4329,124 @@
       });
     }
 
+    function updateSpellData() {
+
+      const selected =
+        userData.spells
+          .map(type =>
+            getCurrentSpells()
+              .find(spell =>
+                spell.type === type
+              )
+          )
+          .filter(Boolean);
+
+      userData.spell =
+        selected
+          .map(spell =>
+            spell.name
+          )
+          .join(" + ");
+
+      userData.spellType =
+        userData.spells.join("+");
+
+      updateSelectionCount();
+    }
+
+    function updateSelectionCount() {
+
+      const counter =
+        document.getElementById(
+          "selectionCount"
+        );
+
+      if (!counter) {
+        return;
+      }
+
+      counter.textContent =
+        `${userData.spells.length} / 2 PODERES ESCOLHIDOS`;
+    }
+
+    /* =========================================
+       APPLY ELEMENTS
+    ========================================= */
+
+    function applySelectedElements() {
+
+      clearElementClasses();
+
+      document.body.classList.add(
+        "magic-mode"
+      );
+
+      const selected =
+        userData.spells || [];
+
+      if (
+        selected.length === 0
+      ) {
+        return;
+      }
+
+      const first =
+        elementColors[selected[0]];
+
+      if (first) {
+
+        document.body.style.setProperty(
+          "--magic",
+          first.main
+        );
+
+        document.body.style.setProperty(
+          "--magic-light",
+          first.light
+        );
+
+        document.body.style.setProperty(
+          "--magic-rgb",
+          first.rgb
+        );
+
+        document.body.classList.add(
+          `element-${selected[0]}`
+        );
+      }
+
+      if (
+        selected.length === 2
+      ) {
+
+        const second =
+          elementColors[selected[1]];
+
+        if (second) {
+
+          document.body.style.setProperty(
+            "--magic-2",
+            second.main
+          );
+
+          document.body.style.setProperty(
+            "--magic-2-light",
+            second.light
+          );
+
+          document.body.style.setProperty(
+            "--magic-2-rgb",
+            second.rgb
+          );
+
+          document.body.classList.add(
+            "dual-element"
+          );
+        }
+      }
+
+      createMagicParticles();
+    }
 
     async function finishWizardChoices() {
 
@@ -2197,15 +4455,19 @@
           "spellError"
         );
 
-      if (!userData.spell) {
+      if (
+        userData.spells.length === 0
+      ) {
 
         error.textContent =
-          "Escolha seu feitiço antes de continuar.";
+          "Escolha pelo menos 1 poder.";
 
         return;
       }
 
       error.textContent = "";
+
+      updateSpellData();
 
       localStorage.setItem(
         "principeData",
@@ -2214,22 +4476,26 @@
 
       await saveProfile();
 
+      const firstType =
+        userData.spells[0] ||
+        "wand";
+
       document.getElementById(
         "activationIcon"
-      ).textContent =
-        getSpellIcon(
-          userData.spellType
-        );
+      ).innerHTML =
+        createIcon(firstType);
 
       document.getElementById(
         "activationTitle"
       ).textContent =
-        "PODER DESPERTADO";
+        userData.alignment === "evil"
+          ? "MAGIA SOMBRIA DESPERTADA"
+          : "PODER DESPERTADO";
 
       document.getElementById(
         "activationText"
       ).textContent =
-        `Bem-vindo, ${userData.nickname}. O poder de ${userData.spell} agora faz parte da sua identidade.`;
+        `Bem-vindo, ${userData.nickname}. Seus poderes são ${userData.spell}.`;
 
       showScreen(
         "activationScreen"
@@ -2238,54 +4504,13 @@
       createMagicParticles();
     }
 
-
     /* =========================================
-       ELEMENT SYSTEM
+       ELEMENT MESSAGE
     ========================================= */
 
-    function applyElement(type) {
-
-      clearElementClasses();
-
-      document.body.classList.add(
-        "magic-mode"
-      );
-
-      if (type) {
-
-        document.body.classList.add(
-          `${type}-element`
-        );
-      }
-
-      createMagicParticles();
-    }
-
-
-    function getSpellIcon(type) {
-
-      const icons = {
-        fire: "🔥",
-        water: "💧",
-        air: "🌪️",
-        earth: "🪨",
-        lightning: "⚡",
-        shadow: "🌑",
-        light: "🌟",
-        ice: "❄️",
-        gravity: "🌀",
-        void: "🕳️"
-      };
-
-      return (
-        icons[type] ||
-        "🔮"
-      );
-    }
-
-
     function showElementMessage(
-      message
+      message,
+      iconType = "wand"
     ) {
 
       const box =
@@ -2293,8 +4518,10 @@
           "elementMessage"
         );
 
-      box.textContent =
-        message;
+      box.innerHTML = `
+        ${createIcon(iconType)}
+        <span>${message}</span>
+      `;
 
       box.classList.add(
         "show"
@@ -2314,6 +4541,9 @@
         }, 2200);
     }
 
+    /* =========================================
+       PARTICLES
+    ========================================= */
 
     function createMagicParticles() {
 
@@ -2363,7 +4593,6 @@
       }
     }
 
-
     /* =========================================
        ENTER SITE
     ========================================= */
@@ -2389,7 +4618,6 @@
         behavior: "smooth"
       });
     }
-
 
     /* =========================================
        SITE MODE
@@ -2427,6 +4655,11 @@
           "avatarPlaceholder"
         );
 
+      const crown =
+        document.getElementById(
+          "crown"
+        );
+
       const modeSwitch =
         document.getElementById(
           "modeSwitch"
@@ -2450,9 +4683,8 @@
         return;
       }
 
-
       /* =====================================
-         🧙 MAGO
+         MAGO
       ===================================== */
 
       if (
@@ -2463,53 +4695,53 @@
           "magic-mode"
         );
 
-        if (
-          userData.spellType
-        ) {
-
-          applyElement(
-            userData.spellType
-          );
-        }
+        applySelectedElements();
 
         eyebrow.textContent =
-          `DESPERTANDO ${(
-            userData.spell || ""
-          ).toUpperCase()}`;
+          userData.spell
+            ? `DESPERTANDO ${userData.spell.toUpperCase()}`
+            : "DESPERTANDO MAGIA";
 
         description.textContent =
-          `O poder de ${userData.spell} foi despertado. O 1PRINCIPEBR agora possui uma identidade mágica própria, com efeitos e energia baseados no seu feitiço.`;
+          `O poder de ${userData.spell || "seu personagem"} foi despertado. O 1PRINCIPEBR agora possui uma identidade mágica própria.`;
 
-        badgeIcon.textContent =
-          getSpellIcon(
-            userData.spellType
+        badgeIcon.innerHTML =
+          createIcon(
+            userData.spells[0] ||
+            "wizard"
           );
 
         badgeName.textContent =
           userData.nickname ||
           "1PRINCIPEBR";
 
+        const alignmentText =
+          userData.alignment === "evil"
+            ? "MAGO DO MAL"
+            : "MAGO DO BEM";
+
         badgeDetails.textContent =
-          `🧙 MAGO • ${(
+          `${alignmentText} • ${(
             userData.spell || ""
           ).toUpperCase()}`;
 
-        avatar.textContent =
-          "🧙🏿‍♂️";
+        avatar.className =
+          "avatar-placeholder";
+
+        crown.innerHTML =
+          createIcon("wizard");
 
         modeSwitch.textContent =
-          "👑 MODO PRÍNCIPE";
+          "MODO PRÍNCIPE";
 
         about.textContent =
-          `O Modo Mago transforma o 1PRINCIPEBR em uma experiência mágica. Seu feitiço escolhido é ${userData.spell}, e essa escolha influencia as cores, brilhos e efeitos visuais do site.`;
-
+          userData.alignment === "evil"
+            ? `O Mago do Mal desperta forças proibidas. Seus poderes escolhidos são ${userData.spell}. As cores, brilhos e energia do site acompanham essa combinação.`
+            : `O Mago do Bem transforma o 1PRINCIPEBR em uma experiência mágica. Seus poderes escolhidos são ${userData.spell}. As cores, brilhos e energia do site acompanham essa combinação.`;
       }
 
-
       /* =====================================
-         👑 PRÍNCIPE
-         CORREÇÃO PRINCIPAL:
-         preserva "site-ready"
+         PRÍNCIPE
       ===================================== */
 
       else {
@@ -2517,32 +4749,59 @@
         clearElementClasses();
 
         eyebrow.textContent =
-          "ATIVANDO MODO PRÍNCIPE";
+          userData.alignment === "evil"
+            ? "ATIVANDO PRÍNCIPE DO MAL"
+            : "ATIVANDO PRÍNCIPE DO BEM";
 
         description.textContent =
-          "Um espaço para games, lives, clipes, comunidade e muita gameplay. Entre no Modo Príncipe e acompanhe essa jornada.";
+          "Um espaço para games, lives, clipes, comunidade e muita gameplay. Entre no universo do 1PRINCIPEBR.";
 
-        badgeIcon.textContent =
-          "👑";
+        badgeIcon.innerHTML =
+          userData.alignment === "evil"
+            ? createIcon(
+                userData.weapons[0] === "Arco"
+                  ? "bow"
+                  : "sword"
+              )
+            : createIcon("crown");
 
         badgeName.textContent =
           userData.nickname ||
           "1PRINCIPEBR";
 
-        badgeDetails.textContent =
-          `👑 PRÍNCIPE • ${userData.mascot || "MASCOTE"}`;
+        if (
+          userData.alignment === "evil"
+        ) {
 
-        avatar.textContent =
-          "🧑🏿‍🎮";
+          badgeDetails.textContent =
+            `PRÍNCIPE DO MAL • ${
+              userData.weapons.join(" + ")
+            }`;
+
+        } else {
+
+          badgeDetails.textContent =
+            `PRÍNCIPE DO BEM • ${
+              userData.mascot ||
+              "MASCOTE"
+            }`;
+        }
+
+        avatar.className =
+          "avatar-placeholder";
+
+        crown.innerHTML =
+          createIcon("crown");
 
         modeSwitch.textContent =
-          "🧙 SEJA MAGO";
+          "SEJA MAGO";
 
         about.textContent =
-          "Bem-vindo ao universo do 1PRINCIPEBR. Aqui a ideia é reunir games, lives, clipes e uma comunidade que acompanha cada nova fase dessa jornada.";
+          userData.alignment === "evil"
+            ? `Bem-vindo ao lado sombrio do 1PRINCIPEBR. Sua identidade de Príncipe do Mal é representada por ${userData.weapons.join(" + ")}. A identidade visual do Modo Príncipe permanece com sua cor original.`
+            : `Bem-vindo ao universo do 1PRINCIPEBR. Sua identidade de Príncipe do Bem é representada pelo mascote ${userData.mascot}. A identidade visual do Modo Príncipe permanece com sua cor original.`;
       }
     }
-
 
     /* =========================================
        TOGGLE MODE
@@ -2565,7 +4824,8 @@
         updateSiteForMode();
 
         showElementMessage(
-          "👑 MODO PRÍNCIPE ATIVADO"
+          "MODO PRÍNCIPE ATIVADO",
+          "crown"
         );
 
       } else {
@@ -2576,14 +4836,32 @@
         currentMode =
           "wizard";
 
-        if (!userData.spell) {
+        if (
+          !userData.nickname
+        ) {
 
           document.body.classList.add(
             "magic-mode"
           );
 
           showScreen(
-            "wizardNicknameScreen"
+            "wizardAlignmentScreen"
+          );
+
+          return;
+        }
+
+        if (
+          !userData.spells ||
+          userData.spells.length === 0
+        ) {
+
+          document.body.classList.add(
+            "magic-mode"
+          );
+
+          showScreen(
+            "wizardAlignmentScreen"
           );
 
           return;
@@ -2592,7 +4870,8 @@
         updateSiteForMode();
 
         showElementMessage(
-          `${getSpellIcon(userData.spellType)} MODO MAGO ATIVADO`
+          "MODO MAGO ATIVADO",
+          "wizard"
         );
       }
 
@@ -2601,7 +4880,6 @@
         JSON.stringify(userData)
       );
     }
-
 
     /* =========================================
        SUPABASE SAVE
@@ -2614,27 +4892,34 @@
         if (!supabaseClient) {
 
           console.warn(
-            "Supabase não está disponível. O site continuará funcionando."
+            "Supabase não está disponível."
           );
 
           return false;
         }
 
-
         /* =====================================
-           👑 PRÍNCIPE
-           Tabela: principe_users
-
-           Campos:
-           nickname
-           mascot
-           platform
-           genres
+           PRÍNCIPE
         ===================================== */
 
         if (
           userData.mode === "prince"
         ) {
+
+          let mascotValue =
+            userData.mascot ||
+            null;
+
+          if (
+            userData.alignment ===
+            "evil"
+          ) {
+
+            mascotValue =
+              `ARMAS: ${
+                userData.weapons.join(" + ")
+              }`;
+          }
 
           const {
             error
@@ -2648,8 +4933,7 @@
                   userData.nickname,
 
                 mascot:
-                  userData.mascot ||
-                  null,
+                  mascotValue,
 
                 platform:
                   userData.platform ||
@@ -2677,15 +4961,8 @@
           return true;
         }
 
-
         /* =====================================
-           🧙 MAGO
-           Tabela: mago_users
-
-           Campos:
-           nickname
-           spell
-           spell_type
+           MAGO
         ===================================== */
 
         if (
@@ -2742,7 +5019,6 @@
       }
     }
 
-
     /* =========================================
        LOAD LOCAL PROFILE
     ========================================= */
@@ -2795,6 +5071,24 @@
             data.mode ||
             "prince",
 
+          alignment:
+            data.alignment ||
+            "good",
+
+          weapons:
+            Array.isArray(
+              data.weapons
+            )
+              ? data.weapons
+              : [],
+
+          spells:
+            Array.isArray(
+              data.spells
+            )
+              ? data.spells
+              : [],
+
           spell:
             data.spell ||
             "",
@@ -2812,20 +5106,11 @@
           "wizard"
         ) {
 
-          clearElementClasses();
-
           document.body.classList.add(
             "magic-mode"
           );
 
-          if (
-            userData.spellType
-          ) {
-
-            applyElement(
-              userData.spellType
-            );
-          }
+          applySelectedElements();
 
         } else {
 
@@ -2844,39 +5129,6 @@
         return false;
       }
     }
-
-
-    /* =========================================
-       ESCAPE HTML
-    ========================================= */
-
-    function escapeHTML(
-      value
-    ) {
-
-      return String(value)
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-    }
-
 
     /* =========================================
        KEYBOARD
@@ -2924,7 +5176,6 @@
       }
     );
 
-
     /* =========================================
        STARTUP
     ========================================= */
@@ -2962,10 +5213,8 @@
           700
         );
 
-
         const hasProfile =
           loadSavedProfile();
-
 
         if (hasProfile) {
 
