@@ -599,3 +599,72 @@ function showPrinceNickError() {
 function showMageNickError() {
     alert("Seu nickname arcano precisa conter 'mago' ou 'bruxa' para abrir o Círculo!");
 }
+/* =========================================================
+   1PRINCIPEBR - BLOCO COMPLETO DE JAVASCRIPT (EXPANSÃO)
+   ========================================================= */
+
+// Função universal para trocar de telas (caso precise no seu script principal)
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    const target = document.getElementById(screenId);
+    if (target) {
+        target.classList.remove('hidden');
+    }
+}
+
+/* =========================================================
+   VALIDAÇÃO DE NICKNAMES (INCLUSIVAS)
+   ========================================================= */
+
+function isValidPrinceNickname(nickname) {
+    if (!nickname || nickname.trim() === "") return false;
+    const lowerNick = nickname.toLowerCase();
+    // Obrigatório conter "principe" ou "princesa"
+    return lowerNick.includes("principe") || lowerNick.includes("princesa");
+}
+
+function isValidMageNickname(nickname) {
+    if (!nickname || nickname.trim() === "") return false;
+    const lowerNick = nickname.toLowerCase();
+    // Obrigatório conter "mago" ou "bruxa"
+    return lowerNick.includes("mago") || lowerNick.includes("bruxa");
+}
+
+// Mensagens de erro dinâmicas para o usuário
+function showPrinceNickError() {
+    alert("Seu nickname precisa conter 'principe' ou 'princesa' para entrar no Reino!");
+}
+
+function showMageNickError() {
+    alert("Seu nickname arcano precisa conter 'mago' ou 'bruxa' para abrir o Círculo!");
+}
+
+/* =========================================================
+   FUNÇÕES DO PAINEL ADMIN (LOGIN E LOGOUT SEGUROS)
+   ========================================================= */
+
+function attemptAdminLogin() {
+    const email = document.getElementById("adminEmail").value;
+    const pass = document.getElementById("adminPassword").value;
+    
+    // Validação com o e-mail e senha definidos por você
+    if(email === "creck27736@gmail.com" && pass === "1principeou1mago") {
+        // Esconde a tela de Login Admin e mostra o Dashboard
+        document.getElementById("adminGateScreen").classList.add("hidden");
+        document.getElementById("adminDashboardScreen").classList.remove("hidden");
+    } else {
+        alert("Acesso negado: E-mail ou senha incorretos.");
+    }
+}
+
+function logoutAdmin() {
+    // Esconde o Dashboard e volta para a tela de Login Admin
+    document.getElementById("adminDashboardScreen").classList.add("hidden");
+    document.getElementById("adminGateScreen").classList.remove("hidden");
+    
+    // Limpa os campos de texto
+    const emailInput = document.getElementById("adminEmail");
+    const passInput = document.getElementById("adminPassword");
+    if (emailInput) emailInput.value = "";
+    if (passInput) passInput.value = "";
+}
