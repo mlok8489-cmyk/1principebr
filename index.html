@@ -6338,7 +6338,162 @@ footer strong{
 </footer>
 
 </div>
+<!-- =========================================================
+     EXPANSÃO 1PRINCIPEBR - NOVA SEÇÃO GAMER E ADMIN
+     ========================================================= -->
 
+<!-- NOVA SEÇÃO: FICHA GAMER & RANKINGS -->
+<section id="gamerProfileSection" class="screen hidden">
+    <div class="gamer-profile-container">
+        
+        <header class="gamer-profile-header">
+            <h2 id="profileRankTitle" class="title-primary">TROFÉUS E RANKINGS</h2>
+            <p id="profileRankDesc">O histórico das suas batalhas através dos universos.</p>
+        </header>
+
+        <div class="gamer-stats-grid">
+            <div class="gamer-stat-card">
+                <div class="stat-icon" data-icon="crown"></div>
+                <h3 class="stat-game">STATUS GERAL</h3>
+                <div class="stat-value" id="generalStatusLevel">Lenda do Reino</div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar-fill" style="width: 85%;"></div>
+                </div>
+                <span class="stat-footer">Progresso da Temporada</span>
+            </div>
+
+            <div class="gamer-stat-card">
+                <div class="stat-icon" data-icon="crosshair"></div>
+                <h3 class="stat-game">FORTNITE</h3>
+                <div class="stat-value rank-diamond">DIAMANTE II</div>
+                <div class="stat-detail">BATTLE ROYALE • PC</div>
+                <span class="stat-footer">Atualizado em 28/09/2026</span>
+            </div>
+
+            <div class="gamer-stat-card">
+                <div class="stat-icon" data-icon="game"></div>
+                <h3 class="stat-game">MINECRAFT</h3>
+                <div class="stat-value rank-custom">MESTRE CONSTRUTOR</div>
+                <div class="stat-detail">SOBREVIVÊNCIA • HORAS JOGADAS: 1.200h</div>
+                <span class="stat-footer">Servidor Principal</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- NOVA SEÇÃO: PAINEL ADMINISTRATIVO -->
+<div id="adminGateScreen" class="screen hidden admin-gate">
+    <div class="admin-login-box">
+        <h2 class="admin-title">1PRINCIPEBR</h2>
+        <h3 class="admin-subtitle">CENTRAL DO PROPRIETÁRIO</h3>
+        
+        <div class="form-group">
+            <label>E-MAIL</label>
+            <input type="email" id="adminEmail" placeholder="coroa@1principe.br" />
+        </div>
+        
+        <div class="form-group">
+            <label>SENHA</label>
+            <input type="password" id="adminPassword" placeholder="••••••••••••" />
+        </div>
+
+        <button id="btnAdminLogin" class="btn-primary" onclick="attemptAdminLogin()">
+            ENTRAR NO PAINEL
+        </button>
+        <p class="admin-security-note">🔒 Área restrita. Acesso monitorado por Supabase Auth + RLS.</p>
+    </div>
+</div>
+
+<!-- =========================================================
+     ESTILOS DA EXPANSÃO (CSS)
+     ========================================================= -->
+<style>
+/* Ficha Gamer & Rankings */
+.gamer-profile-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+.gamer-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+.gamer-stat-card { background: rgba(15, 15, 20, 0.8); border: 1px solid #22222a; border-radius: 12px; padding: 2rem; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.gamer-stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2); }
+.stat-game { font-size: 1.2rem; letter-spacing: 2px; margin: 1rem 0 0.5rem; color: #ffffff; }
+.stat-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; color: #ffffff; }
+.rank-diamond { color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+.rank-custom { color: #ffaa00; }
+.stat-detail { font-size: 0.8rem; color: #888899; margin-bottom: 1rem; }
+.stat-bar-container { width: 100%; height: 6px; background: #333; border-radius: 3px; margin-bottom: 1rem; overflow: hidden; }
+.stat-bar-fill { height: 100%; background: #8a2be2; }
+.stat-footer { display: block; font-size: 0.75rem; color: #888899; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; }
+
+/* Estrutura Painel Admin */
+.admin-gate { display: flex; align-items: center; justify-content: center; background: #050508; height: 100vh; }
+.admin-login-box { background: #111; border: 1px solid #333; padding: 3rem; border-radius: 8px; width: 100%; max-width: 400px; text-align: center; }
+.admin-title { font-size: 2rem; color: #fff; margin-bottom: 0.2rem; font-family: 'Cinzel', serif; }
+.admin-subtitle { font-size: 1rem; color: #8a2be2; margin-bottom: 2rem; }
+.admin-security-note { font-size: 0.75rem; color: #666; margin-top: 2rem; }
+</style>
+    
+    <!-- =========================================================
+     TELA INTERNA DO PAINEL ADMIN (DASHBOARD COMPLETO)
+     ========================================================= -->
+<div id="adminDashboardScreen" class="screen hidden admin-dashboard-layout">
+    
+    <!-- Menu Lateral do Admin -->
+    <aside class="admin-sidebar">
+        <div class="admin-brand">
+            <div class="admin-brand-icon" data-icon="crown"></div>
+            <span>PAINEL REAL</span>
+        </div>
+        <nav class="admin-nav">
+            <button class="admin-nav-btn active" data-target="adminResumo">👑 Dashboard</button>
+            <button class="admin-nav-btn" data-target="adminUsers">👥 Usuários</button>
+            <button class="admin-nav-btn" data-target="adminRanks">🏆 Rankings</button>
+            <button class="admin-nav-btn" data-target="adminGames">🎮 Jogos</button>
+            <button class="admin-nav-btn" data-target="adminLogs">🛡️ Segurança</button>
+        </nav>
+        <div class="admin-user-info">
+            <span id="loggedAdminName" style="color: #aaa;">Proprietário</span>
+            <button onclick="logoutAdmin()" style="color: #ff4444; background: none; border: none; cursor: pointer; font-weight: bold;">Sair</button>
+        </div>
+    </aside>
+
+    <!-- Área Principal do Painel -->
+    <main class="admin-content">
+        <!-- Visão Geral -->
+        <section id="adminResumo" class="admin-view active">
+            <header class="admin-header">
+                <h2 style="color: #fff; margin-bottom: 20px; font-family: 'Cinzel', serif;">Visão Geral do Sistema</h2>
+            </header>
+            
+            <div class="admin-stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
+                <div class="admin-stat-box" style="background: #111; padding: 1.5rem; border: 1px solid #333; border-radius: 8px;">
+                    <h4 style="color: #888; font-size: 0.8rem; margin-bottom: 0.5rem;">TOTAL DE USUÁRIOS</h4>
+                    <span class="admin-stat-number" style="font-size: 2.5rem; color: #fff; font-weight: bold;">1.248</span>
+                </div>
+                <div class="admin-stat-box" style="background: #111; padding: 1.5rem; border: 1px solid #333; border-radius: 8px; border-left: 4px solid #8a2be2;">
+                    <h4 style="color: #888; font-size: 0.8rem; margin-bottom: 0.5rem;">PRÍNCIPES/PRINCESAS</h4>
+                    <span class="admin-stat-number" style="font-size: 2.5rem; color: #fff; font-weight: bold;">827</span>
+                </div>
+                <div class="admin-stat-box" style="background: #111; padding: 1.5rem; border: 1px solid #333; border-radius: 8px; border-left: 4px solid #00ffff;">
+                    <h4 style="color: #888; font-size: 0.8rem; margin-bottom: 0.5rem;">MAGOS/BRUXAS</h4>
+                    <span class="admin-stat-number" style="font-size: 2.5rem; color: #fff; font-weight: bold;">421</span>
+                </div>
+                <div class="admin-stat-box" style="background: #111; padding: 1.5rem; border: 1px solid #333; border-radius: 8px; border-left: 4px solid #ff0055;">
+                    <h4 style="color: #888; font-size: 0.8rem; margin-bottom: 0.5rem;">STATUS DA LIVE</h4>
+                    <span class="admin-stat-number" style="font-size: 2.5rem; color: #ff0055; font-weight: bold; animation: pulse 2s infinite;">ONLINE</span>
+                </div>
+            </div>
+            
+            <div class="admin-recent-logs" style="margin-top: 30px; background: #111; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+                <h3 style="color: #fff; margin-bottom: 15px; font-family: 'Cinzel', serif;">Últimas Ações do Sistema</h3>
+                <ul id="recentAdminLogs" style="list-style: none; color: #aaa; font-size: 0.9rem; line-height: 1.8;">
+                    <li><em>28/09/2026 18:14</em> - <strong>[SISTEMA]</strong> Novo ranking atualizado: Fortnite.</li>
+                    <li><em>28/09/2026 17:30</em> - <strong>[SISTEMA]</strong> 3 novos magos entraram no Círculo.</li>
+                    <li><em>28/09/2026 15:42</em> - <strong>[ADMIN]</strong> Proprietário fez login no painel.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</div>
+    
 <script>
 
 /* =========================================================
