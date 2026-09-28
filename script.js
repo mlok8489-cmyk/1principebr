@@ -572,4 +572,30 @@ async function testarBanco() {
 
 testarBanco();
 
-</script>
+</script> 
+/* =========================================================
+   NOVAS VALIDAÇÕES DE NICKNAME (INCLUSIVAS)
+   ========================================================= */
+
+function isValidPrinceNickname(nickname) {
+    if (!nickname || nickname.trim() === "") return false;
+    const lowerNick = nickname.toLowerCase();
+    // Obrigatório conter "principe" ou "princesa"
+    return lowerNick.includes("principe") || lowerNick.includes("princesa");
+}
+
+function isValidMageNickname(nickname) {
+    if (!nickname || nickname.trim() === "") return false;
+    const lowerNick = nickname.toLowerCase();
+    // Obrigatório conter "mago" ou "bruxa"
+    return lowerNick.includes("mago") || lowerNick.includes("bruxa");
+}
+
+// Mensagens de erro para o usuário
+function showPrinceNickError() {
+    alert("Seu nickname precisa conter 'principe' ou 'princesa' para entrar no Reino!");
+}
+
+function showMageNickError() {
+    alert("Seu nickname arcano precisa conter 'mago' ou 'bruxa' para abrir o Círculo!");
+}
